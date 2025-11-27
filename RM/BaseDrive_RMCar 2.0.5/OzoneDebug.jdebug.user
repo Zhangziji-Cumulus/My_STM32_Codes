@@ -1,0 +1,27 @@
+
+GraphedExpression="((PID_TSD).In_PID).target", Color=#a00909
+GraphedExpression="((PID_TSD).In_PID).current", Color=#09a01b
+GraphedExpression="((PID_TSD).In_PID).Output", Color=#09a087
+GraphedExpression="((PID_TSD).Ex_PID).current", Color=#0984a0
+GraphedExpression="((PID_TSD).Ex_PID).target", Color=#0964a0
+OpenDocument="tasks.c", FilePath="D:/stm32_-new_-project/BaseDrive_RMCar 2.0.3/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3642
+OpenDocument="stm32f4xx_it.c", FilePath="D:/stm32_-new_-project/BaseDrive_RMCar 2.0.5/Core/Src/stm32f4xx_it.c", Line=93
+OpenDocument="Shooting.c", FilePath="D:/stm32_-new_-project/BaseDrive_RMCar 2.0.5/User/Applications/Src/Shooting.c", Line=38
+OpenDocument="main.c", FilePath="D:/stm32_-new_-project/BaseDrive_RMCar 2.0.5/Core/Src/main.c", Line=76
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=1, w=300, h=105, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=300, h=253, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=300, h=156, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=0, w=664, h=516, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=603, h=528, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=1316, h=528, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="500 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1011;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1118;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="1132;0"
+TableHeader="Call Stack", SortCol="Function", SortOrder="ASCENDING", VisibleCols=["Function";"Stack Frame";"Source";"PC";"Return Address";"Stack Used"], ColWidths=[100;100;100;100;112;100]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" ((PID_TSD).In_PID).target";" ((PID_TSD).In_PID).current";" ((PID_TSD).In_PID).Output";" ((PID_TSD).Ex_PID).current";" ((PID_TSD).Ex_PID).target"], ColWidths=[100;100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[213;100;100;100;100;100;100;107;107]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;118;259]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Type";"Size";"Refresh"], ColWidths=[158;161;206;100;100]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;351]
+WatchedExpression="PID_TSD", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="0", Window=Watched Data 1
