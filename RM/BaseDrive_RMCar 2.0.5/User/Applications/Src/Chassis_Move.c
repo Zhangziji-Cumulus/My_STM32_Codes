@@ -27,7 +27,7 @@ Chassis_Variable Ch_Varia;
 PID_DoubleDef PID_CHFollowing;
 
 //** 本地函数声明 **//
-
+void Update_Variable_Function(void);
 /* 获取目标速度 */
 static void  Get_TargetDirectionVel(void);
 /* 计算底盘四个轮子的最终速度值 */
@@ -54,12 +54,15 @@ void Chassis_Init(void)
 	PID_Init(&PID_ChMotor1.Ex_PID,10,0,0,-5000,5000,-10,10);		//外环速度（目标换）
 	
 	//PID_Init(&PID_CHFollowing.In_PID,20,0,0,-16384,16384,-10,10);    	//内环速度
-	PID_Init(&PID_CHFollowing.In_PID,50,0,0,-16384,16384,-10,10); 	//内环速度
-	PID_Init(&PID_CHFollowing.Ex_PID,50,0,0,-5000,5000,-10,10); 	//外环角度
+	PID_Init(&PID_CHFollowing.In_PID,50,0,0,-16384,16384,-10,10); //跟随只用了一个环控制，也就是角度环	
+	//PID_Init(&PID_CHFollowing.Ex_PID,5,0,0,-500,500,-10,10); 	
 }
 /* 设置底盘每个电机的速度 */
 void Chassis_Motor_Set(void)
 {
+	//Update_Variable_Function();
+	Ch_Varia.Following_CSpeed = motor_chassis[4].speed_rpm;
+	
 	Get_TargetChassisDirectionVel();//获取目标方向
 	WheatWheel_Calculation(&CTDV,&CM_TV);//计算目标方向下麦轮速度
 	Chassis_PID_Caculate(&CM_TV,&CM_SV);//计算PID
@@ -98,6 +101,11 @@ static void Get_TargetChassisDirectionVel(void)
 }
 
 /* 计算底盘四个轮子的最终速度值 */
+static void Update_Variable_Function(void)
+{
+	Ch_Varia.Following_CSpeed = motor_chassis[4].speed_rpm;
+}
+
 static void Get_ChassisMotorVel(void)
 {
 	WheatWheel_Calculation(&CTDV,&CM_TV);
@@ -129,15 +137,8 @@ static void Chassis_Get_RelativeAngle(void)
 static float Chassis_Following(void)
 {
 	
-//	float CAngle = Ch_Varia.Theta_Degree;
-//	float CSpeed = motor_chassis[4].speed_rpm;
-//	static float Target = 0.00f;
-//	
-//	return PID_Double_CycleAngle(&PID_CHFollowing.In_PID,&PID_CHFollowing.Ex_PID,Target,CSpeed,CAngle,ERROR_FOLLOWING);
-	return PID_Calculate_CycleAngle(&PID_CHFollowing.In_PID,Ch_Varia.Theta_Degree,0.00f);
-//	float CurrentDegree = MyMath_Limit_Float(Ch_Varia.Theta_Degree,-180.0,180.0,1);
-//	return PID_Double_Caculate(&PID_CHFollowing.In_PID,&PID_CHFollowing.Ex_PID,0.0f,motor_chassis[4].speed_rpm,CurrentDegree,ERROR_FOLLOWING);
-
+	//return PID_Double_CycleAngle(&PID_CHFollowing.In_PID,&PID_CHFollowing.Ex_PID,0.00f,Ch_Varia.Following_CSpeed,Ch_Varia.Theta_Degree,ERROR_FOLLOWING);
+	return PID_Calculate_CycleAngle(&PID_CHFollowing.In_PID,Ch_Varia.Theta_Degree,ERROR_FOLLOWING);
 }
 
 

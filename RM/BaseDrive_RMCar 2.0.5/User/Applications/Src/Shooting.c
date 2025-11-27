@@ -27,28 +27,26 @@ static float Update_Salute_Variable(void);
 //** 对外函数 **//
 void Shooting_Init(void)
 {
-	PID_Init(&PID_SD.In_PID,10,0,0,-16384,16384,-10,10);//内环速度，输出
-	PID_Init(&PID_SD.Ex_PID,10,0,0,-2000,2000,-10,10);//外环角度，目标
-	
+	//拨盘部分的三环控制PID
 	PID_Init(&PID_TSD.In_PID,1.5,0.01,0.05,-16384,16384,-10,10);
 	PID_Init(&PID_TSD.Min_PID,20,0.01,0.1,-10000,10000,-10,10);
 	PID_Init(&PID_TSD.Ex_PID,1.2,0.15,0.2,-500,500,-10,10);
-	
+	//拨盘累加角度
 	SH_Varia.Dial_AcumulateAngle = 0.0f;//初始化拨盘累加角度
 	
-	//SH_Varia.Salute_TAngle = 0;
+	//礼炮发射
 	SH_Varia.Salute_AcumulateAngle = 0;
 	
-	
+	//摩擦轮PID
 	PID_Init(&PID_SF_L.In_PID,1,0,0,-16384,16384,-10,10);//内环电流，输出
 	PID_Init(&PID_SF_L.Ex_PID,50,0,0,-2000,2000,-10,10);//外环速度，目标
 	
 	PID_Init(&PID_SF_R.In_PID,1,0,0,-16384,16384,-10,10);//内环电流，输出
 	PID_Init(&PID_SF_R.Ex_PID,50,0,0,-2000,2000,-10,10);//外环速度，目标
 	
+	//礼炮发射
 	PID_Init(&PID_SS.In_PID,2,0,0,-30000,30000,-10,10);//内环速度，输出
 	PID_Init(&PID_SS.Ex_PID,500,0,0,-50000,50000,-10,10);//外环角度，目标
-	
 }
 
 ////* 发射结构拨盘部分，返回PID计算后的输出值 *//
