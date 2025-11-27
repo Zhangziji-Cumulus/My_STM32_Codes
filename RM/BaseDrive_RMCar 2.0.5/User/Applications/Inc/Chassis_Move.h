@@ -21,7 +21,7 @@
 #define MOTOR_B_R 3
 /*电机允许最小误差*/
 #define ERROR_MOTOR_CH 		1.0f//底盘电机允许最小误差
-#define ERROR_FOLLOWING 	1.0f
+#define ERROR_FOLLOWING 	0.1f
 /*定义编码器零位偏移值*/
 #define ENCODER_ZERO_OFFSET 344.575f
 /*定义小陀螺旋转角速度*/
@@ -53,6 +53,8 @@ typedef struct
 	float RelativeAngle_Degree;
 	float Theta_Radian;
 	float Theta_Degree;
+	
+	float Following_CSpeed;
 	
 }Chassis_Variable;
 

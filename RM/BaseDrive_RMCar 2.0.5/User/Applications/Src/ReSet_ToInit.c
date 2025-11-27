@@ -18,6 +18,7 @@ extern int16_t Yaw_Vel;
 extern int16_t Pitch_Vel;
 extern int16_t Dial_Vel;
 
+extern uint8_t BIM088_ReSetFlag;
 
 void UserInit(void)
 {
@@ -40,7 +41,7 @@ void GetReSetFlag(void)
 	else if(TempFlag == 1)
 	{
 		HAL_Delay(20);
-			
+		BIM088_ReSetFlag = 0;
 		CAN_cmd_chassis(0,0,0,0);
 		CAN_cmd_gimbal(0,0,0,0);
 		

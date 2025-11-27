@@ -1,6 +1,7 @@
 #include "Gimbal_Move.h"
 
 PID_DoubleDef PID_GimBal_Yaw;
+PID_DoubleDef PID_GimBal_Yaw_Init;
 PID_DoubleDef PID_GimBal_Pitch;
 
 //** 外部变量 **//
@@ -34,8 +35,13 @@ void Gimbal_Init(void)
 	PID_Init(&PID_GimBal_Yaw.In_PID,250,0,0,-16384,16384,-10,10);//内环速度环，输出环
 	PID_Init(&PID_GimBal_Yaw.Ex_PID,5,0,0,-2000,2000,-10,10);//外环角度环，目标环
 	
+	PID_Init(&PID_GimBal_Yaw_Init.In_PID,10,0,0,-16384,16384,-10,10);//内环速度环，输出环
+	PID_Init(&PID_GimBal_Yaw_Init.Ex_PID,5,0,0,-500,500,-10,10);//外环角度环，目标环
+	
 	PID_Init(&PID_GimBal_Pitch.In_PID,10,0,0,-16384,16384,-10,10);//内环速度环，输出环
 	PID_Init(&PID_GimBal_Pitch.Ex_PID,20,0,0,-2000,2000,-10,10);//外环角度环，目标环
+	
+	
 	GB_Varia.Yaw_InitFlag = 0;
 	GB_Varia.YawTheta = 0;
 }
@@ -43,10 +49,11 @@ void Gimbal_Init(void)
 /* 云台电机设置 */
 void GimBal_Yaw_Motor_Set(float Dial,float Salute)
 {
-	Gimbal_Get_Direction();
+	
 	
 	if(GB_Varia.Yaw_InitFlag)
 	{
+		Gimbal_Get_Direction();
 		GD_SV.Yaw = GimBal_YawStable();
 	}
 	else if(GB_Varia.Yaw_InitFlag == 0)
@@ -100,14 +107,15 @@ static void GimBal_YawInit(float* PID_Out)
 	if(fabs(GB_Varia.YawTheta) < 5.0f)
 	{
 		add++;
-		if(add>100)
+		if(add > 200)
 		{
 			GB_Varia.Yaw_InitFlag = 1;
 		}
 	}
 	else
 	{
-		*PID_Out = PID_Calculate_CycleAngle(&PID_GimBal_Yaw.In_PID,GB_Varia.YawTheta,0);
+		*PID_Out = PID_Double_CycleAngle(&PID_GimBal_Yaw_Init.In_PID,&PID_GimBal_Yaw_Init.Ex_PID,0.00f,motor_chassis[4].speed_rpm,GB_Varia.YawTheta,1.0f);//PID_Calculate_CycleAngle(&PID_GimBal_Yaw_Init.In_PID,GB_Varia.YawTheta,0);
+		//*PID_Out = PID_Calculate_CycleAngle(&PID_GimBal_Yaw.In_PID,GB_Varia.YawTheta,0);
 	}	
 }
 

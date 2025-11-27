@@ -168,37 +168,22 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PID_GimBal_Yaw</ItemText>
+          <ItemText>PID_CHFollowing</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Ch_Varia</ItemText>
+          <ItemText>INS_gyro</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PID_CHFollowing</ItemText>
+          <ItemText>PID_GimBal_Yaw_Init</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Ch_Varia</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>PID_SS</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>PID_SD</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>PID_TSD</ItemText>
+          <ItemText>GB_Varia</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
