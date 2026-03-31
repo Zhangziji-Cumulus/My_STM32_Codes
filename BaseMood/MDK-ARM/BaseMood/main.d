@@ -29,9 +29,12 @@ basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\main.o: ../Core/Inc/can.h
+basemood\main.o: ../Core/Inc/tim.h
 basemood\main.o: ../Core/Inc/gpio.h
-basemood\main.o: .\UserDrive\CAN_PART.h
-basemood\main.o: .\UserAppliction\CAN_Application.h
+basemood\main.o: ./UserDrive/CAN_PART.h
+basemood\main.o: ./UserAppliction/DJI_Motor.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

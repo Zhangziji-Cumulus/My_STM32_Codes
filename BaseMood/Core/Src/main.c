@@ -19,11 +19,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "can.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CAN_PART.h"
+#include "DJI_Motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,15 +90,17 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CAN1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	
 	MY_CAN_Init(&hcan1);
-
+	HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	
   while (1)
   {
     /* USER CODE END WHILE */
@@ -153,6 +157,25 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	static uint8_t timecount = 0;
+	timecount++;
+    if(htim->Instance == TIM2)
+    {
+				
+			if(timecount > 10)
+			{
+				//ESC_Control_Raw_Single(1,-200);
+				ESC_Control_Amps_Single(&ESC_C610_10A,5,1.0f);
+				
+				//CAN_cmd_chassis(10000,0,0,0);
+				
+				timecount = 0;
+			}
+    }
+}
 
 /* USER CODE END 4 */
 

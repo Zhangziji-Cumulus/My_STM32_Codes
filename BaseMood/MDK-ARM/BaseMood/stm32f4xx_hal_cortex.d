@@ -28,3 +28,5 @@ basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_h
 basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+basemood\stm32f4xx_hal_cortex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
