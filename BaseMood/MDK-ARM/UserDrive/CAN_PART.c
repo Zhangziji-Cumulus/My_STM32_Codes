@@ -86,7 +86,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   * @param  hcan: CAN 句柄指针 ，id：ID，data：数据
   * @retval 无
   */
-void HAL_CAN_Send(CAN_HandleTypeDef *hcan,uint32_t id, uint8_t* data) {
+void CAN_Send_STD(CAN_HandleTypeDef *hcan,uint32_t id, uint8_t* data) {
     CAN_TxHeaderTypeDef TxHeader;
     uint32_t TxMailbox;
 

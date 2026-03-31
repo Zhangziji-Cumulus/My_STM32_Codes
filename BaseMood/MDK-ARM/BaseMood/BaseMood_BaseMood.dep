@@ -1,6 +1,6 @@
 Dependencies for Project 'BaseMood', Target 'BaseMood': (DO NOT MODIFY !)
 F (startup_stm32f407xx.s)(0x69CA3385)(--cpu Cortex-M4.fp -g --apcs=interwork -I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1"--list startup_stm32f407xx.lst --xref -o basemood\startup_stm32f407xx.o --depend basemood\startup_stm32f407xx.d)
-F (../Core/Src/main.c)(0x69CB38EC)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\main.o --omf_browse basemood\main.crf --depend basemood\main.d)
+F (../Core/Src/main.c)(0x69CBCCA1)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\main.o --omf_browse basemood\main.crf --depend basemood\main.d)
 I (../Core/Inc/main.h)(0x69C8D6D2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69CA3383)
@@ -35,8 +35,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
 I (../Core/Inc/can.h)(0x69C8D6D2)
 I (../Core/Inc/tim.h)(0x69CA3383)
 I (../Core/Inc/gpio.h)(0x69C8D6D1)
-I (./UserDrive/CAN_PART.h)(0x69CA1CC2)
-I (./UserAppliction/DJI_Motor.h)(0x69CB3345)
+I (./UserDrive/CAN_PART.h)(0x69CBC5A6)
+I (./UserAppliction/DJI_Motor.h)(0x69CBCBFC)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 F (../Core/Src/gpio.c)(0x69C8D6D1)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\gpio.o --omf_browse basemood\gpio.crf --depend basemood\gpio.d)
@@ -730,8 +730,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
-F (.\UserDrive\CAN_PART.c)(0x69CA26B7)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\can_part.o --omf_browse basemood\can_part.crf --depend basemood\can_part.d)
-I (UserDrive\CAN_PART.h)(0x69CA1CC2)
+F (.\UserDrive\CAN_PART.c)(0x69CBC5A6)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\can_part.o --omf_browse basemood\can_part.crf --depend basemood\can_part.d)
+I (UserDrive\CAN_PART.h)(0x69CBC5A6)
 I (../Core/Inc/main.h)(0x69C8D6D2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69CA3383)
@@ -763,9 +763,10 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
-I (./UserAppliction/DJI_Motor.h)(0x69CB3345)
+I (./UserAppliction/DJI_Motor.h)(0x69CBCBFC)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
+I (./UserDrive/CAN_PART.h)(0x69CBC5A6)
 F (.\UserAppliction\CAN_Application.c)(0x69CA177F)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\can_application.o --omf_browse basemood\can_application.crf --depend basemood\can_application.d)
 I (UserAppliction\CAN_Application.h)(0x69CA1CC2)
 I (../Core/Inc/main.h)(0x69C8D6D2)
@@ -799,12 +800,11 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
-F (.\UserAppliction\DJI_Motor.c)(0x69CB37C3)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\dji_motor.o --omf_browse basemood\dji_motor.crf --depend basemood\dji_motor.d)
-I (UserAppliction\DJI_Motor.h)(0x69CB3345)
+F (.\UserAppliction\DJI_Motor.c)(0x69CBC7FC)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o basemood\dji_motor.o --omf_browse basemood\dji_motor.crf --depend basemood\dji_motor.d)
+I (UserAppliction\DJI_Motor.h)(0x69CBCBFC)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
-I (../Core/Inc/can.h)(0x69C8D6D2)
 I (../Core/Inc/main.h)(0x69C8D6D2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69CA3383)
@@ -835,3 +835,5 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
+I (./UserDrive/CAN_PART.h)(0x69CBC5A6)
+I (./UserAppliction/DJI_Motor.h)(0x69CBCBFC)

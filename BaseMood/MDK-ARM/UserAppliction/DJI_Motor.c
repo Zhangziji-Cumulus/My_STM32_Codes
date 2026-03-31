@@ -1,5 +1,5 @@
 #include "DJI_Motor.h"
-#include "can.h"
+//#include "can.h"
 
 /*
 	3508使用C620电调支持ID 1-8，从0x200+ID开始，0x201/0x202/0x203/0x204/0x205/0x206/0x207/0x208
@@ -146,11 +146,12 @@ void CAN_DJI_SendSTD(uint32_t id, uint8_t* data) {
 
 /**
  * @brief 安培值控制单个电机
+ * @param can指针句柄
  * @param config: 电调配置指针 (如 &ESC_CONFIG_20A)
  * @param motor_id: 电机 ID (1 ~ 8)
  * @param current_amps: 目标电流 (单位：安培 A)，如 5.5f 或 -3.0f
  */
-void ESC_Control_Amps_Single(const ESC_Config_t* config, uint8_t motor_id, float current_amps) {
+void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_id, float current_amps){
     uint8_t data[8] = 0;
     uint32_t can_id = 0;
     int data_index = 0;
@@ -167,7 +168,7 @@ void ESC_Control_Amps_Single(const ESC_Config_t* config, uint8_t motor_id, float
 
     int16_t raw_val = Amps_To_Raw(config, current_amps);
     Int16_To_BigEndian(raw_val, &data[data_index], &data[data_index + 1]);
-    CAN_DJI_SendSTD(can_id, data);
+    CAN_Send_STD(hcan,can_id, data);
 }
 
 /**
@@ -176,7 +177,7 @@ void ESC_Control_Amps_Single(const ESC_Config_t* config, uint8_t motor_id, float
  * @param motor_start_id: 起始电机 ID (1 或 5)
  * @param currents_amps: 长度为 4 的浮点数组，对应 4 个电机的电流
  */
-void ESC_Control_Amps_Group(const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]) {
+void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]) {
     uint8_t data[8];
     uint32_t can_id = Get_CAN_ID(motor_start_id);
     
@@ -187,7 +188,7 @@ void ESC_Control_Amps_Group(const ESC_Config_t* config, uint8_t motor_start_id, 
         Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
     }
 
-    CAN_DJI_SendSTD(can_id, data);
+    CAN_Send_STD(hcan,can_id, data);
 }
 
 /**
@@ -195,7 +196,7 @@ void ESC_Control_Amps_Group(const ESC_Config_t* config, uint8_t motor_start_id, 
  * @param config: 电调配置指针
  * @param currents_amps: 长度为 8 的浮点数组，索引 0 对应电机 1
  */
-void ESC_Control_Amps_All(const ESC_Config_t* config, float currents_amps[8]) {
+void ESC_Control_Amps_All(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, float currents_amps[8]) {
     uint8_t data[8];
 
     // 发送第一帧 (电机 1-4)
@@ -210,7 +211,7 @@ void ESC_Control_Amps_All(const ESC_Config_t* config, float currents_amps[8]) {
         int16_t raw_val = Amps_To_Raw(config, currents_amps[i + 4]);
         Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
     }
-    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_2, data);
+    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
 }
 
 /* ================= 原始值控制函数 ================= */
@@ -220,7 +221,7 @@ void ESC_Control_Amps_All(const ESC_Config_t* config, float currents_amps[8]) {
  * @param motor_id: 电机 ID (1 ~ 8)
  * @param raw_value: 协议原始值，如 8192 或 -10000
  */
-void ESC_Control_Raw_Single(uint8_t motor_id, int16_t raw_value) {
+void ESC_Control_Raw_Single(CAN_HandleTypeDef *hcan,uint8_t motor_id, int16_t raw_value) {
     uint8_t data[8] = {0};
     uint32_t can_id = 0;
     int data_index = 0;
@@ -236,7 +237,7 @@ void ESC_Control_Raw_Single(uint8_t motor_id, int16_t raw_value) {
     }
 
     Int16_To_BigEndian(raw_value, &data[data_index], &data[data_index + 1]);
-    CAN_DJI_SendSTD(can_id, data);
+    CAN_Send_STD(hcan,can_id, data);
 }
 
 /**
@@ -244,7 +245,7 @@ void ESC_Control_Raw_Single(uint8_t motor_id, int16_t raw_value) {
  * @param motor_start_id: 起始电机 ID (1 或 5)
  * @param raw_values: 长度为 4 的整型数组，对应 4 个电机的原始值
  */
-void ESC_Control_Raw_Group(uint8_t motor_start_id, int16_t raw_values[4]) {
+void ESC_Control_Raw_Group(CAN_HandleTypeDef *hcan,uint8_t motor_start_id, int16_t raw_values[4]) {
     uint8_t data[8];
     uint32_t can_id = Get_CAN_ID(motor_start_id);
     
@@ -254,14 +255,14 @@ void ESC_Control_Raw_Group(uint8_t motor_start_id, int16_t raw_values[4]) {
         Int16_To_BigEndian(raw_values[i], &data[i*2], &data[i*2 + 1]);
     }
 
-    CAN_DJI_SendSTD(can_id, data);
+    CAN_Send_STD(hcan,can_id, data);
 }
 
 /**
  * @brief 原始值控制所有电机 (8个)
  * @param raw_values: 长度为 8 的整型数组，索引 0 对应电机 1
  */
-void ESC_Control_Raw_All(int16_t raw_values[8]) {
+void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]) {
     uint8_t data[8];
 
     // 发送第一帧 (电机 1-4)
@@ -274,33 +275,5 @@ void ESC_Control_Raw_All(int16_t raw_values[8]) {
     for (int i = 0; i < 4; i++) {
         Int16_To_BigEndian(raw_values[i + 4], &data[i*2], &data[i*2 + 1]);
     }
-    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_2, data);
-}
-
-
-static CAN_TxHeaderTypeDef  gimbal_tx_message;
-static uint8_t              gimbal_can_send_data[8];
-static CAN_TxHeaderTypeDef  chassis_tx_message;
-static uint8_t              chassis_can_send_data[8];
-
-void CAN_cmd_chassis(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
-{
-		CAN_TxHeaderTypeDef chassis_tx_message;
-    uint32_t send_mail_box;
-	
-	
-    chassis_tx_message.StdId = 0x200 ;
-    chassis_tx_message.IDE = CAN_ID_STD;
-    chassis_tx_message.RTR = CAN_RTR_DATA;
-    chassis_tx_message.DLC = 0x08;
-    chassis_can_send_data[0] = motor1 >> 8;
-    chassis_can_send_data[1] = motor1;
-    chassis_can_send_data[2] = motor2 >> 8;
-    chassis_can_send_data[3] = motor2;
-    chassis_can_send_data[4] = motor3 >> 8;
-    chassis_can_send_data[5] = motor3;
-    chassis_can_send_data[6] = motor4 >> 8;
-    chassis_can_send_data[7] = motor4;
-
-    HAL_CAN_AddTxMessage(&hcan1, &chassis_tx_message, chassis_can_send_data, &send_mail_box);
+    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
 }

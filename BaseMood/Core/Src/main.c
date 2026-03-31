@@ -164,11 +164,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	timecount++;
     if(htim->Instance == TIM2)
     {
-				
 			if(timecount > 10)
 			{
 				//ESC_Control_Raw_Single(1,-200);
-				ESC_Control_Amps_Single(&ESC_C610_10A,5,1.0f);
+			  //ESC_Control_Amps_Single(&hcan1,&ESC_C610_10A,1,0.2f);
+				
+				float test[4] = { 0.2f , -0.5f , 1.0f ,0.0f};
+				ESC_Control_Amps_Group(&hcan1,&ESC_C610_10A,1,test);
 				
 				//CAN_cmd_chassis(10000,0,0,0);
 				

@@ -38,3 +38,4 @@ basemood\main.o: ./UserDrive/CAN_PART.h
 basemood\main.o: ./UserAppliction/DJI_Motor.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+basemood\main.o: ./UserDrive/CAN_PART.h

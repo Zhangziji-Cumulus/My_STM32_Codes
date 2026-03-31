@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "main.h"
+#include "CAN_PART.h"
 
 //** 接受电机反馈数据 **//
 
@@ -56,20 +58,20 @@ extern const ESC_Config_t ESC_C610_10A;
 //===== ** 安培值控制 (自动换算) ** =====//
 
 //安培值控制单个电机
-void ESC_Control_Amps_Single(const ESC_Config_t* config, uint8_t motor_id, float current_amps);
+void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan, const ESC_Config_t* config, uint8_t motor_id, float current_amps);
 //安培值控制一组电机 (4个)
-void ESC_Control_Amps_Group(const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]);
+void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan, const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]);
 //安培值控制所有电机 (8个)
-void ESC_Control_Amps_All(const ESC_Config_t* config, float currents_amps[8]);
+void ESC_Control_Amps_All(CAN_HandleTypeDef *hcan, const ESC_Config_t* config, float currents_amps[8]);
 
 //===== ** 原始值控制 (直接发送) ** =====//
 
 //原始值控制单个电机
-void ESC_Control_Raw_Single(uint8_t motor_id, int16_t raw_value);
+void ESC_Control_Raw_Single(CAN_HandleTypeDef *hcan, uint8_t motor_id, int16_t raw_value);
 //原始值控制一组电机 (4个)
-void ESC_Control_Raw_Group(uint8_t motor_start_id, int16_t raw_values[4]);
+void ESC_Control_Raw_Group(CAN_HandleTypeDef *hcan, uint8_t motor_start_id, int16_t raw_values[4]);
 //原始值控制所有电机 (8个)
-void ESC_Control_Raw_All(int16_t raw_values[8]);
+void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]);
 
 //===== ** 底层发送 ** =====//
 void CAN_DJI_SendSTD(uint32_t id, uint8_t* data);

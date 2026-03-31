@@ -3,7 +3,6 @@ basemood\dji_motor.o: UserAppliction\DJI_Motor.h
 basemood\dji_motor.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 basemood\dji_motor.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\dji_motor.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-basemood\dji_motor.o: ../Core/Inc/can.h
 basemood\dji_motor.o: ../Core/Inc/main.h
 basemood\dji_motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 basemood\dji_motor.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -35,3 +34,5 @@ basemood\dji_motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 basemood\dji_motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\dji_motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\dji_motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\dji_motor.o: ./UserDrive/CAN_PART.h
+basemood\dji_motor.o: ./UserAppliction/DJI_Motor.h
