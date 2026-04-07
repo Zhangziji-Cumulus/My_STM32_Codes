@@ -24,8 +24,11 @@
 "basemood\stm32f4xx_hal_tim_ex.o"
 "basemood\system_stm32f4xx.o"
 "basemood\can_part.o"
-"basemood\can_application.o"
-"basemood\dji_motor.o"
+"basemood\dji_motor_can.o"
+"basemood\my_pid.o"
+"basemood\my_math.o"
+"basemood\my_time.o"
+"basemood\motor_contral.o"
 --strict --scatter "BaseMood\BaseMood.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

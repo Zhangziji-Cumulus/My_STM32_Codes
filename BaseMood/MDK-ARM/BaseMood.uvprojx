@@ -675,20 +675,35 @@
               <FileType>1</FileType>
               <FilePath>.\UserDrive\CAN_PART.c</FilePath>
             </File>
+            <File>
+              <FileName>DJI_Motor_CAN.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserDrive\DJI_Motor_CAN.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>UserAppliction</GroupName>
           <Files>
             <File>
-              <FileName>CAN_Application.c</FileName>
+              <FileName>MY_PID.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\UserAppliction\CAN_Application.c</FilePath>
+              <FilePath>.\UserAppliction\MY_PID.c</FilePath>
             </File>
             <File>
-              <FileName>DJI_Motor.c</FileName>
+              <FileName>My_Math.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\UserAppliction\DJI_Motor.c</FilePath>
+              <FilePath>.\UserAppliction\My_Math.c</FilePath>
+            </File>
+            <File>
+              <FileName>MY_Time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserAppliction\MY_Time.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor_Contral.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserAppliction\Motor_Contral.c</FilePath>
             </File>
           </Files>
         </Group>

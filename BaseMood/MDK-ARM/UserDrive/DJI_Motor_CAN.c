@@ -1,4 +1,4 @@
-#include "DJI_Motor.h"
+#include "DJI_Motor_CAN.h"
 //#include "can.h"
 
 /*
