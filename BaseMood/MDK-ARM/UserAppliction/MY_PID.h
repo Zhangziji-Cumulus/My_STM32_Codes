@@ -47,6 +47,7 @@ void PID_Init(PID_HandleTypeDef *pid, float kp, float ki, float kd,
               float output_min, float output_max,
               float integral_min, float integral_max);
 float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val);
+float PID_Calculate_Cycle(PID_HandleTypeDef *pid, float current_val, float target_val);
 float PID_Double_Caculate(PID_HandleTypeDef* PID_In,
 						  PID_HandleTypeDef* PID_Ex,
 						  float Tartget,

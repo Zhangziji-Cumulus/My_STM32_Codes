@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MY_Time.h"
+#include "UAP_Init.h"
 
 //#include "CAN_PART.h"
 //#include "DJI_Motor.h"
@@ -165,19 +166,9 @@ void SystemClock_Config(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	static uint8_t timecount = 0;
-	timecount++;
-	
     if(htim->Instance == TIM2)
     {
-				MY_TIM2_Callback();
-				timecount = 0;
-			
-			//1ms计时一次
-			if(timecount > 10)
-			{
-
-			}
+				MY_TIM2_Callback();	
     }
 }
 

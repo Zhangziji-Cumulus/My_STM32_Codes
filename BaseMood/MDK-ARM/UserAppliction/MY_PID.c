@@ -7,6 +7,19 @@
 //** 对外函数 **//
 
 /**
+ * @brief 计算最短路径角度差（控制算法必备）
+ * @param target 目标角度
+ * @param current 当前角度
+ * @return 差值，范围 (-180, 180]，正=逆时针，负=顺时针
+ */
+double MyPID_angle_diff_shortest(double target, double current) {
+    double diff = fmod(target - current, 360.0);
+    if (diff >  180.0) diff -= 360.0;
+    if (diff <= -180.0) diff += 360.0;
+    return diff;
+}
+
+/**
  * @brief  初始化PID控制器
  * @param  pid: PID结构体指针
  * @param  kp: 比例系数
@@ -49,6 +62,7 @@ float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val)
     pid->target = target_val;
 
     // 计算当前误差
+	
     pid->error = pid->target - pid->current;
 
     // 1. 比例项计算
@@ -79,7 +93,55 @@ float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val)
     } else if (total_out < pid->output_min) {
         total_out = pid->output_min;
     }
+		pid->Output = total_out;
+    return total_out;
+}
 
+/**
+ * @brief  PID基础计算函数循环角度（位置式PID，带积分限幅和输出限幅）
+ * @param  pid: PID结构体指针
+ * @param  current_val: 当前测量值
+ * @param  target_val: 目标值
+ * @return 计算后的输出值（已限幅）
+ */
+float PID_Calculate_Cycle(PID_HandleTypeDef *pid, float current_val, float target_val) {
+    // 更新当前值和目标值
+    pid->current = current_val;
+    pid->target = target_val;
+
+    // 计算当前误差
+    pid->error = MyPID_angle_diff_shortest(pid->current,pid->target);
+	
+
+    // 1. 比例项计算
+    float p_out = pid->kp * pid->error;
+
+    // 2. 积分项计算（带积分限幅，防止积分饱和）
+    pid->error_sum += pid->ki * pid->error;
+    // 积分限幅（限制误差累计值在合理范围）
+    if (pid->error_sum > pid->integral_max) {
+        pid->error_sum = pid->integral_max;
+    } else if (pid->error_sum < pid->integral_min) {
+        pid->error_sum = pid->integral_min;
+    }
+    float i_out = pid->error_sum;
+
+    // 3. 微分项计算（基于当前误差与上一次误差的差值）
+    float d_out = pid->kd * (pid->error - pid->last_error);
+
+    // 保存当前误差，用于下一次微分计算
+    pid->last_error = pid->error;
+
+    // 总输出 = 比例项 + 积分项 + 微分项
+    float total_out = p_out + i_out + d_out;
+
+    // 输出限幅（防止执行器超出物理范围）
+    if (total_out > pid->output_max) {
+        total_out = pid->output_max;
+    } else if (total_out < pid->output_min) {
+        total_out = pid->output_min;
+    }
+		pid->Output = total_out;
     return total_out;
 }
 
@@ -175,6 +237,9 @@ float PID_Triple_Calculate(PID_HandleTypeDef* PID_Angle,
     return pid_current_output;
 }
 
+
+
+
 // 计算360°旋转场景下的最近角度误差（核心函数）
 // 输入：当前角度current（°）、目标角度target（°），范围需预先确保在[0, 360)
 // 输出：最近方向的误差（范围[-180, 180]），正为顺时针，负为逆时针
@@ -243,7 +308,6 @@ float PID_Calculate_CycleAngle(PID_HandleTypeDef *pid, float current, float targ
 //* PID 循环角度双环控制函数 *//
 float PID_Double_CycleAngle(PID_HandleTypeDef* PID_In,PID_HandleTypeDef* PID_Ex,float Tartget,float Current_In,float Current_Ex,float MError)
 {
-
 	float PID_InOutput;
 	float PID_ExOutput;
 	

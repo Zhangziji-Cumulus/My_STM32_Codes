@@ -40,3 +40,5 @@ basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdi
 basemood\uap_init.o: ./UserDrive/CAN_PART.h
 basemood\uap_init.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_init.o: ../Core/Inc/can.h
+basemood\uap_init.o: UserAppliction\My_Math.h
+basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h

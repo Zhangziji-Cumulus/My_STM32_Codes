@@ -39,3 +39,5 @@ basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include
 basemood\motor_contral.o: ./UserDrive/CAN_PART.h
 basemood\motor_contral.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\motor_contral.o: ../Core/Inc/can.h
+basemood\motor_contral.o: UserAppliction\My_Math.h
+basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
