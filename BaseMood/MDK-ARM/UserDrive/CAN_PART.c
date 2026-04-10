@@ -1,12 +1,9 @@
 #include "CAN_PART.h"
 
-
 #include "main.h" 
 
 //** 声明外部参数 **//
 extern CAN_HandleTypeDef hcan1;
-
-
 
 /**
   * @brief  自定义 CAN 初始化配置
@@ -18,7 +15,7 @@ void MY_CAN_Init(CAN_HandleTypeDef *hcan)
 {
     CAN_FilterTypeDef sFilterConfig;
     HAL_StatusTypeDef status;
-
+	
     /* 1. 配置 CAN 滤波器 (接收所有 ID) */
     sFilterConfig.FilterBank = 0;                 // 使用滤波器组 0
     sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK; // 掩码模式

@@ -8,6 +8,10 @@
 #include "main.h"
 #include "CAN_PART.h"
 
+#define DJI_M2006_A 3.0f
+#define DJI_M2006_R 10000
+
+
 //** 接受电机反馈数据 **//
 
 // 错误码枚举 
@@ -30,6 +34,9 @@ typedef struct {
     DJI_MotorErrorCode_t error_code;     // 错误码	电机错误码：
     bool is_online;         // 在线标志位，用于检测电机是否掉线
 } DJI_MotorFeedback_t;
+
+
+extern DJI_MotorFeedback_t DJI_MFeedback[8];
 
 
 void CAN_DJI_Motor_Feedback(uint32_t std_id, uint8_t* data);

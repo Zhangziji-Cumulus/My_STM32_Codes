@@ -98,6 +98,8 @@ int main(void)
 	
 	MY_CAN_Init(&hcan1);
 	HAL_TIM_Base_Start_IT(&htim2);
+	
+	UAP_Init();
 
   /* USER CODE END 2 */
 
@@ -168,11 +170,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	
     if(htim->Instance == TIM2)
     {
+				MY_TIM2_Callback();
+				timecount = 0;
+			
 			//1ms计时一次
 			if(timecount > 10)
 			{
-				MY_TIM2_Callback();
-				timecount = 0;
+
 			}
     }
 }

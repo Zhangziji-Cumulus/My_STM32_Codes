@@ -29,6 +29,7 @@
 "basemood\my_math.o"
 "basemood\my_time.o"
 "basemood\motor_contral.o"
+"basemood\uap_init.o"
 --strict --scatter "BaseMood\BaseMood.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

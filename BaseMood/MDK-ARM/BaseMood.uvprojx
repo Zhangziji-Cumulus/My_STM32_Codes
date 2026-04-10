@@ -705,6 +705,11 @@
               <FileType>1</FileType>
               <FilePath>.\UserAppliction\Motor_Contral.c</FilePath>
             </File>
+            <File>
+              <FileName>UAP_Init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserAppliction\UAP_Init.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
