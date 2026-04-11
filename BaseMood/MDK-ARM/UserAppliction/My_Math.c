@@ -128,14 +128,13 @@ double MyMath_angle_diff_shortest(double target, double current) {
     return diff;
 }
 
-
- double Last_Angle = 0.0;
- double changeAngle = 0.0;
- double add_angle = 0.0;
-
 //知道当前编码器值和减速比求输出轴角度(放到1ms里计算),输出角度范围（-180°，180°）
 double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
 {
+		static double Last_Angle = 0.0;
+		static double changeAngle = 0.0;
+		static double add_angle = 0.0;
+	
 	    // 静态变量：保存上一次角度和累计圈数（仅初始化一次）
     static float last_angle = -1.0f;  // 初始值设为无效值，标记首次调用
     static int total_cycles = 0;      // 累计圈数（正转+，反转-）
@@ -173,4 +172,34 @@ double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
 	
 	return add_angle;
 }
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

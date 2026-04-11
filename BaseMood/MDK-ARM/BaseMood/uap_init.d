@@ -34,6 +34,8 @@ basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\uap_init.o: UserAppliction\Motor_Contral.h
 basemood\uap_init.o: UserAppliction\MY_PID.h
+basemood\uap_init.o: UserAppliction\MY_PID.h
+basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\uap_init.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
@@ -41,4 +43,3 @@ basemood\uap_init.o: ./UserDrive/CAN_PART.h
 basemood\uap_init.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_init.o: ../Core/Inc/can.h
 basemood\uap_init.o: UserAppliction\My_Math.h
-basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h

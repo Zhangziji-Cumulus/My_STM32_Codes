@@ -8,8 +8,8 @@ PID_HandleTypeDef test3;
 void Motor_CInit(void)
 {
 	PID_Init(&test,13.0f,0.2,1.0,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
-	PID_Init(&test2,2.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
-	PID_Init(&test3,2.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
+	PID_Init(&test2,15.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
+	PID_Init(&test3,20.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
 }
 
 void Motor_DJI_Speed_SingleContral(int16_t MotorVel)

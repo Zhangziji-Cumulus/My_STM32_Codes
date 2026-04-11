@@ -1,71 +1,205 @@
+//#ifndef __MY_PID_H
+//#define __MY_PID_H
+
+//#include "math.h"
+
+//// PID控制器结构体，包含所有相关变量
+//typedef struct {
+//    // 核心参数（需根据实际系统调试设定）
+//    float kp;         // 比例系数
+//    float ki;         // 积分系数
+//    float kd;         // 微分系数
+
+//    // 目标与当前状态
+//    float target;     // 目标值（设定值）
+//    float current;    // 当前测量值
+//    float error;      // 当前误差（target - current）
+//    float last_error; // 上一次误差（用于计算微分）
+//    float error_sum;  // 误差积分累计（用于积分项计算）
+
+//    // 输出限制（防止执行器饱和）
+//    float output_min; // 输出最小值
+//    float output_max; // 输出最大值
+
+//    // 积分限幅（防止积分饱和）
+//    float integral_min; // 积分项最小值
+//    float integral_max; // 积分项最大值
+//	
+//	float Output;
+//} PID_HandleTypeDef;
+
+//typedef struct
+//{
+//	PID_HandleTypeDef In_PID;
+//	PID_HandleTypeDef Ex_PID;
+//}PID_DoubleDef;
+
+//typedef struct
+//{
+//	PID_HandleTypeDef In_PID;
+//	PID_HandleTypeDef Min_PID;
+//	PID_HandleTypeDef Ex_PID;
+//}PID_Triple;
+
+////初始化PID控制器
+//void PID_Init(PID_HandleTypeDef *pid, float kp, float ki, float kd,
+//              float output_min, float output_max,
+//              float integral_min, float integral_max);
+////PID基础计算函数
+//float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val);
+////PID双环计算函数，外环目标，内环输出							
+//float PID_Double_Caculate(PID_HandleTypeDef* PID_In,
+//						  PID_HandleTypeDef* PID_Ex,
+//						  float Tartget,
+//						  float Current_In,
+//					      float Current_Ex,
+//						  float MError);
+////PID三环计算函数，外环目标（角度），中环目标（速度），内环输出（电流）												
+//float PID_Triple_Calculate(PID_HandleTypeDef* PID_Angle,
+//                           PID_HandleTypeDef* PID_Speed,
+//                           PID_HandleTypeDef* PID_Current,
+//                           float target_angle,
+//                           float current_angle,
+//                           float current_speed,
+//                           float current_current,
+//                           float max_angle_error);
+//float PID_Calculate_CycleAngle(PID_HandleTypeDef *pid, float current, float target);
+//float PID_Double_CycleAngle(PID_HandleTypeDef* PID_In,PID_HandleTypeDef* PID_Ex,float Tartget,float Current_In,float Current_Ex,float MError);
+//		  
+//#endif
+
+
+
+/**
+  ******************************************************************************
+  * @file    MY_PID.h
+  * @author  [Your Name/Team]
+  * @brief   PID控制器库头文件
+  *          支持：单环PID、360°角度环、双环PID、三环PID（角度-速度-电流）
+  ******************************************************************************
+  */
+
 #ifndef __MY_PID_H
 #define __MY_PID_H
 
-#ifndef __PID_H
-#define __PID_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// PID控制器结构体，包含所有相关变量
+#include <stdint.h>
+#include "MY_PID.h"
+#include "math.h"
+
+/* ============================ 数据类型定义 ============================ */
+/**
+  * @brief PID控制器句柄结构体
+  * @note  使用前需通过 PID_Init() 初始化参数
+  */
 typedef struct {
-    // 核心参数（需根据实际系统调试设定）
-    float kp;         // 比例系数
-    float ki;         // 积分系数
-    float kd;         // 微分系数
+    float kp;               ///< 比例系数
+    float ki;               ///< 积分系数
+    float kd;               ///< 微分系数
 
-    // 目标与当前状态
-    float target;     // 目标值（设定值）
-    float current;    // 当前测量值
-    float error;      // 当前误差（target - current）
-    float last_error; // 上一次误差（用于计算微分）
-    float error_sum;  // 误差积分累计（用于积分项计算）
+    float target;           ///< 目标设定值
+    float current;          ///< 当前反馈值
+    float error;            ///< 当前误差 (target - current)
+    float last_error;       ///< 上一次误差
+    float error_sum;        ///< 误差积分累加值（用于抗饱和限幅）
 
-    // 输出限制（防止执行器饱和）
-    float output_min; // 输出最小值
-    float output_max; // 输出最大值
+    float output_min;       ///< 输出下限
+    float output_max;       ///< 输出上限
+    float integral_min;     ///< 积分累加值下限
+    float integral_max;     ///< 积分累加值上限
 
-    // 积分限幅（防止积分饱和）
-    float integral_min; // 积分项最小值
-    float integral_max; // 积分项最大值
-	
-	float Output;
+    float Output;           ///< 最终计算输出值（已限幅，供外部读取）
 } PID_HandleTypeDef;
 
-typedef struct
-{
-	PID_HandleTypeDef In_PID;
-	PID_HandleTypeDef Ex_PID;
-}PID_DoubleDef;
+/* ============================ 函数声明 ============================ */
 
-typedef struct
-{
-	PID_HandleTypeDef In_PID;
-	PID_HandleTypeDef Min_PID;
-	PID_HandleTypeDef Ex_PID;
-}PID_Triple;
-
-
+/**
+  * @brief  初始化PID控制器参数
+  * @param  pid: PID句柄指针
+  * @param  kp, ki, kd: PID系数
+  * @param  output_min, output_max: 输出限幅范围
+  * @param  integral_min, integral_max: 积分累加值限幅范围
+  */
 void PID_Init(PID_HandleTypeDef *pid, float kp, float ki, float kd,
               float output_min, float output_max,
               float integral_min, float integral_max);
+
+/**
+  * @brief  标准单环PID计算（位置式，带积分抗饱和与输出限幅）
+  * @param  pid: PID句柄指针
+  * @param  current_val: 当前反馈值
+  * @param  target_val: 目标设定值
+  * @retval 计算后的控制输出值
+  */
 float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val);
-float PID_Calculate_Cycle(PID_HandleTypeDef *pid, float current_val, float target_val);
-float PID_Double_Caculate(PID_HandleTypeDef* PID_In,
-						  PID_HandleTypeDef* PID_Ex,
-						  float Tartget,
-						  float Current_In,
-					      float Current_Ex,
-						  float MError);
-float PID_Triple_Calculate(PID_HandleTypeDef* PID_Angle,
-                           PID_HandleTypeDef* PID_Speed,
-                           PID_HandleTypeDef* PID_Current,
-                           float target_angle,
-                           float current_angle,
-                           float current_speed,
-                           float current_current,
-                           float max_angle_error);
+
+/**
+  * @brief  计算360°旋转场景下的最短路径角度误差 [-180, 180)
+  * @param  current: 当前角度 (°)
+  * @param  target: 目标角度 (°)
+  * @retval 标准化后的角度误差
+  */
+float PID_CalcNearestAngleError(float current, float target);
+
+/**
+  * @brief  360°角度环专用PID计算（自动处理角度跳变与最短路径）
+  * @param  pid: PID句柄指针
+  * @param  current: 当前角度 (°)
+  * @param  target: 目标角度 (°)
+  * @retval 计算后的控制输出值
+  */
 float PID_Calculate_CycleAngle(PID_HandleTypeDef *pid, float current, float target);
-float PID_Double_CycleAngle(PID_HandleTypeDef* PID_In,PID_HandleTypeDef* PID_Ex,float Tartget,float Current_In,float Current_Ex,float MError);
 
-#endif
-			  
+/**
+  * @brief  双环PID控制计算（外环 → 内环）
+  * @param  PID_In: 内环PID句柄
+  * @param  PID_Ex: 外环PID句柄
+  * @param  Target: 外环目标值
+  * @param  Current_In: 内环当前反馈值
+  * @param  Current_Ex: 外环当前反馈值
+  * @param  MError: 外环死区阈值，小于此值时内环输出清零
+  * @retval 内环输出值（最终控制量）
+  */
+float PID_Double_Calculate(PID_HandleTypeDef *PID_In, PID_HandleTypeDef *PID_Ex,
+                           float Target, float Current_In, float Current_Ex, float MError);
 
+/**
+  * @brief  360°角度双环PID控制计算（外环角度 → 内环线性量）
+  * @param  PID_In: 内环PID句柄（通常为速度或位置环）
+  * @param  PID_Ex: 外环角度PID句柄
+  * @param  Target: 目标角度 (°)
+  * @param  Current_In: 内环当前反馈值
+  * @param  Current_Ex: 当前角度 (°)
+  * @param  MError: 角度死区阈值
+  * @retval 内环输出值
+  */
+float PID_Double_CycleAngle(PID_HandleTypeDef *PID_In, PID_HandleTypeDef *PID_Ex,
+                            float Target, float Current_In, float Current_Ex, float MError);
+
+/**
+  * @brief  三环PID控制计算（角度环 → 速度环 → 电流环）
+  * @param  PID_Angle: 外环（角度）PID句柄
+  * @param  PID_Speed: 中环（速度）PID句柄
+  * @param  PID_Current: 内环（电流）PID句柄
+  * @param  target_angle: 目标角度
+  * @param  current_angle: 当前角度
+  * @param  current_speed: 当前速度
+  * @param  current_current: 当前电流
+  * @param  max_angle_error: 角度激活阈值
+  * @retval 电流环输出值（最终控制量）
+  */
+float PID_Triple_Calculate(PID_HandleTypeDef *PID_Angle,
+                           PID_HandleTypeDef *PID_Speed,
+                           PID_HandleTypeDef *PID_Current,
+                           float target_angle, float current_angle,
+                           float current_speed, float current_current,
+                           float max_angle_error);
+
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* __MY_PID_H */
