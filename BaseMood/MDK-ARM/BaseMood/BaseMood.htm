@@ -3,7 +3,7 @@
 <title>Static Call Graph - [BaseMood\BaseMood.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image BaseMood\BaseMood.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Apr 11 11:25:32 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Mon Apr 13 12:45:56 2026
 <BR><P>
 <H3>Maximum Stack Usage =        192 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -546,8 +546,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
+<BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 </UL>
 
 <P><STRONG><a name="[73]"></a>__aeabi_errno_addr</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rt_errno_addr_intlibspace.o(.text))
@@ -997,7 +997,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[af]"></a>MY_TIM2_Callback</STRONG> (Thumb, 82 bytes, Stack size 8 bytes, my_time.o(i.MY_TIM2_Callback))
+<P><STRONG><a name="[af]"></a>MY_TIM2_Callback</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, my_time.o(i.MY_TIM2_Callback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = MY_TIM2_Callback &rArr; Motor_DJI_Angle_SingleContral &rArr; MyMath_cal_output_angle &rArr; MyMath_normalize_m180_to_p180 &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
@@ -1012,55 +1012,56 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[b8]"></a>Motor_CInit</STRONG> (Thumb, 140 bytes, Stack size 32 bytes, motor_contral.o(i.Motor_CInit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Motor_CInit
+<P><STRONG><a name="[b8]"></a>Motor_CInit</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, motor_contral.o(i.Motor_CInit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = Motor_CInit &rArr; PID_FF_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Init
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Init
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UAP_Init
 </UL>
 
-<P><STRONG><a name="[b7]"></a>Motor_DJI_Angle_SingleContral</STRONG> (Thumb, 126 bytes, Stack size 16 bytes, motor_contral.o(i.Motor_DJI_Angle_SingleContral))
+<P><STRONG><a name="[b7]"></a>Motor_DJI_Angle_SingleContral</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, motor_contral.o(i.Motor_DJI_Angle_SingleContral))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = Motor_DJI_Angle_SingleContral &rArr; MyMath_cal_output_angle &rArr; MyMath_normalize_m180_to_p180 &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Double_CycleAngle
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Calculate_CycleAngle
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESC_Control_Raw_Single
 </UL>
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_TIM2_Callback
 </UL>
 
-<P><STRONG><a name="[bd]"></a>MyMath_cal_output_angle</STRONG> (Thumb, 238 bytes, Stack size 32 bytes, my_math.o(i.MyMath_cal_output_angle))
+<P><STRONG><a name="[be]"></a>MyMath_cal_output_angle</STRONG> (Thumb, 238 bytes, Stack size 32 bytes, my_math.o(i.MyMath_cal_output_angle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = MyMath_cal_output_angle &rArr; MyMath_normalize_m180_to_p180 &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
 </UL>
 
-<P><STRONG><a name="[bb]"></a>MyMath_normalize_m180_to_p180</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, my_math.o(i.MyMath_normalize_m180_to_p180))
+<P><STRONG><a name="[bc]"></a>MyMath_normalize_m180_to_p180</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, my_math.o(i.MyMath_normalize_m180_to_p180))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = MyMath_normalize_m180_to_p180 &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[4]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.NMI_Handler))
@@ -1070,40 +1071,29 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[c8]"></a>PID_CalcNearestAngleError</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, my_pid.o(i.PID_CalcNearestAngleError))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = PID_CalcNearestAngleError &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
+<P><STRONG><a name="[bf]"></a>PID_FF_Calculate_CycleAngle</STRONG> (Thumb, 212 bytes, Stack size 40 bytes, my_pid.o(i.PID_FF_Calculate_CycleAngle))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = PID_FF_Calculate_CycleAngle &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
-</UL>
-<BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate_CycleAngle
-</UL>
-
-<P><STRONG><a name="[ca]"></a>PID_Calculate</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, my_pid.o(i.PID_Calculate))
-<BR><BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_CalcCore
-</UL>
-<BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Double_CycleAngle
-</UL>
-
-<P><STRONG><a name="[cc]"></a>PID_Calculate_CycleAngle</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, my_pid.o(i.PID_Calculate_CycleAngle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = PID_Calculate_CycleAngle &rArr; PID_CalcNearestAngleError &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_CalcNearestAngleError
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_CalcCore
-</UL>
-<BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Double_CycleAngle
-</UL>
-
-<P><STRONG><a name="[be]"></a>PID_Double_CycleAngle</STRONG> (Thumb, 94 bytes, Stack size 40 bytes, my_pid.o(i.PID_Double_CycleAngle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = PID_Double_CycleAngle &rArr; PID_Calculate_CycleAngle &rArr; PID_CalcNearestAngleError &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
-</UL>
-<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate_CycleAngle
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_CalcCore
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_AngleShortestError
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
 </UL>
 
-<P><STRONG><a name="[b9]"></a>PID_Init</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, my_pid.o(i.PID_Init))
+<P><STRONG><a name="[b9]"></a>PID_FF_Init</STRONG> (Thumb, 38 bytes, Stack size 4 bytes, my_pid.o(i.PID_FF_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = PID_FF_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Reset
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_CInit
+</UL>
+
+<P><STRONG><a name="[cc]"></a>PID_FF_Reset</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, my_pid.o(i.PID_FF_Reset))
+<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Init
+</UL>
+
+<P><STRONG><a name="[ba]"></a>PID_Init</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, my_pid.o(i.PID_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_CInit
 </UL>
 
@@ -1151,7 +1141,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[cf]"></a>UAP_Init</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, uap_init.o(i.UAP_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = UAP_Init &rArr; Motor_CInit
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = UAP_Init &rArr; Motor_CInit &rArr; PID_FF_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_CInit
 </UL>
@@ -1165,38 +1155,37 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[c6]"></a>__hardfp_fmod</STRONG> (Thumb, 254 bytes, Stack size 48 bytes, fmod.o(i.__hardfp_fmod))
+<P><STRONG><a name="[c7]"></a>__hardfp_fmod</STRONG> (Thumb, 254 bytes, Stack size 48 bytes, fmod.o(i.__hardfp_fmod))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_drem
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
 </UL>
 
-<P><STRONG><a name="[c9]"></a>__hardfp_fmodf</STRONG> (Thumb, 176 bytes, Stack size 16 bytes, fmodf.o(i.__hardfp_fmodf))
+<P><STRONG><a name="[ca]"></a>__hardfp_fmodf</STRONG> (Thumb, 176 bytes, Stack size 16 bytes, fmodf.o(i.__hardfp_fmodf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_invalid
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_frem
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 </UL>
-<BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate_CycleAngle
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_CalcNearestAngleError
+<BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Calculate_CycleAngle
 </UL>
 
 <P><STRONG><a name="[d1]"></a>__mathlib_dbl_invalid</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, dunder.o(i.__mathlib_dbl_invalid))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
+<BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 </UL>
 
 <P><STRONG><a name="[d3]"></a>__mathlib_flt_invalid</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, funder.o(i.__mathlib_flt_invalid))
-<BR><BR>[Called By]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
+<BR><BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
 </UL>
 
 <P><STRONG><a name="[6c]"></a>main</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, main.o(i.main))
@@ -1214,11 +1203,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>__aeabi_d2f</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f))
+<P><STRONG><a name="[bd]"></a>__aeabi_d2f</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[d6]"></a>_d2f</STRONG> (Thumb, 98 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f), UNUSED)
@@ -1226,11 +1215,11 @@ Global Symbols
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[c0]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
+<P><STRONG><a name="[c1]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[d9]"></a>_dadd</STRONG> (Thumb, 332 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd), UNUSED)
@@ -1243,11 +1232,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
 </UL>
 
-<P><STRONG><a name="[c5]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
+<P><STRONG><a name="[c6]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_ddiv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[dc]"></a>_ddiv</STRONG> (Thumb, 552 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv), UNUSED)
@@ -1255,23 +1244,23 @@ Global Symbols
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[c3]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
-<BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<P><STRONG><a name="[c4]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
+<BR><BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[116]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
 
-<P><STRONG><a name="[c1]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
-<BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<P><STRONG><a name="[c2]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
+<BR><BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[117]"></a>_dfltu</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu), UNUSED)
 
-<P><STRONG><a name="[c2]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf))
+<P><STRONG><a name="[c3]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_cdcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[dd]"></a>_dcmple</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
@@ -1299,7 +1288,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
+<BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 </UL>
 
 <P><STRONG><a name="[db]"></a>__fpl_dretinf</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dretinf.o(x$fpl$dretinf), UNUSED)
@@ -1308,22 +1297,22 @@ Global Symbols
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd
 </UL>
 
-<P><STRONG><a name="[c4]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf))
+<P><STRONG><a name="[c5]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_cdrcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[df]"></a>_drcmple</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmple_InfNaN
 </UL>
 
-<P><STRONG><a name="[bf]"></a>__aeabi_drsub</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb))
+<P><STRONG><a name="[c0]"></a>__aeabi_drsub</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_drsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[e1]"></a>_drsb</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb), UNUSED)
@@ -1331,10 +1320,10 @@ Global Symbols
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd1
 </UL>
 
-<P><STRONG><a name="[c7]"></a>__aeabi_dsub</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, daddsub_clz.o(x$fpl$dsub))
+<P><STRONG><a name="[c8]"></a>__aeabi_dsub</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, daddsub_clz.o(x$fpl$dsub))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_normalize_m180_to_p180
 </UL>
 
 <P><STRONG><a name="[e3]"></a>_dsub</STRONG> (Thumb, 464 bytes, Stack size 32 bytes, daddsub_clz.o(x$fpl$dsub), UNUSED)
@@ -1342,11 +1331,11 @@ Global Symbols
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd1
 </UL>
 
-<P><STRONG><a name="[ba]"></a>__aeabi_f2d</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d))
+<P><STRONG><a name="[bb]"></a>__aeabi_f2d</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_f2d
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Angle_SingleContral
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_cal_output_angle
 </UL>
 
 <P><STRONG><a name="[e4]"></a>_f2d</STRONG> (Thumb, 86 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d), UNUSED)
@@ -1374,7 +1363,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_fnaninf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
+<BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmodf
 </UL>
 
 <P><STRONG><a name="[d7]"></a>__fpl_fretinf</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fretinf.o(x$fpl$fretinf), UNUSED)
@@ -1409,9 +1398,12 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESC_Control_Raw_Single
 </UL>
 
-<P><STRONG><a name="[cb]"></a>PID_CalcCore</STRONG> (Thumb, 134 bytes, Stack size 0 bytes, my_pid.o(i.PID_CalcCore))
-<BR><BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate_CycleAngle
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<P><STRONG><a name="[c9]"></a>PID_AngleShortestError</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, my_pid.o(i.PID_AngleShortestError))
+<BR><BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Calculate_CycleAngle
+</UL>
+
+<P><STRONG><a name="[cb]"></a>PID_FF_CalcCore</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, my_pid.o(i.PID_FF_CalcCore))
+<BR><BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_Calculate_CycleAngle
 </UL>
 
 <P><STRONG><a name="[e2]"></a>_dadd1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, daddsub_clz.o(x$fpl$dadd), UNUSED)

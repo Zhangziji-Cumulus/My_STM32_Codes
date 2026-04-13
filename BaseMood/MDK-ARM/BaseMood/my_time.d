@@ -42,4 +42,5 @@ basemood\my_time.o: UserAppliction\Motor_Contral.h
 basemood\my_time.o: UserAppliction\MY_PID.h
 basemood\my_time.o: UserAppliction\MY_PID.h
 basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\my_time.o: UserAppliction\My_Math.h

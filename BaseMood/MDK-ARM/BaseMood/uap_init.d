@@ -36,6 +36,7 @@ basemood\uap_init.o: UserAppliction\Motor_Contral.h
 basemood\uap_init.o: UserAppliction\MY_PID.h
 basemood\uap_init.o: UserAppliction\MY_PID.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\uap_init.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

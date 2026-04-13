@@ -89,8 +89,10 @@ extern "C" {
 #include <stdint.h>
 #include "MY_PID.h"
 #include "math.h"
-
+#include <stdlib.h> 
+	
 /* ============================ 数据类型定义 ============================ */
+	
 /**
   * @brief PID控制器句柄结构体
   * @note  使用前需通过 PID_Init() 初始化参数
@@ -197,7 +199,58 @@ float PID_Triple_Calculate(PID_HandleTypeDef *PID_Angle,
                            float target_angle, float current_angle,
                            float current_speed, float current_current,
                            float max_angle_error);
+													 
+													 
+													 													 
+													 
+																									 
+/**
+ * @brief PID+前馈控制句柄
+ */
+typedef struct {
+    // 增益参数
+    float kp;
+    float ki;
+    float kd;
+    float kff;          // 前馈增益系数
 
+    // 状态变量
+    float error;        // 当前误差
+    float error_sum;    // 积分累加值
+    float last_error;   // 上一拍误差
+    float target;       // 目标值
+    float current;      // 当前反馈值
+    float output;       // 最终输出值
+    float last_target;  // 上一拍目标值（用于速度前馈）
+
+    // 限幅参数
+    float output_max;
+    float output_min;
+    float integral_max;
+    float integral_min;
+
+    // 控制标志
+    uint8_t enable;     // 1:启用, 0:禁用(输出保持或清零)
+} PID_FF_HandleTypeDef;
+
+/**
+ * @brief 前馈计算模式枚举
+ */
+typedef enum {
+    PID_FF_MODE_NONE = 0,       ///< 无/外部传入
+    PID_FF_MODE_TARGET,         ///< 目标值前馈：Kff * target (克服恒定负载/重力)
+    PID_FF_MODE_VELOCITY        ///< 速度前馈：Kff * Δtarget (提升动态响应/轨迹跟踪)
+} PID_FF_Mode_t;
+
+/* ================= 公开API ================= */
+void PID_FF_Init(PID_FF_HandleTypeDef *pid, float kp, float ki, float kd, float kff,
+              float out_min, float out_max, float int_min, float int_max);
+void PID_FF_Reset(PID_FF_HandleTypeDef *pid);
+float PID_FF_Calculate(PID_FF_HandleTypeDef *pid, float current_val, float target_val, float ff_value);
+float PID_FF_Calculate_AutoFF(PID_FF_HandleTypeDef *pid, float current_val, float target_val, PID_FF_Mode_t mode);													 
+//单环循环角度控制
+float PID_FF_Calculate_CycleAngle(PID_FF_HandleTypeDef *pid, float current, float target);								 
+													 
 #ifdef __cplusplus
 }
 #endif

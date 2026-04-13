@@ -44,5 +44,6 @@ basemood\main.o: ./UserAppliction/Motor_Contral.h
 basemood\main.o: ./UserAppliction/MY_PID.h
 basemood\main.o: ./UserAppliction/MY_PID.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\main.o: ./UserAppliction/My_Math.h
 basemood\main.o: ./UserAppliction/UAP_Init.h

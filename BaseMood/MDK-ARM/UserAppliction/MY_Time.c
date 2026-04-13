@@ -10,13 +10,14 @@ float test6 = 0.0f;
 
 void MY_TIM2_Callback(void)
 {
-	
+	//Motor_DJI_Speed_SingleContral(test6);
 	Motor_DJI_Angle_SingleContral(test6);
 	
 	static uint16_t timecount = 0;
-	if(timecount > 2000)
+	
+	if(timecount > 50)
 	{
-		test6 -= 66.0f;
+		test6 += 66.0f;
 		if(test6 > 180.0f)
 		{
 			test6 = -180.0f;

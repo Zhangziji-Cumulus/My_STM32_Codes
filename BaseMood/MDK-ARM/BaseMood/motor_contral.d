@@ -35,6 +35,7 @@ basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_
 basemood\motor_contral.o: UserAppliction\MY_PID.h
 basemood\motor_contral.o: UserAppliction\MY_PID.h
 basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\motor_contral.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
