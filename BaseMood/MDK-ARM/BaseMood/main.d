@@ -31,6 +31,17 @@ basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+basemood\main.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 basemood\main.o: ../Core/Inc/can.h
 basemood\main.o: ../Core/Inc/tim.h
 basemood\main.o: ../Core/Inc/gpio.h

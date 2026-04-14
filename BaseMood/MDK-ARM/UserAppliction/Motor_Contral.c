@@ -24,11 +24,10 @@ float Angletest = 0.0;
 void Motor_DJI_Angle_SingleContral(float TargetAngle)
 {
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
-	Angletest = MyMath_cal_output_angle(DJI_MFeedback[0].angle_deg,36);
+	Angletest = MyMath_cal_output_angle(DJI_MFeedback[0].angle_deg,36); //计算减速比后的输出轴角度
 	
 	//int16_t PIDoutput = PID_Double_CycleAngle(&test2,&test3,TargetAngle,DJI_MFeedback[0].speed_rpm,Angletest,1.00f);
 	int16_t PIDoutput = PID_FF_Calculate_CycleAngle(&test_FF,Angletest,TargetAngle);
-	//int16_t PIDoutput = PID_Calculate_CycleAngle(&test2,Angletest,TargetAngle);
 
 	ESC_Control_Raw_Single(&hcan1,1,PIDoutput);
 }
