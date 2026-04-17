@@ -36,6 +36,7 @@ basemood\ist8310driver_middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4
 basemood\ist8310driver_middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\ist8310driver_middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\ist8310driver_middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\ist8310driver_middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\ist8310driver_middleware.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\ist8310driver_middleware.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\ist8310driver_middleware.o: ../Core/Inc/FreeRTOSConfig.h

@@ -34,6 +34,7 @@ basemood\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_e
 basemood\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\stm32f4xx_it.o: ../Core/Inc/stm32f4xx_it.h
 basemood\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\stm32f4xx_it.o: ../Core/Inc/FreeRTOSConfig.h

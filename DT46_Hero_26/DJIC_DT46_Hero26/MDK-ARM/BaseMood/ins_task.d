@@ -36,6 +36,7 @@ basemood\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\ins_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\ins_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\ins_task.o: ../Core/Inc/FreeRTOSConfig.h

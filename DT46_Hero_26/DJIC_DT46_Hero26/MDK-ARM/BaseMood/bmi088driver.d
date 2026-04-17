@@ -36,5 +36,6 @@ basemood\bmi088driver.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_e
 basemood\bmi088driver.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\bmi088driver.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\bmi088driver.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\bmi088driver.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\bmi088driver.o: UAP_IMU\BMI088reg.h
 basemood\bmi088driver.o: UAP_IMU\BMI088Middleware.h

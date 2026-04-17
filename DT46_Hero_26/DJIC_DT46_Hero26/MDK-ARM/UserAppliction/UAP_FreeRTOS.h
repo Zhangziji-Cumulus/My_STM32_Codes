@@ -9,6 +9,7 @@
 #include "DJI_Motor_CAN.h"
 #include "MY_LED.h"
 #include "sound_effects_task.h" 
+#include "HOTRC_HT10A.h"
 
 
 #endif

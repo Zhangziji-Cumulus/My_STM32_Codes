@@ -4,13 +4,14 @@
 
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern osMessageQueueId_t Queue_DJI_MDHandle;
+extern HOTRC_Ctl_t RC_Ctl;
 
 __attribute__((used)) void StartRealTime_TASK(void *argument)
 {
 	 // 定义要发送的结构体变量
    DJI_MotorFeedback_t feedback_data;
 	 static uint8_t timecount = 0;
-	 
+	 buzzer_t *buzzer = get_buzzer_effect_point();
 	
 	 for(;;)
   {			
@@ -29,6 +30,12 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
     if (ret != osOK) {
             // 队列满，发送失败
     }
+		
+		
+		if(RC_Ctl.Switch.S2_L == 1)
+		{
+			buzzer->sound_effect = D_D_D_;
+		}
 		
 		timecount++;
     osDelay(10);

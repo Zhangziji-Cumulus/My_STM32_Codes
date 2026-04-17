@@ -36,6 +36,7 @@ basemood\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_p
 basemood\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\bmi088middleware.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\bmi088middleware.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\bmi088middleware.o: ../Core/Inc/FreeRTOSConfig.h

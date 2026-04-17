@@ -35,6 +35,7 @@ basemood\uap_freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_e
 basemood\uap_freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\uap_freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\uap_freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\uap_freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\uap_freertos.o: ../Core/Inc/FreeRTOSConfig.h
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -56,3 +57,6 @@ basemood\uap_freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
 basemood\uap_freertos.o: ./UAP_IMU/struct_typedef.h
+basemood\uap_freertos.o: ./UserDrive/HOTRC_HT10A.h
+basemood\uap_freertos.o: ../Core/Inc/usart.h
+basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h

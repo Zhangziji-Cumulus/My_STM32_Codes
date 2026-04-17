@@ -37,5 +37,6 @@ basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_
 basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\dji_motor_can.o: UserDrive\CAN_PART.h
 basemood\dji_motor_can.o: UserDrive\DJI_Motor_CAN.h

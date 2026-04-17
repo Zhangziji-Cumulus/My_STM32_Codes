@@ -35,6 +35,7 @@ basemood\my_time.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\my_time.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\my_time.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\my_time.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\my_time.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\my_time.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

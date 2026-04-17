@@ -34,6 +34,7 @@ basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\main.o: ../Core/Inc/FreeRTOSConfig.h
@@ -50,6 +51,7 @@ basemood\main.o: ../Core/Inc/dma.h
 basemood\main.o: ../Core/Inc/i2c.h
 basemood\main.o: ../Core/Inc/spi.h
 basemood\main.o: ../Core/Inc/tim.h
+basemood\main.o: ../Core/Inc/usart.h
 basemood\main.o: ../Core/Inc/gpio.h
 basemood\main.o: ./UAP_IMU/bsp_delay.h
 basemood\main.o: ./UAP_IMU/struct_typedef.h

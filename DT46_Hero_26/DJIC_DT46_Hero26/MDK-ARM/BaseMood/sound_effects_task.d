@@ -35,6 +35,7 @@ basemood\sound_effects_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal
 basemood\sound_effects_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\sound_effects_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\sound_effects_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\sound_effects_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\sound_effects_task.o: UserAppliction\Buzzer\bsp_buzzer_driver.h
 basemood\sound_effects_task.o: ./UAP_IMU/struct_typedef.h
 basemood\sound_effects_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h

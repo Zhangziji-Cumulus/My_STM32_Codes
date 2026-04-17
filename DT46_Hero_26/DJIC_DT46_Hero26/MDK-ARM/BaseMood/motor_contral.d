@@ -35,6 +35,7 @@ basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_
 basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\motor_contral.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\motor_contral.o: UserAppliction\MY_PID.h
 basemood\motor_contral.o: UserAppliction\MY_PID.h
 basemood\motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h

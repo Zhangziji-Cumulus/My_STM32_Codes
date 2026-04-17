@@ -117,8 +117,8 @@ const osMessageQueueAttr_t Queue_DJI_MD_attributes = {
 void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
-//void INS_task(void *argument);
-//void buzzer_effects_task(void *argument);
+
+
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -190,14 +190,13 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
 	
-	static uint16_t timecounttest = 0;
-	buzzer_t *buzzer = get_buzzer_effect_point();
-	buzzer->work = FALSE;
-	buzzer->work = TRUE;
+//	static uint16_t timecounttest = 0;
+//	buzzer_t *buzzer = get_buzzer_effect_point();
+//	buzzer->work = FALSE;
+//	buzzer->work = TRUE;
 	
   for(;;)
   {
-
 	  //buzzer->sound_effect = D_D_D_;
 		
 		//HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_B_Pin,LED_Flash(500,1));
@@ -250,35 +249,7 @@ __weak void Start_DJI_RecieveData(void *argument)
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_INS_task */
-//void INS_task(void *argument)
-//{
-//  /* USER CODE BEGIN INS_task */
-////  /* Infinite loop */
-////  for(;;)
-////  {
-////    osDelay(1);
-////  }
-//  /* USER CODE END INS_task */
-//}
 
-/* USER CODE BEGIN Header_buzzer_effects_task */
-/**
-* @brief Function implementing the buzr thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_buzzer_effects_task */
-//void buzzer_effects_task(void *argument)
-//{
-//  /* USER CODE BEGIN buzzer_effects_task */
-//  /* Infinite loop */
-//  for(;;)
-//  {
-//    osDelay(1);
-//  }
-//  /* USER CODE END buzzer_effects_task */
-//}
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
