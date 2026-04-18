@@ -118,8 +118,6 @@ void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
 
-
-
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -249,6 +247,7 @@ __weak void Start_DJI_RecieveData(void *argument)
 * @param argument: Not used
 * @retval None
 */
+/* USER CODE END Header_INS_task */
 
 
 /* Private application code --------------------------------------------------*/

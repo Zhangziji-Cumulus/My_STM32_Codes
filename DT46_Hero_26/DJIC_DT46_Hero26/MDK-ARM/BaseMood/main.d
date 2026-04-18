@@ -68,3 +68,8 @@ basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\main.o: ./UserAppliction/My_Math.h
 basemood\main.o: ./UserAppliction/UAP_Init.h
+basemood\main.o: ./UserDrive/bsp_can.h
+basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\main.o: ./UserDrive/Dual_board_Transmit.h
+basemood\main.o: ./UserDrive/bsp_can.h
+basemood\main.o: ./UAP_IMU/INS_task.h

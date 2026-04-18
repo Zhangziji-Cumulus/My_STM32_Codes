@@ -48,3 +48,9 @@ basemood\my_time.o: UserAppliction\MY_PID.h
 basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\my_time.o: UserAppliction\My_Math.h
+basemood\my_time.o: ./UserDrive/Dual_board_Transmit.h
+basemood\my_time.o: ./UserDrive/bsp_can.h
+basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\my_time.o: ./UserDrive/Dual_board_Transmit.h
+basemood\my_time.o: ./UAP_IMU/struct_typedef.h
+basemood\my_time.o: ./UAP_IMU/INS_task.h

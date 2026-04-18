@@ -35,6 +35,8 @@
 "basemood\can_part.o"
 "basemood\dji_motor_can.o"
 "basemood\hotrc_ht10a.o"
+"basemood\dual_board_transmit.o"
+"basemood\bsp_can.o"
 "basemood\my_pid.o"
 "basemood\my_math.o"
 "basemood\my_time.o"

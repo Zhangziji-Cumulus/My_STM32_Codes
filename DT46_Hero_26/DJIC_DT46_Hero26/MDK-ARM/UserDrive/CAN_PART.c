@@ -52,29 +52,29 @@ void MY_CAN_Init(CAN_HandleTypeDef *hcan)
     }
 }
 
-/**
-  * @brief  CAN FIFO0 消息挂起回调函数 (接收中断触发)
-  * @param  hcan: CAN 句柄指针
-  * @retval 无
-  */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-    CAN_RxHeaderTypeDef RxHeader;
-    static uint8_t RxData[8];
-    HAL_StatusTypeDef status;
-	
-    /* 1. 获取接收到的消息 */
-    status = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
+///**
+//  * @brief  CAN FIFO0 消息挂起回调函数 (接收中断触发)
+//  * @param  hcan: CAN 句柄指针
+//  * @retval 无
+//  */
+//void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+//{
+//    CAN_RxHeaderTypeDef RxHeader;
+//    static uint8_t RxData[8];
+//    HAL_StatusTypeDef status;
+//	
+//    /* 1. 获取接收到的消息 */
+//    status = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 
-	 if(hcan == &hcan1)
-	 {
-	   if (status == HAL_OK)
-     {
-		 		CAN_DJI_Motor_Feedback(RxHeader.StdId,RxData);    
-     } 
- 	 }
-   
-}
+//	 if(hcan == &hcan1)
+//	 {
+//	   if (status == HAL_OK)
+//     {
+//		 		CAN_DJI_Motor_Feedback(RxHeader.StdId,RxData);    
+//     } 
+// 	 }
+//   
+//}
 
 //** CAN发送函数 **//
 

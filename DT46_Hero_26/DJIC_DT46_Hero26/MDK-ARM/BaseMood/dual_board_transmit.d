@@ -1,10 +1,5 @@
-basemood\dual_board_transmit.o: UserAppliction\Dual_board_Transmit.c
-basemood\dual_board_transmit.o: UserAppliction\Dual_board_Transmit.h
-basemood\dual_board_transmit.o: ../Core/Inc/main.h
-basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-basemood\dual_board_transmit.o: ../Core/Inc/stm32f4xx_hal_conf.h
-basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
-basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+basemood\dual_board_transmit.o: UserDrive\Dual_board_Transmit.c
+basemood\dual_board_transmit.o: UserDrive\Dual_board_Transmit.h
 basemood\dual_board_transmit.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 basemood\dual_board_transmit.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
 basemood\dual_board_transmit.o: ../Drivers/CMSIS/Include/core_cm4.h
@@ -15,6 +10,10 @@ basemood\dual_board_transmit.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 basemood\dual_board_transmit.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 basemood\dual_board_transmit.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+basemood\dual_board_transmit.o: ../Core/Inc/stm32f4xx_hal_conf.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+basemood\dual_board_transmit.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
 basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
@@ -28,7 +27,20 @@ basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ha
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+basemood\dual_board_transmit.o: ../Core/Inc/main.h
+basemood\dual_board_transmit.o: UserDrive\bsp_can.h
+basemood\dual_board_transmit.o: ../Core/Inc/can.h
+basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\dual_board_transmit.o: UserDrive\Dual_board_Transmit.h
+basemood\dual_board_transmit.o: ./UAP_IMU/struct_typedef.h
+basemood\dual_board_transmit.o: ./UAP_IMU/INS_task.h

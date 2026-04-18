@@ -1,6 +1,5 @@
-basemood\bsp_can.o: UAP_IMU\IMU\bsp_can.c
-basemood\bsp_can.o: UAP_IMU\IMU\bsp_can.h
-basemood\bsp_can.o: UAP_IMU\IMU\struct_typedef.h
+basemood\bsp_can.o: UserDrive\bsp_can.c
+basemood\bsp_can.o: UserDrive\bsp_can.h
 basemood\bsp_can.o: ../Core/Inc/main.h
 basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 basemood\bsp_can.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -36,3 +35,12 @@ basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\bsp_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+basemood\bsp_can.o: ../Core/Inc/can.h
+basemood\bsp_can.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\bsp_can.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\bsp_can.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\bsp_can.o: UserDrive\Dual_board_Transmit.h
+basemood\bsp_can.o: UserDrive\bsp_can.h
+basemood\bsp_can.o: ./UAP_IMU/struct_typedef.h
+basemood\bsp_can.o: ./UAP_IMU/INS_task.h

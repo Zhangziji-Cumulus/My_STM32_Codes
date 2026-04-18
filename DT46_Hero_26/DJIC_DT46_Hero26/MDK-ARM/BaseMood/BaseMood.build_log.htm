@@ -22,17 +22,20 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\A_Code_GitHub\My_STM32_Code_Free\My_STM32_Codes\DT46_Hero_26\DJIC_DT46_Hero26\MDK-ARM\BaseMood.uvprojx
-Project File Date:  04/17/2026
+Project File Date:  04/18/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling UAP_FreeRTOS.c...
-UserAppliction\UAP_FreeRTOS.c(12): warning:  #177-D: variable "feedback_data"  was declared but never referenced
-     DJI_MotorFeedback_t feedback_data;
-UserAppliction\UAP_FreeRTOS.c: 1 warning, 0 errors
+compiling Dual_board_Transmit.c...
+compiling bsp_can.c...
+UserDrive\bsp_can.c(182): warning:  #940-D: missing return statement at end of non-void function "CAN_SendFloatArray" 
+  }
+UserDrive\bsp_can.c: 1 warning, 0 errors
+compiling MY_Time.c...
+compiling main.c...
 linking...
-Program Size: Code=47056 RO-data=1084 RW-data=480 ZI-data=23232  
+Program Size: Code=47112 RO-data=1084 RW-data=480 ZI-data=23568  
 FromELF: creating hex file...
 "BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
 
@@ -58,7 +61,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

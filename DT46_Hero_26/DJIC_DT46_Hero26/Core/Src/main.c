@@ -33,6 +33,13 @@
 #include "MY_Time.h"
 #include "UAP_Init.h"
 
+
+
+#include "bsp_can.h"
+
+
+
+
 //#include "CAN_PART.h"
 //#include "DJI_Motor.h"
 
@@ -110,10 +117,11 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	delay_init();
-	MY_CAN_Init(&hcan1);
+	//MY_CAN_Init(&hcan1);
 	HAL_TIM_Base_Start_IT(&htim2);
+	can_filter_init();
 	UAP_Init();
-
+	
   /* USER CODE END 2 */
 
   /* Init scheduler */
