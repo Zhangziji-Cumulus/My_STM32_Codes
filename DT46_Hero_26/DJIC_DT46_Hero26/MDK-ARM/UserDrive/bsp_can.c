@@ -2,22 +2,10 @@
 
 float DualBoard_ReceiveData[64] = {0.0f};
 
-uint8_t  BOARD_ID_Int = BOARD_ID;
+//uint8_t  BOARD_ID_Int = BOARD_ID;
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-
-//motor data read
-#define get_motor_measure(ptr, data)                                       \
-	{                                                                      \
-        (ptr)->last_ecd = (ptr)->ecd;                                      \
-        (ptr)->ecd = (uint16_t)((data)[0] << 8 | (data)[1]);               \
-        (ptr)->speed_rpm = (uint16_t)((data)[2] << 8 | (data)[3]);         \
-        (ptr)->given_current = (uint16_t)((data)[4] << 8 | (data)[5]);     \
-        (ptr)->temperate = (data)[6];                                      \
-		(ptr)->Degree_Angle = EncoderToDegree((ptr)->ecd);                 \
-		(ptr)->Radian_Angle = EncoderToRadian((ptr)->ecd);                 \
-    }																	   
 
 void can_filter_init(void)
 {
@@ -125,7 +113,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	}
 
 }
-/* 带帧序号的CAN发送函数 */
+/* 带帧序号的CAN发送函数（使用扩展帧） */
 bool CAN_SendFloatArray(CAN_HandleTypeDef* hcan, float* data, uint8_t length) { 
 	
 	if(length > 64 ){length = 64;}

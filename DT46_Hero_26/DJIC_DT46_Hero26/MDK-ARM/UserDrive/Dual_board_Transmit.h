@@ -1,15 +1,42 @@
 #ifndef __DUAL_BOARD_TRANSMIT_H
 #define __DUAL_BOARD_TRANSMIT_H
 
-#include "stm32f4xx.h"                  // Device header
+//** ############################################# **//
+//** ================= 引用头文件 ================= **//
+//** ############################################# **//
+
 #include "main.h"
-#include "bsp_can.h"
+#include "can.h"
 #include "struct_typedef.h"
 #include "INS_task.h"
+#include "CAN_PART.h"
 
+//** ########################################## **//
+//** ================= 宏定义 ================= **//
+//** ########################################## **//
 
+#define BOARD_ID 2
+#define TX_BASE_ID ((BOARD_ID == 1) ? 0x100 : 0x200)  /* 发送基ID */
+#define RX_BASE_ID ((BOARD_ID == 1) ? 0x200 : 0x100)  /* 接收基ID */
 
-void Dual_Board_Send(void);
+//** ############################################## **//
+//** ================= 定义结构体 ================= **//
+//** ############################################## **//
+
+typedef struct{
+	struct{
+		
+	} Board_1;
+	
+	struct{
+		
+	} Board_2;
+}Dual_Board_Transmit_t;
+
+//** ################################################ **//
+//** ================= 声明对外函数 ================= **//
+//** ############################################### **//
+void Dual_Board_MainSend(void);
 void Dual_Board_ReceiveCallBack(void);
 
 #endif

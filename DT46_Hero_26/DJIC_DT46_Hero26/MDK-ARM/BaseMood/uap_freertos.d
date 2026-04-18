@@ -51,7 +51,8 @@ basemood\uap_freertos.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 basemood\uap_freertos.o: ./UserDrive/CAN_PART.h
-basemood\uap_freertos.o: ./UserDrive/DJI_Motor_CAN.h
+basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\uap_freertos.o: UserAppliction\MY_LED.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
@@ -59,4 +60,3 @@ basemood\uap_freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
 basemood\uap_freertos.o: ./UAP_IMU/struct_typedef.h
 basemood\uap_freertos.o: ./UserDrive/HOTRC_HT10A.h
 basemood\uap_freertos.o: ../Core/Inc/usart.h
-basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h

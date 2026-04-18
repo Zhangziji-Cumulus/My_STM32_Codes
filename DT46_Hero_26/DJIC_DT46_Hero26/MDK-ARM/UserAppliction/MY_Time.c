@@ -22,7 +22,7 @@ void MY_TIM2_Callback(void)
 	static uint16_t timecount = 0;
 	
 	
-	Dual_Board_Send();
+	Dual_Board_MainSend();
 	
 //	if(timecount > 50)
 //	{

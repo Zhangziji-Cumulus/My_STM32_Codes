@@ -35,11 +35,6 @@
 
 
 
-#include "bsp_can.h"
-
-
-
-
 //#include "CAN_PART.h"
 //#include "DJI_Motor.h"
 
@@ -119,7 +114,7 @@ int main(void)
 	delay_init();
 	//MY_CAN_Init(&hcan1);
 	HAL_TIM_Base_Start_IT(&htim2);
-	can_filter_init();
+	
 	UAP_Init();
 	
   /* USER CODE END 2 */

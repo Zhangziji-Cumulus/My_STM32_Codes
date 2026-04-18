@@ -27,17 +27,29 @@ Project File Date:  04/18/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
+compiling User_CanCallBack.c...
+./UserDrive/Dual_board_Transmit.h(31): error:  #169: expected a declaration
+  	} Board_1;
+./UserDrive/Dual_board_Transmit.h(36): error:  #169: expected a declaration
+  	} Board_2;
+UserCallBack\User_CanCallBack.c(30): warning:  #223-D: function "CAN_DJI_Motor_Feedback" declared implicitly
+  			 CAN_DJI_Motor_Feedback(RxHeader.StdId,RxData);    
+UserCallBack\User_CanCallBack.c(5): warning:  #177-D: function "FloatToBytes"  was declared but never referenced
+  static void FloatToBytes(float value, uint8_t* bytes) {
+UserCallBack\User_CanCallBack.c: 2 warnings, 2 errors
 compiling Dual_board_Transmit.c...
-compiling bsp_can.c...
-UserDrive\bsp_can.c(182): warning:  #940-D: missing return statement at end of non-void function "CAN_SendFloatArray" 
-  }
-UserDrive\bsp_can.c: 1 warning, 0 errors
+UserDrive\Dual_board_Transmit.h(31): error:  #169: expected a declaration
+  	} Board_1;
+UserDrive\Dual_board_Transmit.h(36): error:  #169: expected a declaration
+  	} Board_2;
+UserDrive\Dual_board_Transmit.c: 0 warnings, 2 errors
 compiling MY_Time.c...
-compiling main.c...
-linking...
-Program Size: Code=47112 RO-data=1084 RW-data=480 ZI-data=23568  
-FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
+./UserDrive/Dual_board_Transmit.h(31): error:  #169: expected a declaration
+  	} Board_1;
+./UserDrive/Dual_board_Transmit.h(36): error:  #169: expected a declaration
+  	} Board_2;
+UserAppliction\MY_Time.c: 0 warnings, 2 errors
+"BaseMood\BaseMood.axf" - 6 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -61,7 +73,8 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:03
+Target not created.
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

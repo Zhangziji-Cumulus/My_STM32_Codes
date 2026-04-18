@@ -53,7 +53,8 @@ basemood\freertos.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 basemood\freertos.o: ./UserDrive/CAN_PART.h
-basemood\freertos.o: ./UserDrive/DJI_Motor_CAN.h
+basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
