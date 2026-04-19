@@ -63,7 +63,42 @@ HAL_StatusTypeDef CAN_Filter_AcceptAllID(CAN_HandleTypeDef *hcan, uint8_t filter
     return HAL_OK;
 }
 
+void can_filter_init(void)
+{
+    CAN_FilterTypeDef can_filter_st;
 
+    // 1. 公共配置部分
+    can_filter_st.FilterActivation = ENABLE;
+    can_filter_st.FilterMode = CAN_FILTERMODE_IDMASK;
+    can_filter_st.FilterScale = CAN_FILTERSCALE_32BIT;
+    can_filter_st.FilterIdHigh = 0x0000;
+    can_filter_st.FilterIdLow = 0x0000;
+    can_filter_st.FilterMaskIdHigh = 0x0000;
+    can_filter_st.FilterMaskIdLow = 0x0000;
+    can_filter_st.FilterFIFOAssignment = CAN_RX_FIFO0;
+    
+    // 【关键】设置过滤器分组：过滤器 0-13 归 CAN1，14-27 归 CAN2
+    // 这个参数只需要设置一次，且必须通过 hcan1 设置
+    can_filter_st.SlaveStartFilterBank = 14;
+
+    // 2. 配置 CAN1 的过滤器 (Filter 0)
+    can_filter_st.FilterBank = 0;
+    // 注意：传 &hcan1
+    HAL_CAN_ConfigFilter(&hcan1, &can_filter_st);
+
+    // 3. 配置 CAN2 的过滤器 (Filter 14)
+    can_filter_st.FilterBank = 14;
+    // 【修正重点】这里依然要传 &hcan1！！！
+    HAL_CAN_ConfigFilter(&hcan1, &can_filter_st);
+
+    // 4. 启动 CAN1 和 CAN2 (建议过滤器配置完再统一启动)
+    HAL_CAN_Start(&hcan1);
+    HAL_CAN_Start(&hcan2);
+
+    // 5. 开启中断
+    HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
+}
 
 //** ############################################### **//
 //** ================= CAN发送函数 ================= **//

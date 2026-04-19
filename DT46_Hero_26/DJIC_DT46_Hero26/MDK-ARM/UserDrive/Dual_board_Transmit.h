@@ -42,13 +42,13 @@ typedef struct{
 		float IMU[3];
 		HOTRC_Ctl_t RC_Ctl;
 	} B2;
+	
 }Dual_Board_Transmit_t;
 
 //** ################################################ **//
 //** ================= 声明对外函数 ================= **//
 //** ############################################### **//
 
-void Dual_Board_MainSend(void);
 void Dual_Board_ReceiveCallBack(void);
 
 #endif

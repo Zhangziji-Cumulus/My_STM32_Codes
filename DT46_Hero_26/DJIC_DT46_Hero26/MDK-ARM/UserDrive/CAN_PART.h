@@ -9,6 +9,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
+#include "can.h"
 
 //** ############################################### **//
 //** ================= 对外函数声明 ================= **//
@@ -21,6 +22,8 @@
 
 /* CAN过滤器接收所有ID */
 HAL_StatusTypeDef CAN_Filter_AcceptAllID(CAN_HandleTypeDef *hcan, uint8_t filter_bank);
+
+void can_filter_init(void);
 
 //** ----------------------------------------------- **//
 //** ================= CAN发送函数 ================= **//

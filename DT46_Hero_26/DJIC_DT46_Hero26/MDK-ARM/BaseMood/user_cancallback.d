@@ -37,8 +37,6 @@ basemood\user_cancallback.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_t
 basemood\user_cancallback.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\user_cancallback.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\user_cancallback.o: ../Core/Inc/can.h
-basemood\user_cancallback.o: ./UserDrive/Dual_board_Transmit.h
-basemood\user_cancallback.o: ./UAP_IMU/struct_typedef.h
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\user_cancallback.o: ../Core/Inc/FreeRTOSConfig.h
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -48,8 +46,11 @@ basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+basemood\user_cancallback.o: ./UserDrive/Dual_board_Transmit.h
+basemood\user_cancallback.o: ./UAP_IMU/struct_typedef.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\user_cancallback.o: ./UAP_IMU/INS_task.h
 basemood\user_cancallback.o: ./UserDrive/CAN_PART.h
 basemood\user_cancallback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h

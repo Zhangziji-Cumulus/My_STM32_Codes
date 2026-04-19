@@ -55,10 +55,24 @@ basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdi
 basemood\freertos.o: ./UserDrive/CAN_PART.h
 basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\freertos.o: ../Core/Inc/can.h
 basemood\freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
 basemood\freertos.o: ./UserDrive/Dual_board_Transmit.h
-basemood\freertos.o: ../Core/Inc/can.h
 basemood\freertos.o: ./UserDrive/HOTRC_HT10A.h
 basemood\freertos.o: ../Core/Inc/usart.h
+basemood\freertos.o: ./HERO_Application/HERO_DriveSystem.h
+basemood\freertos.o: ./HERO_Application/HERO_API.h
+basemood\freertos.o: ./HERO_Application/HERO_Chassis.h
+basemood\freertos.o: ./HERO_Application/HERO_API.h
+basemood\freertos.o: ./UserAppliction/MY_PID.h
+basemood\freertos.o: ./UserAppliction/MY_PID.h
+basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\freertos.o: ./HERO_Application/HERO_Gimbal.h
+basemood\freertos.o: ./HERO_Application/HERO_Math.h
+basemood\freertos.o: ./HERO_Application/HERO_Shooting.h
+basemood\freertos.o: ./UserAppliction/Motor_Contral.h
+basemood\freertos.o: ./UserAppliction/My_Math.h
+basemood\freertos.o: ./UserCallBack/User_CanCallBack.h
+basemood\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h

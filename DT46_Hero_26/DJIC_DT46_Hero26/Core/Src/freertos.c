@@ -30,6 +30,10 @@
 #include "DJI_Motor_CAN.h"
 #include "sound_effects_task.h" 
 #include "Dual_board_Transmit.h"
+#include "HERO_DriveSystem.h"
+
+#include "User_CanCallBack.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,7 +74,7 @@ const osThreadAttr_t RealTime_TASK_attributes = {
   .cb_size = sizeof(RealTime_TASKControlBlock),
   .stack_mem = &RealTime_TASKBuffer[0],
   .stack_size = sizeof(RealTime_TASKBuffer),
-  .priority = (osPriority_t) osPriorityHigh,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for DJI_RecieveData */
 osThreadId_t DJI_RecieveDataHandle;
@@ -82,7 +86,7 @@ const osThreadAttr_t DJI_RecieveData_attributes = {
   .cb_size = sizeof(DJI_RecieveDataControlBlock),
   .stack_mem = &DJI_RecieveDataBuffer[0],
   .stack_size = sizeof(DJI_RecieveDataBuffer),
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for imuTask */
 osThreadId_t imuTaskHandle;
@@ -100,7 +104,7 @@ const osThreadAttr_t buzr_attributes = {
 };
 /* Definitions for DualBoard */
 osThreadId_t DualBoardHandle;
-uint32_t Dual_Board_TranBuffer[ 128 ];
+uint32_t Dual_Board_TranBuffer[ 256 ];
 osStaticThreadDef_t Dual_Board_TranControlBlock;
 const osThreadAttr_t DualBoard_attributes = {
   .name = "DualBoard",
@@ -108,6 +112,18 @@ const osThreadAttr_t DualBoard_attributes = {
   .cb_size = sizeof(Dual_Board_TranControlBlock),
   .stack_mem = &Dual_Board_TranBuffer[0],
   .stack_size = sizeof(Dual_Board_TranBuffer),
+  .priority = (osPriority_t) osPriorityRealtime1,
+};
+/* Definitions for HERODriveSystem */
+osThreadId_t HERODriveSystemHandle;
+uint32_t HERO_DriveSysteBuffer[ 128 ];
+osStaticThreadDef_t HERO_DriveSysteControlBlock;
+const osThreadAttr_t HERODriveSystem_attributes = {
+  .name = "HERODriveSystem",
+  .cb_mem = &HERO_DriveSysteControlBlock,
+  .cb_size = sizeof(HERO_DriveSysteControlBlock),
+  .stack_mem = &HERO_DriveSysteBuffer[0],
+  .stack_size = sizeof(HERO_DriveSysteBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for Queue_DJI_MD */
@@ -121,6 +137,17 @@ const osMessageQueueAttr_t Queue_DJI_MD_attributes = {
   .mq_mem = &myQueue01testBuffer,
   .mq_size = sizeof(myQueue01testBuffer)
 };
+/* Definitions for g_CAN2_Queue */
+osMessageQueueId_t g_CAN2_QueueHandle;
+uint8_t g_CAN2_QueueBuffer[ 16 * sizeof( CAN2_RxMsg_t ) ];
+osStaticMessageQDef_t g_CAN2_QueueControlBlock;
+const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
+  .name = "g_CAN2_Queue",
+  .cb_mem = &g_CAN2_QueueControlBlock,
+  .cb_size = sizeof(g_CAN2_QueueControlBlock),
+  .mq_mem = &g_CAN2_QueueBuffer,
+  .mq_size = sizeof(g_CAN2_QueueBuffer)
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -131,6 +158,7 @@ void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
 void Dual_Board_Transmit_Task(void *argument);
+void HERODriveSystemTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -160,6 +188,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of Queue_DJI_MD */
   Queue_DJI_MDHandle = osMessageQueueNew (5, sizeof(uint16_t), &Queue_DJI_MD_attributes);
 
+  /* creation of g_CAN2_Queue */
+  g_CAN2_QueueHandle = osMessageQueueNew (16, sizeof(CAN2_RxMsg_t), &g_CAN2_Queue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -182,6 +213,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of DualBoard */
   DualBoardHandle = osThreadNew(Dual_Board_Transmit_Task, NULL, &DualBoard_attributes);
+
+  /* creation of HERODriveSystem */
+  HERODriveSystemHandle = osThreadNew(HERODriveSystemTask, NULL, &HERODriveSystem_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -292,6 +326,24 @@ __weak void Dual_Board_Transmit_Task(void *argument)
     osDelay(1);
   }
   /* USER CODE END Dual_Board_Transmit_Task */
+}
+
+/* USER CODE BEGIN Header_HERODriveSystemTask */
+/**
+* @brief Function implementing the HERODriveSystem thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_HERODriveSystemTask */
+__weak void HERODriveSystemTask(void *argument)
+{
+  /* USER CODE BEGIN HERODriveSystemTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END HERODriveSystemTask */
 }
 
 /* Private application code --------------------------------------------------*/

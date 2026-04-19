@@ -12,15 +12,15 @@
 * @return:
 **/
 
-float test6 = 0.0f;
-
 void MY_TIM2_Callback(void)
 {
 	//Motor_DJI_Speed_SingleContral(test6);
-	Motor_DJI_Angle_SingleContral(test6);
+	
+	//Motor_DJI_Speed_SingleContral(500);
 	
 	static uint16_t timecount = 0;
 	
+//	Motor_DJI_Speed_SingleContral(500);
 	
 //	Dual_Board_MainSend();
 	

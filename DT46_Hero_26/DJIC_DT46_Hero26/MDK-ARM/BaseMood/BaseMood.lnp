@@ -69,6 +69,11 @@
 "basemood\my_led.o"
 "basemood\uap_freertos.o"
 "basemood\user_cancallback.o"
+"basemood\hero_chassis.o"
+"basemood\hero_gimbal.o"
+"basemood\hero_math.o"
+"basemood\hero_shooting.o"
+"basemood\hero_drivesystem.o"
 --strict --scatter "BaseMood\BaseMood.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

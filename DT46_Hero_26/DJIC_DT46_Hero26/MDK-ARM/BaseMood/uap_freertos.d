@@ -53,6 +53,7 @@ basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\
 basemood\uap_freertos.o: ./UserDrive/CAN_PART.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\uap_freertos.o: ../Core/Inc/can.h
 basemood\uap_freertos.o: UserAppliction\MY_LED.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h

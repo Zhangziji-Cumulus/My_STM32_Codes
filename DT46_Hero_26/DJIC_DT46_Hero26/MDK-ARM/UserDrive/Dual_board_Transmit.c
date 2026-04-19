@@ -10,18 +10,16 @@ float DualBoard_SendDataBuff[64];
 
 static void Dual_Board_MainSend(void);
 
+
+UBaseType_t remain_stack;
 __attribute__((used)) void Dual_Board_Transmit_Task(void *argument)
 {
-  /* USER CODE BEGIN Dual_Board_Transmit_Task */
-  /* Infinite loop */
-	
   for(;;)
   {
 		Dual_Board_MainSend();
-		
+		remain_stack = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
-  /* USER CODE END Dual_Board_Transmit_Task */
 }
 
 void Dual_Board_ReceiveCallBack(void)
@@ -43,10 +41,10 @@ void Dual_Board_ReceiveCallBack(void)
 		DBT_RX.B2.IMU[1] = DualBoard_ReceiveDataBuff[1];
 		DBT_RX.B2.IMU[2] = DualBoard_ReceiveDataBuff[2];
 		
-		DBT_RX.B2.RC_Ctl.Stick.LX = DualBoard_ReceiveDataBuff[3];
-		DBT_RX.B2.RC_Ctl.Stick.LY = DualBoard_ReceiveDataBuff[4];
-		DBT_RX.B2.RC_Ctl.Stick.RX = DualBoard_ReceiveDataBuff[5];
-		DBT_RX.B2.RC_Ctl.Stick.LY = DualBoard_ReceiveDataBuff[6];
+		DBT_RX.B2.RC_Ctl.Stick.LX = DualBoard_ReceiveDataBuff[3] - HOTRC_MID_VEL;
+		DBT_RX.B2.RC_Ctl.Stick.LY = DualBoard_ReceiveDataBuff[4] - HOTRC_MID_VEL;
+		DBT_RX.B2.RC_Ctl.Stick.RX = DualBoard_ReceiveDataBuff[5] - HOTRC_MID_VEL;
+		DBT_RX.B2.RC_Ctl.Stick.RY = DualBoard_ReceiveDataBuff[6] - HOTRC_MID_VEL;
 		
 		DBT_RX.B2.RC_Ctl.Switch.S2_L = DualBoard_ReceiveDataBuff[7];
 		DBT_RX.B2.RC_Ctl.Switch.S2_R = DualBoard_ReceiveDataBuff[8];
@@ -73,7 +71,7 @@ static void Dual_Board_MainSend(void)
 		DualBoard_SendDataBuff[3] = RC_Ctl.Stick.LX;
 		DualBoard_SendDataBuff[4] = RC_Ctl.Stick.LY;
 		DualBoard_SendDataBuff[5] = RC_Ctl.Stick.RX;
-		DualBoard_SendDataBuff[6] = RC_Ctl.Stick.LY;
+		DualBoard_SendDataBuff[6] = RC_Ctl.Stick.RY;
 		
 		DualBoard_SendDataBuff[7]  = RC_Ctl.Switch.S2_L;
 		DualBoard_SendDataBuff[8]  = RC_Ctl.Switch.S2_R;

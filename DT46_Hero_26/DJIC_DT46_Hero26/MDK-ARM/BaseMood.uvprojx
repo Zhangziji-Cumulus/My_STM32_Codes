@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./UAP_IMU;./UAP_IMU/IMU;./UserAppliction/Buzzer;./UserCallBack</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./UAP_IMU;./UAP_IMU/IMU;./UserAppliction/Buzzer;./UserCallBack;./HERO_Application</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1942,6 +1942,41 @@
               <FileName>User_CanCallBack.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\UserCallBack\User_CanCallBack.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>HERO_Application</GroupName>
+          <Files>
+            <File>
+              <FileName>HERO_API.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\HERO_Application\HERO_API.h</FilePath>
+            </File>
+            <File>
+              <FileName>HERO_Chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HERO_Application\HERO_Chassis.c</FilePath>
+            </File>
+            <File>
+              <FileName>HERO_Gimbal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HERO_Application\HERO_Gimbal.c</FilePath>
+            </File>
+            <File>
+              <FileName>HERO_Math.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HERO_Application\HERO_Math.c</FilePath>
+            </File>
+            <File>
+              <FileName>HERO_Shooting.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HERO_Application\HERO_Shooting.c</FilePath>
+            </File>
+            <File>
+              <FileName>HERO_DriveSystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HERO_Application\HERO_DriveSystem.c</FilePath>
             </File>
           </Files>
         </Group>

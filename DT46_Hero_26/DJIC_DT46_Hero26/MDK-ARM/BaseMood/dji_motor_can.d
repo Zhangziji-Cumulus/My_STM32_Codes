@@ -41,3 +41,4 @@ basemood\dji_motor_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart
 basemood\dji_motor_can.o: UserDrive\CAN_PART.h
 basemood\dji_motor_can.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\dji_motor_can.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\dji_motor_can.o: ../Core/Inc/can.h
