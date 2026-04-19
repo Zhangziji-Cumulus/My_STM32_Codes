@@ -38,8 +38,21 @@ basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ha
 basemood\dual_board_transmit.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\dual_board_transmit.o: ../Core/Inc/can.h
 basemood\dual_board_transmit.o: ./UAP_IMU/struct_typedef.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+basemood\dual_board_transmit.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\dual_board_transmit.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 basemood\dual_board_transmit.o: ./UAP_IMU/INS_task.h
 basemood\dual_board_transmit.o: UserDrive\CAN_PART.h
 basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\dual_board_transmit.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\dual_board_transmit.o: UserDrive\HOTRC_HT10A.h
+basemood\dual_board_transmit.o: ../Core/Inc/usart.h

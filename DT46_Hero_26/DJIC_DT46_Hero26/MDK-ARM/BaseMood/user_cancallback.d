@@ -39,8 +39,23 @@ basemood\user_cancallback.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_u
 basemood\user_cancallback.o: ../Core/Inc/can.h
 basemood\user_cancallback.o: ./UserDrive/Dual_board_Transmit.h
 basemood\user_cancallback.o: ./UAP_IMU/struct_typedef.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+basemood\user_cancallback.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\user_cancallback.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 basemood\user_cancallback.o: ./UAP_IMU/INS_task.h
 basemood\user_cancallback.o: ./UserDrive/CAN_PART.h
 basemood\user_cancallback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\user_cancallback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\user_cancallback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\user_cancallback.o: ./UserDrive/HOTRC_HT10A.h
+basemood\user_cancallback.o: ../Core/Inc/usart.h
+basemood\user_cancallback.o: ./UserDrive/DJI_Motor_CAN.h
+basemood\user_cancallback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

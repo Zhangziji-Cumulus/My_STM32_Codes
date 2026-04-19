@@ -1,6 +1,22 @@
 #include "User_CanCallBack.h"
 
-float DualBoard_ReceiveDataBuff[64];
+//** ####################################### **//
+//** ================= ´®¿Ú ================= **//
+//** ####################################### **//
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART3)
+    {
+				HOTRC_CallBack(huart);
+    }
+}
+
+//** ########################################### **//
+//** ================= CAN×ÜÏß ================= **//
+//** ########################################## **//
+
+extern float DualBoard_ReceiveDataBuff[64];
 
 static void FloatToBytes(float value, uint8_t* bytes) {
     uint32_t* intValue = (uint32_t*)&value;
@@ -19,7 +35,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef RxHeader;
 	static uint8_t RxData[8];
-	//HAL_StatusTypeDef status;	
+	
+//HAL_StatusTypeDef status;	
 //	
 //	status = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 	

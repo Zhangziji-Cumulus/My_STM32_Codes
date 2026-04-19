@@ -51,5 +51,6 @@ typedef struct{
 
 
 void Remote_ControlInit(void);
+void HOTRC_CallBack(UART_HandleTypeDef *huart);
 
 #endif

@@ -10,6 +10,18 @@ uint16_t sbus_ch[16];
 uint8_t  sbus_flags;
 volatile uint8_t sbus_new_frame = 0; // 中断标志，主循环读取
 
+
+//** #################################################### **//
+//** ================= 本地静态函数声明 ================= **//
+//** ################################################### **//
+
+static void HORRC_HT10A_GET_Ctl(SbusFrame_t* RC_Raw);
+static bool parse_sbus(const uint8_t* buffer, size_t len, SbusFrame_t* out);
+
+//** ############################################### **//
+//** ================= 对外函数声明 ================= **//
+//** ############################################### **//
+
 void Remote_ControlInit(void)
 {
 	// 启动DMA接收25字节
@@ -19,6 +31,44 @@ void Remote_ControlInit(void)
 	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
 }
 
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+//{
+//    if (huart->Instance == USART3)
+//    {
+//			 // 1. DMA 完成时已自动停止，直接解析
+//			 // 注意：长度必须传 25！
+//			 if (parse_sbus(sbus_rx_buf, 25, &RC_Raw))
+//			 {
+//					// 2. 直接使用结构体内的 bool 标志位，避免硬编码掩码错误
+//					if (!RC_Raw.frame_lost && !RC_Raw.failsafe)
+//					{
+//							sbus_new_frame = 1; // 通知主循环
+//					}
+//			 }
+//			 // 3. 重启 DMA 准备接收下一帧
+//			 HAL_UART_Receive_DMA(huart, sbus_rx_buf, 25);
+//    }
+//}
+
+void HOTRC_CallBack(UART_HandleTypeDef *huart)
+{
+	   // 1. DMA 完成时已自动停止，直接解析
+     // 注意：长度必须传 25！
+     if (parse_sbus(sbus_rx_buf, 25, &RC_Raw))
+     {
+				// 2. 直接使用结构体内的 bool 标志位，避免硬编码掩码错误
+				if (!RC_Raw.frame_lost && !RC_Raw.failsafe)
+				{
+						sbus_new_frame = 1; // 通知主循环
+				}
+     }
+     // 3. 重启 DMA 准备接收下一帧
+     HAL_UART_Receive_DMA(huart, sbus_rx_buf, 25);
+}
+
+//** ############################################### **//
+//** ================= 本地静态函数 ================= **//
+//** ############################################### **//
 static uint8_t Switch_Set(uint16_t ChValue)
 {
 		if(ChValue > (192 - 20) && ChValue < (192 + 20))
@@ -110,23 +160,7 @@ static bool parse_sbus(const uint8_t* buffer, size_t len, SbusFrame_t* out) {
     return true;
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART3)
-    {
-        // 1. DMA 完成时已自动停止，直接解析
-        // 注意：长度必须传 25！
-        if (parse_sbus(sbus_rx_buf, 25, &RC_Raw))
-        {
-            // 2. 直接使用结构体内的 bool 标志位，避免硬编码掩码错误
-            if (!RC_Raw.frame_lost && !RC_Raw.failsafe)
-            {
-                sbus_new_frame = 1; // 通知主循环
-            }
-        }
-        // 3. 重启 DMA 准备接收下一帧
-        HAL_UART_Receive_DMA(huart, sbus_rx_buf, 25);
-    }
-}
+
+
 
 

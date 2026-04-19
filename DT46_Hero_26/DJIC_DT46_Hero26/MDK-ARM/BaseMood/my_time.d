@@ -50,4 +50,17 @@ basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdli
 basemood\my_time.o: UserAppliction\My_Math.h
 basemood\my_time.o: ./UserDrive/Dual_board_Transmit.h
 basemood\my_time.o: ./UAP_IMU/struct_typedef.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+basemood\my_time.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\my_time.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 basemood\my_time.o: ./UAP_IMU/INS_task.h
+basemood\my_time.o: ./UserDrive/HOTRC_HT10A.h
+basemood\my_time.o: ../Core/Inc/usart.h

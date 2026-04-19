@@ -103,7 +103,7 @@ void buzzer_effects_task(void const *argument)
 	//关闭蜂鸣器
 	buzzer_drv_off();
 	//鸣响一次“开机启动”音效，若不需要在此使用，请将本句注释
-	buzzer_control.sound_effect = SYSTEM_START_BEEP;
+	//buzzer_control.sound_effect = SYSTEM_START_BEEP;
 
 	for (;;)
 	{

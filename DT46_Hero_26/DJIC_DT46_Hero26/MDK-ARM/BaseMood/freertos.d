@@ -58,3 +58,7 @@ basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stri
 basemood\freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
+basemood\freertos.o: ./UserDrive/Dual_board_Transmit.h
+basemood\freertos.o: ../Core/Inc/can.h
+basemood\freertos.o: ./UserDrive/HOTRC_HT10A.h
+basemood\freertos.o: ../Core/Inc/usart.h

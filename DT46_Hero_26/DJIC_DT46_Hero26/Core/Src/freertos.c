@@ -29,6 +29,7 @@
 #include "MY_LED.h"
 #include "DJI_Motor_CAN.h"
 #include "sound_effects_task.h" 
+#include "Dual_board_Transmit.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,7 +89,7 @@ osThreadId_t imuTaskHandle;
 const osThreadAttr_t imuTask_attributes = {
   .name = "imuTask",
   .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityRealtime1,
 };
 /* Definitions for buzr */
 osThreadId_t buzrHandle;
@@ -96,6 +97,18 @@ const osThreadAttr_t buzr_attributes = {
   .name = "buzr",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for DualBoard */
+osThreadId_t DualBoardHandle;
+uint32_t Dual_Board_TranBuffer[ 128 ];
+osStaticThreadDef_t Dual_Board_TranControlBlock;
+const osThreadAttr_t DualBoard_attributes = {
+  .name = "DualBoard",
+  .cb_mem = &Dual_Board_TranControlBlock,
+  .cb_size = sizeof(Dual_Board_TranControlBlock),
+  .stack_mem = &Dual_Board_TranBuffer[0],
+  .stack_size = sizeof(Dual_Board_TranBuffer),
+  .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for Queue_DJI_MD */
 osMessageQueueId_t Queue_DJI_MDHandle;
@@ -117,6 +130,7 @@ const osMessageQueueAttr_t Queue_DJI_MD_attributes = {
 void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
+void Dual_Board_Transmit_Task(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -165,6 +179,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of buzr */
   buzrHandle = osThreadNew(buzzer_effects_task, NULL, &buzr_attributes);
+
+  /* creation of DualBoard */
+  DualBoardHandle = osThreadNew(Dual_Board_Transmit_Task, NULL, &DualBoard_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -249,6 +266,33 @@ __weak void Start_DJI_RecieveData(void *argument)
 */
 /* USER CODE END Header_INS_task */
 
+
+/* USER CODE BEGIN Header_buzzer_effects_task */
+/**
+* @brief Function implementing the buzr thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_buzzer_effects_task */
+
+
+/* USER CODE BEGIN Header_Dual_Board_Transmit_Task */
+/**
+* @brief Function implementing the Dual_Board_Tran thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Dual_Board_Transmit_Task */
+__weak void Dual_Board_Transmit_Task(void *argument)
+{
+  /* USER CODE BEGIN Dual_Board_Transmit_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Dual_Board_Transmit_Task */
+}
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */

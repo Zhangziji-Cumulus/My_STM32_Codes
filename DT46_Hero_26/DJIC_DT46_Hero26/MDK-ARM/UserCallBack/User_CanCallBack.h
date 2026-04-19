@@ -5,7 +5,8 @@
 #include "can.h"
 
 
-#include "Dual_board_Transmit.h"//////
+#include "Dual_board_Transmit.h"
+#include "DJI_Motor_CAN.h"
 
 
 #endif
