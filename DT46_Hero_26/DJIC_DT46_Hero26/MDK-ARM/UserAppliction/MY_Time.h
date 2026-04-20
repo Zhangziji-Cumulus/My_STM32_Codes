@@ -5,7 +5,8 @@
 
 #include "DJI_Motor_CAN.h"
 #include "can.h"
-#include "Motor_Contral.h"
+#include "Dual_board_Transmit.h"
+#include "MY_LED.h"
 
 void MY_TIM2_Callback(void);
 

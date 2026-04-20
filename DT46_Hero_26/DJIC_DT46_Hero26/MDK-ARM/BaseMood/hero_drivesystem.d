@@ -57,7 +57,7 @@ basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\incl
 basemood\hero_drivesystem.o: HERO_Application\HERO_Gimbal.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Math.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Shooting.h
-basemood\hero_drivesystem.o: ./UserAppliction/Motor_Contral.h
+basemood\hero_drivesystem.o: ./UserAppliction/DJI_Motor_Contral.h
 basemood\hero_drivesystem.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

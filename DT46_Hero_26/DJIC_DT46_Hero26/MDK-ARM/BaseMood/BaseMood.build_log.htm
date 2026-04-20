@@ -22,16 +22,28 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\A_Code_GitHub\My_STM32_Code_Free\My_STM32_Codes\DT46_Hero_26\DJIC_DT46_Hero26\MDK-ARM\BaseMood.uvprojx
-Project File Date:  04/19/2026
+Project File Date:  04/20/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling Motor_Contral.c...
+compiling HERO_Gimbal.c...
+compiling HERO_DriveSystem.c...
+HERO_Application\HERO_DriveSystem.c(73): warning:  #1-D: last line of file ends without a newline
+  }
+HERO_Application\HERO_DriveSystem.c(18): warning:  #550-D: variable "remain_HEROSystemTask"  was set but never used
+  static UBaseType_t remain_HEROSystemTask;
+HERO_Application\HERO_DriveSystem.c(30): warning:  #550-D: variable "remain_HEROChassisTask"  was set but never used
+  static UBaseType_t remain_HEROChassisTask;
+HERO_Application\HERO_DriveSystem.c(43): warning:  #550-D: variable "remain_HEROGimbalTask"  was set but never used
+  static UBaseType_t remain_HEROGimbalTask;
+HERO_Application\HERO_DriveSystem.c(54): warning:  #550-D: variable "remain_HEROShootingTask"  was set but never used
+  static UBaseType_t remain_HEROShootingTask;
+HERO_Application\HERO_DriveSystem.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=45400 RO-data=1224 RW-data=456 ZI-data=25648  
+Program Size: Code=45856 RO-data=1364 RW-data=484 ZI-data=27300  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 0 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 

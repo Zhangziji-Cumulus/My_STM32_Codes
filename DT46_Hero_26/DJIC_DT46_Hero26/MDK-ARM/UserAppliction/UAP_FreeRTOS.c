@@ -1,11 +1,11 @@
 #include "UAP_FreeRTOS.h"
 
 //蜂鸣器
-
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern osMessageQueueId_t Queue_DJI_MDHandle;
 extern HOTRC_Ctl_t RC_Ctl;
 
+static UBaseType_t remain_StartRealTime_TASK;
 __attribute__((used)) void StartRealTime_TASK(void *argument)
 {
 	 // 定义要发送的结构体变量
@@ -18,11 +18,10 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 			buzzer->sound_effect = D_D_D_;
 		}
 		
+		remain_StartRealTime_TASK = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
 }
-DJI_MotorFeedback_t recv_data_buff;
-DJI_MotorFeedback_t recv_data[8];
 
 __attribute__((used)) void Start_DJI_RecieveData(void *argument)
 {

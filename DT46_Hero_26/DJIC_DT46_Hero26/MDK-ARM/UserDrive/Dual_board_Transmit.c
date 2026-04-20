@@ -11,13 +11,15 @@ float DualBoard_SendDataBuff[64];
 static void Dual_Board_MainSend(void);
 
 
-UBaseType_t remain_stack;
+static UBaseType_t remain_DBTT;
 __attribute__((used)) void Dual_Board_Transmit_Task(void *argument)
 {
   for(;;)
   {
+		
 		Dual_Board_MainSend();
-		remain_stack = uxTaskGetStackHighWaterMark(NULL);
+		
+		remain_DBTT = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
 }

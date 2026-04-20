@@ -1914,11 +1914,6 @@
               <FilePath>.\UserAppliction\MY_Time.c</FilePath>
             </File>
             <File>
-              <FileName>Motor_Contral.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UserAppliction\Motor_Contral.c</FilePath>
-            </File>
-            <File>
               <FileName>UAP_Init.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\UserAppliction\UAP_Init.c</FilePath>
@@ -1932,6 +1927,11 @@
               <FileName>UAP_FreeRTOS.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\UserAppliction\UAP_FreeRTOS.c</FilePath>
+            </File>
+            <File>
+              <FileName>DJI_Motor_Contral.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserAppliction\DJI_Motor_Contral.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -6,7 +6,7 @@
 #include "cmsis_os.h"
 
 #include "HERO_API.h"
-#include "Motor_Contral.h"
+#include "DJI_Motor_Contral.h"
 #include "HOTRC_HT10A.h"
 #include "Dual_board_Transmit.h"
 

@@ -4,10 +4,6 @@ extern HOTRC_Ctl_t RC_Ctl;
 extern Dual_Board_Transmit_t DBT_RX;
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 
-float test;
-
-Chassis_PID_t Chassis_PID;
-
 //定义地盘数据
 Mecanum_Data_t Chassis_MD;
 Wheels_Data_t wheels;
@@ -19,23 +15,52 @@ void HERO_DriveSystem_Init(void)
 
 }
 
-__attribute__((used)) void HERODriveSystemTask(void *argument)
+static UBaseType_t remain_HEROSystemTask;
+__attribute__((used)) void HEROSystemTask(void *argument)
 {
-
   for(;;)
   {
 		get_data();
-		Chassis_Mecanum_Calc(&Chassis_MD);
 		
-		Motor_DJI_Speed_SingleContral(Chassis_MD.FL.T_Speed);
-		
-		HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,LED_Flash(100,1));
-		
+		remain_HEROSystemTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
-
 }
 
+static UBaseType_t remain_HEROChassisTask;
+__attribute__((used)) void HEROChassisTask(void *argument)
+{
+  for(;;)
+  {
+		Chassis_Mecanum_Calc(&Chassis_MD);	
+		Motor_DJI_SpeedCtl_5_8(&hcan1,1.0f,Chassis_MD.FL.T_Speed,Chassis_MD.FL.T_Speed,Chassis_MD.FL.T_Speed,Chassis_MD.FL.T_Speed);
+		
+		remain_HEROChassisTask = uxTaskGetStackHighWaterMark(NULL);
+    osDelay(1);
+  }
+}
+
+static UBaseType_t remain_HEROGimbalTask;
+__attribute__((used)) void HEROGimbalTask(void *argument)
+{
+  for(;;)
+  {
+
+		remain_HEROGimbalTask = uxTaskGetStackHighWaterMark(NULL);
+    osDelay(1);
+  }
+}
+
+static UBaseType_t remain_HEROShootingTask;
+__attribute__((used)) void HEROShootingTask(void *argument)
+{
+  for(;;)
+  {
+		
+		remain_HEROShootingTask = uxTaskGetStackHighWaterMark(NULL);
+    osDelay(1);
+  }
+}
 void get_data(void)
 { 
 	Chassis_MD.Target.Xv = DBT_RX.B2.RC_Ctl.Stick.LX;

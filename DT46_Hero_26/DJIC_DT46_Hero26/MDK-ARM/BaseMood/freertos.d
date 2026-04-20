@@ -72,7 +72,7 @@ basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdl
 basemood\freertos.o: ./HERO_Application/HERO_Gimbal.h
 basemood\freertos.o: ./HERO_Application/HERO_Math.h
 basemood\freertos.o: ./HERO_Application/HERO_Shooting.h
-basemood\freertos.o: ./UserAppliction/Motor_Contral.h
+basemood\freertos.o: ./UserAppliction/DJI_Motor_Contral.h
 basemood\freertos.o: ./UserAppliction/My_Math.h
 basemood\freertos.o: ./UserCallBack/User_CanCallBack.h
 basemood\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h

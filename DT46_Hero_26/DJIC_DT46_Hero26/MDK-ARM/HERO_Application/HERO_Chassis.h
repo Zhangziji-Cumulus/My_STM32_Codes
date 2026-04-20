@@ -52,12 +52,7 @@ typedef struct{
 	
 }Chassis_PID_t;
 
-
-//获取四个麦轮的数据
-void Chassis_Get_Data(Mecanum_Data_t* pMD,Wheels_Data_t* wheels);
 //每个麦轮速度解算
 void Chassis_Mecanum_Calc(Mecanum_Data_t* pMD);
-//PID闭环返回输出值
-void Chassis_PID_Caculate(Mecanum_Data_t* pMD ,Chassis_PID_t* PID,float MError);
 
 #endif

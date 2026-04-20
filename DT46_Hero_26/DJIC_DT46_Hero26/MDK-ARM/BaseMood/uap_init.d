@@ -36,7 +36,7 @@ basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\uap_init.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-basemood\uap_init.o: UserAppliction\Motor_Contral.h
+basemood\uap_init.o: UserAppliction\DJI_Motor_Contral.h
 basemood\uap_init.o: UserAppliction\MY_PID.h
 basemood\uap_init.o: UserAppliction\MY_PID.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h

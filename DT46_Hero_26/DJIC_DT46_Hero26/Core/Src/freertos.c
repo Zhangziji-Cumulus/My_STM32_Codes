@@ -114,17 +114,53 @@ const osThreadAttr_t DualBoard_attributes = {
   .stack_size = sizeof(Dual_Board_TranBuffer),
   .priority = (osPriority_t) osPriorityRealtime1,
 };
-/* Definitions for HERODriveSystem */
-osThreadId_t HERODriveSystemHandle;
+/* Definitions for HEROChassis */
+osThreadId_t HEROChassisHandle;
 uint32_t HERO_DriveSysteBuffer[ 128 ];
 osStaticThreadDef_t HERO_DriveSysteControlBlock;
-const osThreadAttr_t HERODriveSystem_attributes = {
-  .name = "HERODriveSystem",
+const osThreadAttr_t HEROChassis_attributes = {
+  .name = "HEROChassis",
   .cb_mem = &HERO_DriveSysteControlBlock,
   .cb_size = sizeof(HERO_DriveSysteControlBlock),
   .stack_mem = &HERO_DriveSysteBuffer[0],
   .stack_size = sizeof(HERO_DriveSysteBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
+};
+/* Definitions for HEROGimbal */
+osThreadId_t HEROGimbalHandle;
+uint32_t HEROGimbalBuffer[ 128 ];
+osStaticThreadDef_t HEROGimbalControlBlock;
+const osThreadAttr_t HEROGimbal_attributes = {
+  .name = "HEROGimbal",
+  .cb_mem = &HEROGimbalControlBlock,
+  .cb_size = sizeof(HEROGimbalControlBlock),
+  .stack_mem = &HEROGimbalBuffer[0],
+  .stack_size = sizeof(HEROGimbalBuffer),
+  .priority = (osPriority_t) osPriorityRealtime,
+};
+/* Definitions for HEROShooting */
+osThreadId_t HEROShootingHandle;
+uint32_t HEROShootingBuffer[ 128 ];
+osStaticThreadDef_t HEROShootingControlBlock;
+const osThreadAttr_t HEROShooting_attributes = {
+  .name = "HEROShooting",
+  .cb_mem = &HEROShootingControlBlock,
+  .cb_size = sizeof(HEROShootingControlBlock),
+  .stack_mem = &HEROShootingBuffer[0],
+  .stack_size = sizeof(HEROShootingBuffer),
+  .priority = (osPriority_t) osPriorityRealtime,
+};
+/* Definitions for HEROSystem */
+osThreadId_t HEROSystemHandle;
+uint32_t HEROSystemBuffer[ 128 ];
+osStaticThreadDef_t HEROSystemControlBlock;
+const osThreadAttr_t HEROSystem_attributes = {
+  .name = "HEROSystem",
+  .cb_mem = &HEROSystemControlBlock,
+  .cb_size = sizeof(HEROSystemControlBlock),
+  .stack_mem = &HEROSystemBuffer[0],
+  .stack_size = sizeof(HEROSystemBuffer),
+  .priority = (osPriority_t) osPriorityRealtime1,
 };
 /* Definitions for Queue_DJI_MD */
 osMessageQueueId_t Queue_DJI_MDHandle;
@@ -139,7 +175,7 @@ const osMessageQueueAttr_t Queue_DJI_MD_attributes = {
 };
 /* Definitions for g_CAN2_Queue */
 osMessageQueueId_t g_CAN2_QueueHandle;
-uint8_t g_CAN2_QueueBuffer[ 16 * sizeof( CAN2_RxMsg_t ) ];
+uint8_t g_CAN2_QueueBuffer[ 16 * sizeof( uint16_t ) ];
 osStaticMessageQDef_t g_CAN2_QueueControlBlock;
 const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
   .name = "g_CAN2_Queue",
@@ -158,7 +194,10 @@ void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
 void Dual_Board_Transmit_Task(void *argument);
-void HERODriveSystemTask(void *argument);
+void HEROChassisTask(void *argument);
+void HEROGimbalTask(void *argument);
+void HEROShootingTask(void *argument);
+void HEROSystemTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -189,7 +228,7 @@ void MX_FREERTOS_Init(void) {
   Queue_DJI_MDHandle = osMessageQueueNew (5, sizeof(uint16_t), &Queue_DJI_MD_attributes);
 
   /* creation of g_CAN2_Queue */
-  g_CAN2_QueueHandle = osMessageQueueNew (16, sizeof(CAN2_RxMsg_t), &g_CAN2_Queue_attributes);
+  g_CAN2_QueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &g_CAN2_Queue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -214,8 +253,17 @@ void MX_FREERTOS_Init(void) {
   /* creation of DualBoard */
   DualBoardHandle = osThreadNew(Dual_Board_Transmit_Task, NULL, &DualBoard_attributes);
 
-  /* creation of HERODriveSystem */
-  HERODriveSystemHandle = osThreadNew(HERODriveSystemTask, NULL, &HERODriveSystem_attributes);
+  /* creation of HEROChassis */
+  HEROChassisHandle = osThreadNew(HEROChassisTask, NULL, &HEROChassis_attributes);
+
+  /* creation of HEROGimbal */
+  HEROGimbalHandle = osThreadNew(HEROGimbalTask, NULL, &HEROGimbal_attributes);
+
+  /* creation of HEROShooting */
+  HEROShootingHandle = osThreadNew(HEROShootingTask, NULL, &HEROShooting_attributes);
+
+  /* creation of HEROSystem */
+  HEROSystemHandle = osThreadNew(HEROSystemTask, NULL, &HEROSystem_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -328,22 +376,76 @@ __weak void Dual_Board_Transmit_Task(void *argument)
   /* USER CODE END Dual_Board_Transmit_Task */
 }
 
-/* USER CODE BEGIN Header_HERODriveSystemTask */
+/* USER CODE BEGIN Header_HEROChassisTask */
 /**
-* @brief Function implementing the HERODriveSystem thread.
+* @brief Function implementing the HEROChassis thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_HERODriveSystemTask */
-__weak void HERODriveSystemTask(void *argument)
+/* USER CODE END Header_HEROChassisTask */
+__weak void HEROChassisTask(void *argument)
 {
-  /* USER CODE BEGIN HERODriveSystemTask */
+  /* USER CODE BEGIN HEROChassisTask */
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END HERODriveSystemTask */
+  /* USER CODE END HEROChassisTask */
+}
+
+/* USER CODE BEGIN Header_HEROGimbalTask */
+/**
+* @brief Function implementing the HEROGimbal thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_HEROGimbalTask */
+__weak void HEROGimbalTask(void *argument)
+{
+  /* USER CODE BEGIN HEROGimbalTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END HEROGimbalTask */
+}
+
+/* USER CODE BEGIN Header_HEROShootingTask */
+/**
+* @brief Function implementing the HEROShooting thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_HEROShootingTask */
+__weak void HEROShootingTask(void *argument)
+{
+  /* USER CODE BEGIN HEROShootingTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END HEROShootingTask */
+}
+
+/* USER CODE BEGIN Header_HEROSystemTask */
+/**
+* @brief Function implementing the HEROSystem thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_HEROSystemTask */
+__weak void HEROSystemTask(void *argument)
+{
+  /* USER CODE BEGIN HEROSystemTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END HEROSystemTask */
 }
 
 /* Private application code --------------------------------------------------*/
