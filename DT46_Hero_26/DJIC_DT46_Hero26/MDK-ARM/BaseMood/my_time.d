@@ -60,3 +60,8 @@ basemood\my_time.o: ./UAP_IMU/INS_task.h
 basemood\my_time.o: ./UserDrive/HOTRC_HT10A.h
 basemood\my_time.o: ../Core/Inc/usart.h
 basemood\my_time.o: UserAppliction\MY_LED.h
+basemood\my_time.o: UserAppliction\DJI_Motor_Contral.h
+basemood\my_time.o: UserAppliction\MY_PID.h
+basemood\my_time.o: UserAppliction\MY_PID.h
+basemood\my_time.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\my_time.o: UserAppliction\My_Math.h

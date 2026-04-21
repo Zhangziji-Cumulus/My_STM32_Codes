@@ -166,37 +166,42 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>RC_Ctl</ItemText>
+          <ItemText>RC_Ctl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Chassis_MD,0x10</ItemText>
+          <ItemText>Chassis_MD,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_HEROGimbalTask,0x0A</ItemText>
+          <ItemText>sbus_rx_buf,0x10</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_HEROShootingTask,0x0A</ItemText>
+          <ItemText>GD</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_HEROSystemTask,0x0A</ItemText>
+          <ItemText>test2</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_HEROChassisTask,0x0A</ItemText>
+          <ItemText>test3</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_DBTT,0x0A</ItemText>
+          <ItemText>test_FF</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tesppt</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -960,7 +965,7 @@
 
   <Group>
     <GroupName>UAP_Buzzer</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

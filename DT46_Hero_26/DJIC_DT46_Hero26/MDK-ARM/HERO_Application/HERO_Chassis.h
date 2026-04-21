@@ -2,7 +2,6 @@
 #define __HERO_CHASSIS_H
 
 #include "HERO_API.h"
-#include "MY_PID.h"
 
 typedef struct{
 
@@ -44,13 +43,6 @@ typedef struct{
 	Wheel_Data_t BR;
 	
 }Mecanum_Data_t;
-
-typedef struct{
-	
-	PID_HandleTypeDef* Ex_Speed;
-	PID_HandleTypeDef* In_Current;
-	
-}Chassis_PID_t;
 
 //每个麦轮速度解算
 void Chassis_Mecanum_Calc(Mecanum_Data_t* pMD);

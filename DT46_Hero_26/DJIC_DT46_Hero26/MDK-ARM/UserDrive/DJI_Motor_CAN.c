@@ -277,4 +277,3 @@ void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]) {
     }
     CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
 }
-

@@ -24,6 +24,7 @@ static bool parse_sbus(const uint8_t* buffer, size_t len, SbusFrame_t* out);
 
 void Remote_ControlInit(void)
 {
+	__HAL_UART_CLEAR_FLAG(&huart3, UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE | UART_FLAG_IDLE);
 	// 启动DMA接收25字节
 	HAL_UART_Receive_DMA(&huart3, sbus_rx_buf, 25);
 
@@ -50,21 +51,46 @@ void Remote_ControlInit(void)
 //    }
 //}
 
+/* 缓冲区扩大到 50 字节，保证错位时也能覆盖完整帧 */
+uint8_t sbus_dma_buf[50] __attribute__((aligned(4)));
+
 void HOTRC_CallBack(UART_HandleTypeDef *huart)
 {
-	   // 1. DMA 完成时已自动停止，直接解析
-     // 注意：长度必须传 25！
-     if (parse_sbus(sbus_rx_buf, 25, &RC_Raw))
-     {
-				// 2. 直接使用结构体内的 bool 标志位，避免硬编码掩码错误
-				if (!RC_Raw.frame_lost && !RC_Raw.failsafe)
+		bool frame_found = false;
+		
+		// 滑动窗口寻帧头（最多搜到第 25 字节，保证 i+24 不越界）
+		for (int i = 0; i <= 25; i++)
+		{
+				if (sbus_dma_buf[i] == 0x0F)
 				{
-						sbus_new_frame = 1; // 通知主循环
+						// 强校验帧尾
+						if (sbus_dma_buf[i + 24] == 0x00)
+						{
+								// 解析找到的完整帧
+								if (parse_sbus(&sbus_dma_buf[i], 25, &RC_Raw))
+								{
+										if (!RC_Raw.frame_lost && !RC_Raw.failsafe)
+												sbus_new_frame = 1;
+								}
+								frame_found = true;
+								break; // 每次只处理一帧，避免重复
+						}
 				}
-     }
-     // 3. 重启 DMA 准备接收下一帧
-     HAL_UART_Receive_DMA(huart, sbus_rx_buf, 25);
+		}
+
+		// ?? 无论是否找到，立即重启 DMA 准备下一批 50 字节
+		HAL_UART_Receive_DMA(huart, sbus_dma_buf, 50);
 }
+
+void HOTRC_ErrorCallback(UART_HandleTypeDef *huart)
+{
+	// 安全复位HAL状态机 + 停止当前DMA
+	HAL_UART_AbortReceive(huart);
+	
+	// 立即重启接收，等待遥控器信号恢复
+	HAL_UART_Receive_DMA(huart, sbus_dma_buf, 50);
+}
+
 
 //** ############################################### **//
 //** ================= 本地静态函数 ================= **//
@@ -87,16 +113,16 @@ static uint8_t Switch_Set(uint16_t ChValue)
 
 static void HORRC_HT10A_GET_Ctl(SbusFrame_t* RC_Raw)
 {
-		RC_Ctl.Stick.LX = RC_Raw->channels[3];
-		RC_Ctl.Stick.LY = RC_Raw->channels[2];
-		RC_Ctl.Stick.RX = RC_Raw->channels[0];
-		RC_Ctl.Stick.RY = RC_Raw->channels[1];
+		RC_Ctl.Stick.LX = RC_Raw->channels[3] - HOTRC_MID_VEL;
+		RC_Ctl.Stick.LY = RC_Raw->channels[2] - HOTRC_MID_VEL;
+		RC_Ctl.Stick.RX = RC_Raw->channels[0] - HOTRC_MID_VEL;
+		RC_Ctl.Stick.RY = RC_Raw->channels[1] - HOTRC_MID_VEL;
 	
 		RC_Ctl.Switch.S2_L = Switch_Set(RC_Raw->channels[5]);
 		RC_Ctl.Switch.S2_R = Switch_Set(RC_Raw->channels[6]);
 		RC_Ctl.Switch.S3_L = Switch_Set(RC_Raw->channels[4]);
 		RC_Ctl.Switch.S3_R = Switch_Set(RC_Raw->channels[7]);
-	
+		
 		RC_Ctl.Knob.KL = RC_Raw->channels[8];
 	  RC_Ctl.Knob.KR = RC_Raw->channels[9];
 	

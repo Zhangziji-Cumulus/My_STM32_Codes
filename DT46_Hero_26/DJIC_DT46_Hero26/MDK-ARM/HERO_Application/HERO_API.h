@@ -7,6 +7,8 @@
 #include "HERO_Gimbal.h"
 #include "HERO_Math.h"
 #include "HERO_Shooting.h"
+#include "My_Math.h"
+#include "HOTRC_HT10A.h"
 
 #include "MY_PID.h"
 

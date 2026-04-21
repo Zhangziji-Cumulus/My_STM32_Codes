@@ -8,6 +8,8 @@
 #include <stdbool.h>
 
 #define HOTRC_MID_VEL 992.0f //接受到的数据的正中值
+#define HOTRC_RANGE 600
+
 
 // 定义SBUS解析结果结构体
 typedef struct {
@@ -86,5 +88,6 @@ typedef struct{
 
 void Remote_ControlInit(void);
 void HOTRC_CallBack(UART_HandleTypeDef *huart);
+void HOTRC_ErrorCallback(UART_HandleTypeDef *huart);
 
 #endif

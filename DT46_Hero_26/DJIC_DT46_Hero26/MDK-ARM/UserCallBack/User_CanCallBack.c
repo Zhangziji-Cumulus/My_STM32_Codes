@@ -4,11 +4,21 @@
 //** ================= 串口 ================= **//
 //** ####################################### **//
 
+/* UART接受回调函数 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART3)
     {
 				HOTRC_CallBack(huart);
+    }
+}
+
+/* UART错误回调（掉电重启瞬间必触发，不处理必卡死） */
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART3)
+    {
+				HOTRC_ErrorCallback(huart);
     }
 }
 

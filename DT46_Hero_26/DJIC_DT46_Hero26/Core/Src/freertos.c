@@ -193,6 +193,7 @@ const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
 void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
+
 void Dual_Board_Transmit_Task(void *argument);
 void HEROChassisTask(void *argument);
 void HEROGimbalTask(void *argument);
@@ -348,7 +349,6 @@ __weak void Start_DJI_RecieveData(void *argument)
 */
 /* USER CODE END Header_INS_task */
 
-
 /* USER CODE BEGIN Header_buzzer_effects_task */
 /**
 * @brief Function implementing the buzr thread.
@@ -356,7 +356,6 @@ __weak void Start_DJI_RecieveData(void *argument)
 * @retval None
 */
 /* USER CODE END Header_buzzer_effects_task */
-
 
 /* USER CODE BEGIN Header_Dual_Board_Transmit_Task */
 /**

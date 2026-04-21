@@ -13,7 +13,8 @@ PID_HandleTypeDef Chassis_Motor_Ex;
 
 void Motor_Init(void)
 {
-	PID_FF_Init(&test_FF,3.0f,0.0f,0.0f,100.0,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
+	PID_FF_Init(&test_FF,3.0f,0.0f,0.0f,1.0,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
+	
 	PID_Init(&test2,15.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
 	PID_Init(&test3,20.0f,0.0f,0.0f,-DJI_M2006_R,DJI_M2006_R,-500.0f, 500.0f);
 
@@ -189,12 +190,13 @@ float Angletest = 0.0;
 void Motor_DJI_Angle_SingleContral(float TargetAngle)
 {
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
-	Angletest = MyMath_cal_output_angle(DJI_MFeedback[0].angle_deg,36); //计算减速比后的输出轴角度
+	Angletest = MyMath_cal_output_angle(DJI_MFeedback[4].angle_deg,36); //计算减速比后的输出轴角度
 	
 	//int16_t PIDoutput = PID_Double_CycleAngle(&test2,&test3,TargetAngle,DJI_MFeedback[0].speed_rpm,Angletest,1.00f);
+
 	int16_t PIDoutput = PID_FF_Calculate_CycleAngle(&test_FF,Angletest,TargetAngle);
 
-	ESC_Control_Raw_Single(&hcan1,1,PIDoutput);
+	ESC_Control_Raw_Single(&hcan1,5,PIDoutput);
 }
 
 

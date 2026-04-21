@@ -1,7 +1,7 @@
 #include "Dual_board_Transmit.h"
 
 extern HOTRC_Ctl_t RC_Ctl;
-extern float IMU_DegAngle[3];
+extern fp32 INS_angle[3];
 
 Dual_Board_Transmit_t DBT_RX;
 
@@ -9,7 +9,7 @@ float DualBoard_ReceiveDataBuff[64];
 float DualBoard_SendDataBuff[64];
 
 static void Dual_Board_MainSend(void);
-
+static void RXRC_TO_HOTRC(void);
 
 static UBaseType_t remain_DBTT;
 __attribute__((used)) void Dual_Board_Transmit_Task(void *argument)
@@ -18,6 +18,7 @@ __attribute__((used)) void Dual_Board_Transmit_Task(void *argument)
   {
 		
 		Dual_Board_MainSend();
+		
 		
 		remain_DBTT = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
@@ -43,10 +44,10 @@ void Dual_Board_ReceiveCallBack(void)
 		DBT_RX.B2.IMU[1] = DualBoard_ReceiveDataBuff[1];
 		DBT_RX.B2.IMU[2] = DualBoard_ReceiveDataBuff[2];
 		
-		DBT_RX.B2.RC_Ctl.Stick.LX = DualBoard_ReceiveDataBuff[3] - HOTRC_MID_VEL;
-		DBT_RX.B2.RC_Ctl.Stick.LY = DualBoard_ReceiveDataBuff[4] - HOTRC_MID_VEL;
-		DBT_RX.B2.RC_Ctl.Stick.RX = DualBoard_ReceiveDataBuff[5] - HOTRC_MID_VEL;
-		DBT_RX.B2.RC_Ctl.Stick.RY = DualBoard_ReceiveDataBuff[6] - HOTRC_MID_VEL;
+		DBT_RX.B2.RC_Ctl.Stick.LX = DualBoard_ReceiveDataBuff[3];
+		DBT_RX.B2.RC_Ctl.Stick.LY = DualBoard_ReceiveDataBuff[4];
+		DBT_RX.B2.RC_Ctl.Stick.RX = DualBoard_ReceiveDataBuff[5];
+		DBT_RX.B2.RC_Ctl.Stick.RY = DualBoard_ReceiveDataBuff[6];
 		
 		DBT_RX.B2.RC_Ctl.Switch.S2_L = DualBoard_ReceiveDataBuff[7];
 		DBT_RX.B2.RC_Ctl.Switch.S2_R = DualBoard_ReceiveDataBuff[8];
@@ -55,7 +56,8 @@ void Dual_Board_ReceiveCallBack(void)
 		
 		DBT_RX.B2.RC_Ctl.Knob.KL = DualBoard_ReceiveDataBuff[11];
 		DBT_RX.B2.RC_Ctl.Knob.KR = DualBoard_ReceiveDataBuff[12];
-		//** Other data **//
+		//** Other data **//	
+		RXRC_TO_HOTRC();
 	}
 }
 
@@ -66,9 +68,9 @@ static void Dual_Board_MainSend(void)
 		//** Send **//
 				
 		//Board-1 IMU Datas Send
-		DualBoard_SendDataBuff[0] = IMU_DegAngle[0];
-		DualBoard_SendDataBuff[1] = IMU_DegAngle[1];
-		DualBoard_SendDataBuff[2] = IMU_DegAngle[2];
+		DualBoard_SendDataBuff[0] = INS_angle[0];
+		DualBoard_SendDataBuff[1] = INS_angle[1];
+		DualBoard_SendDataBuff[2] = INS_angle[2];
 		
 		DualBoard_SendDataBuff[3] = RC_Ctl.Stick.LX;
 		DualBoard_SendDataBuff[4] = RC_Ctl.Stick.LY;
@@ -92,7 +94,22 @@ static void Dual_Board_MainSend(void)
 	}
 }
 
-
+static void RXRC_TO_HOTRC(void)
+{
+	RC_Ctl.Stick.LX = DBT_RX.B2.RC_Ctl.Stick.LX;
+	RC_Ctl.Stick.LY = DBT_RX.B2.RC_Ctl.Stick.LY;
+	RC_Ctl.Stick.RX = DBT_RX.B2.RC_Ctl.Stick.RX;
+	RC_Ctl.Stick.RY = DBT_RX.B2.RC_Ctl.Stick.RY;
+	
+	RC_Ctl.Switch.S2_L =  DBT_RX.B2.RC_Ctl.Switch.S2_L;
+	RC_Ctl.Switch.S2_R =  DBT_RX.B2.RC_Ctl.Switch.S2_R;
+	
+	RC_Ctl.Switch.S3_L = DBT_RX.B2.RC_Ctl.Switch.S3_L;
+	RC_Ctl.Switch.S3_R = DBT_RX.B2.RC_Ctl.Switch.S3_R;
+	
+	RC_Ctl.Knob.KL = DBT_RX.B2.RC_Ctl.Knob.KL;
+	RC_Ctl.Knob.KR = DBT_RX.B2.RC_Ctl.Knob.KR;
+};
 
 
 
