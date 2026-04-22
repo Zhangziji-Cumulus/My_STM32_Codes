@@ -65,6 +65,10 @@ float MyMath_Map_Range(float input, float input_min, float input_max, float targ
 float MyMath_Degrees_To_Radians(float degrees) {
     return degrees * MY_PI / 180.0;
 }
+// 弧度转角度
+float MyMath_Radians_To_Degrees(float rad) {
+    return rad * (180.0 / MY_PI);
+}
 
 /* 传入一个0-360度的角度，返回累计值 */
 float MyMath_get_accumulated_angle(float current_angle) {

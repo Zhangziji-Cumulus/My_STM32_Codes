@@ -4,10 +4,11 @@
 #include "main.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "cmsis_os.h"
+#include "cmsis_os2.h"
 
 
 #include "DJI_Motor_CAN.h"
+#include "DJI_Motor_Contral.h"
 #include "MY_LED.h"
 #include "sound_effects_task.h" 
 #include "HOTRC_HT10A.h"

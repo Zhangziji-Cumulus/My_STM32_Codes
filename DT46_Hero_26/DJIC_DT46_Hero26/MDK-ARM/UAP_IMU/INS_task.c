@@ -31,7 +31,7 @@
 #include "bsp_spi.h"
 #include "bmi088driver.h"
 #include "ist8310driver.h"
-#include "pid.h"
+#include "IMU_pid.h"
 #include "ahrs.h"
 
 
@@ -147,8 +147,6 @@ static fp32 accel_fliter_3[3] = {0.0f, 0.0f, 0.0f};
 static const fp32 fliter_num[3] = {1.929454039488895f, -0.93178349823448126f, 0.002329458745586203f};
 
 
-
-
 static fp32 INS_gyro[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_accel[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_mag[3] = {0.0f, 0.0f, 0.0f};
@@ -174,7 +172,6 @@ void GetIMU_Value(void)
 	IMU_DegAngle[1] = radian_to_degree(INS_angle[1]);
 	IMU_DegAngle[2] = radian_to_degree(INS_angle[2]);
 }
-
 
 /**
   * @brief          imu task, init bmi088, ist8310, calculate the euler angle
@@ -287,11 +284,9 @@ void INS_task(void const *pvParameters)
         {
             mag_update_flag &= ~(1<< IMU_DR_SHFITS);
             mag_update_flag |= (1 << IMU_SPI_SHFITS);
-//            ist8310_read_mag(ist8310_real_data.mag);
+				//ist8310_read_mag(ist8310_real_data.mag);
         }
-				
-				GetIMU_Value();
-
+	     GetIMU_Value();
     }
 }
 

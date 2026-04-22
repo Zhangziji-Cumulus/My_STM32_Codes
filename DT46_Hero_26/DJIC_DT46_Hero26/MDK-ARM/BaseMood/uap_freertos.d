@@ -45,7 +45,6 @@ basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVD
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 basemood\uap_freertos.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
@@ -54,10 +53,16 @@ basemood\uap_freertos.o: ./UserDrive/CAN_PART.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\uap_freertos.o: ../Core/Inc/can.h
+basemood\uap_freertos.o: UserAppliction\DJI_Motor_Contral.h
+basemood\uap_freertos.o: UserAppliction\MY_PID.h
+basemood\uap_freertos.o: UserAppliction\MY_PID.h
+basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\uap_freertos.o: UserAppliction\My_Math.h
 basemood\uap_freertos.o: UserAppliction\MY_LED.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
 basemood\uap_freertos.o: ./UAP_IMU/struct_typedef.h
+basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\uap_freertos.o: ./UserDrive/HOTRC_HT10A.h
 basemood\uap_freertos.o: ../Core/Inc/usart.h

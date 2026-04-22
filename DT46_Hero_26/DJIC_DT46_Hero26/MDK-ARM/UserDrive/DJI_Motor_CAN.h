@@ -10,7 +10,8 @@
 
 #define DJI_M2006_A 3.0f
 #define DJI_M2006_R 10000
-
+#define DJI_M3508_A 10.0f
+#define DJI_M3508_R 16384
 
 //** 接受电机反馈数据 **//
 

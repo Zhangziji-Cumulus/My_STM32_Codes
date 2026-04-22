@@ -92,7 +92,7 @@ const osThreadAttr_t DJI_RecieveData_attributes = {
 osThreadId_t imuTaskHandle;
 const osThreadAttr_t imuTask_attributes = {
   .name = "imuTask",
-  .stack_size = 256 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityRealtime1,
 };
 /* Definitions for buzr */
@@ -124,7 +124,7 @@ const osThreadAttr_t HEROChassis_attributes = {
   .cb_size = sizeof(HERO_DriveSysteControlBlock),
   .stack_mem = &HERO_DriveSysteBuffer[0],
   .stack_size = sizeof(HERO_DriveSysteBuffer),
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityHigh7,
 };
 /* Definitions for HEROGimbal */
 osThreadId_t HEROGimbalHandle;
@@ -136,7 +136,7 @@ const osThreadAttr_t HEROGimbal_attributes = {
   .cb_size = sizeof(HEROGimbalControlBlock),
   .stack_mem = &HEROGimbalBuffer[0],
   .stack_size = sizeof(HEROGimbalBuffer),
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityHigh7,
 };
 /* Definitions for HEROShooting */
 osThreadId_t HEROShootingHandle;
@@ -148,7 +148,7 @@ const osThreadAttr_t HEROShooting_attributes = {
   .cb_size = sizeof(HEROShootingControlBlock),
   .stack_mem = &HEROShootingBuffer[0],
   .stack_size = sizeof(HEROShootingBuffer),
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityHigh7,
 };
 /* Definitions for HEROSystem */
 osThreadId_t HEROSystemHandle;
@@ -160,7 +160,19 @@ const osThreadAttr_t HEROSystem_attributes = {
   .cb_size = sizeof(HEROSystemControlBlock),
   .stack_mem = &HEROSystemBuffer[0],
   .stack_size = sizeof(HEROSystemBuffer),
-  .priority = (osPriority_t) osPriorityRealtime1,
+  .priority = (osPriority_t) osPriorityHigh7,
+};
+/* Definitions for HERODial */
+osThreadId_t HERODialHandle;
+uint32_t HERODialBuffer[ 128 ];
+osStaticThreadDef_t HERODialControlBlock;
+const osThreadAttr_t HERODial_attributes = {
+  .name = "HERODial",
+  .cb_mem = &HERODialControlBlock,
+  .cb_size = sizeof(HERODialControlBlock),
+  .stack_mem = &HERODialBuffer[0],
+  .stack_size = sizeof(HERODialBuffer),
+  .priority = (osPriority_t) osPriorityHigh7,
 };
 /* Definitions for Queue_DJI_MD */
 osMessageQueueId_t Queue_DJI_MDHandle;
@@ -193,12 +205,12 @@ const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
 void StartDefaultTask(void *argument);
 void StartRealTime_TASK(void *argument);
 void Start_DJI_RecieveData(void *argument);
-
 void Dual_Board_Transmit_Task(void *argument);
 void HEROChassisTask(void *argument);
 void HEROGimbalTask(void *argument);
 void HEROShootingTask(void *argument);
 void HEROSystemTask(void *argument);
+void HERODialTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -266,6 +278,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of HEROSystem */
   HEROSystemHandle = osThreadNew(HEROSystemTask, NULL, &HEROSystem_attributes);
 
+  /* creation of HERODial */
+  HERODialHandle = osThreadNew(HERODialTask, NULL, &HERODial_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -295,11 +310,6 @@ void StartDefaultTask(void *argument)
 	
   for(;;)
   {
-	  //buzzer->sound_effect = D_D_D_;
-		
-		//HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_B_Pin,LED_Flash(500,1));
-		//HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_G_Pin,LED_Flash(800,1));
-		//HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,LED_Flash(800,1));
     osDelay(10);
   }
   /* USER CODE END StartDefaultTask */
@@ -445,6 +455,24 @@ __weak void HEROSystemTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END HEROSystemTask */
+}
+
+/* USER CODE BEGIN Header_HERODialTask */
+/**
+* @brief Function implementing the HERODial thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_HERODialTask */
+__weak void HERODialTask(void *argument)
+{
+  /* USER CODE BEGIN HERODialTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END HERODialTask */
 }
 
 /* Private application code --------------------------------------------------*/

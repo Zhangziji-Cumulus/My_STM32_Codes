@@ -9,8 +9,14 @@
 
 void Motor_Init(void);
 void Motor_DJI_Speed_SingleContral(int16_t MotorVel);
-void Motor_DJI_Angle_SingleContral(float TargetAngle);
+void Motor_DJI_Angle_SingleContral(float TargetAngle,uint8_t ID,uint16_t gear_ratio);
 double MyMath_cal_output_angle(double CurentAngle,uint16_t gear_ratio);
+
+void Motor_DJI_IMUPitchContral(float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio);
+void Motor_DJI_IMUYawContral(float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio);
+
+//¼±Í£
+void DJI_MOTOR_STOP_ALL(CAN_HandleTypeDef *hcan);
 
 void Motor_DJI_SpeedCtl_1_4(CAN_HandleTypeDef *hcan,
 														float   MError,

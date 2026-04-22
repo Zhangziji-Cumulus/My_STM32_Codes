@@ -52,6 +52,6 @@ basemood\ins_task.o: UAP_IMU\bsp_imu_pwm.h
 basemood\ins_task.o: UAP_IMU\bsp_spi.h
 basemood\ins_task.o: UAP_IMU\bmi088driver.h
 basemood\ins_task.o: UAP_IMU\ist8310driver.h
-basemood\ins_task.o: UAP_IMU\pid.h
+basemood\ins_task.o: UAP_IMU\IMU_pid.h
 basemood\ins_task.o: UAP_IMU\ahrs.h
 basemood\ins_task.o: UAP_IMU\AHRS_MiddleWare.h

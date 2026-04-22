@@ -25,5 +25,6 @@ typedef struct{
 
 
 void HERO_Gimbal_YawStable(Gimbal_Data_t* GD,int16_t RC_ctl);
+void HERO_Gimbal_PitchStable(Gimbal_Data_t* GD,int16_t RC_ctl);
 
 #endif

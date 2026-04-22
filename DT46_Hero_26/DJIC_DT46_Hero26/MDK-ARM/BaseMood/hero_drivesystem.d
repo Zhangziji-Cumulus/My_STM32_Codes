@@ -50,18 +50,18 @@ basemood\hero_drivesystem.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RT
 basemood\hero_drivesystem.o: HERO_Application\HERO_API.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Chassis.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_API.h
+basemood\hero_drivesystem.o: ./UserAppliction/MY_PID.h
+basemood\hero_drivesystem.o: ./UserAppliction/MY_PID.h
+basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Gimbal.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Math.h
 basemood\hero_drivesystem.o: HERO_Application\HERO_Shooting.h
 basemood\hero_drivesystem.o: ./UserAppliction/My_Math.h
-basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\hero_drivesystem.o: ./UserDrive/HOTRC_HT10A.h
 basemood\hero_drivesystem.o: ../Core/Inc/usart.h
 basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-basemood\hero_drivesystem.o: ./UserAppliction/MY_PID.h
-basemood\hero_drivesystem.o: ./UserAppliction/MY_PID.h
-basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\hero_drivesystem.o: ./UserAppliction/DJI_Motor_Contral.h
 basemood\hero_drivesystem.o: ./UserDrive/DJI_Motor_CAN.h
 basemood\hero_drivesystem.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

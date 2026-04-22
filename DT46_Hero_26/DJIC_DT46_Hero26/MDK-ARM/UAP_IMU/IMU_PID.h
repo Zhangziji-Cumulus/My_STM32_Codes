@@ -14,8 +14,8 @@
   @endverbatim
   ****************************(C) COPYRIGHT 2016 DJI****************************
   */
-#ifndef PID_H
-#define PID_H
+#ifndef __IMU_PID_H
+#define __IMU_PID_H
 #include "struct_typedef.h"
 enum PID_MODE
 {

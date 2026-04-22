@@ -7,6 +7,7 @@
 float MyMath_Limit_Float(float value, float min, float max, int is_cycle);
 float MyMath_Map_Range(float input, float input_min, float input_max, float target_min, float target_max);
 float MyMath_Degrees_To_Radians(float degrees);
+float MyMath_Radians_To_Degrees(float rad);
 
 double MyMath_normalize_0_to_360(double angle);//规范化到 [0, 360)
 double MyMath_normalize_m180_to_p180(double angle);//规范化到 (-180, 180]  (与 atan2 返回值范围一致)

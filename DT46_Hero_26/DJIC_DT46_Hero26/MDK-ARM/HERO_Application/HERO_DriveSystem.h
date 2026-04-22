@@ -12,4 +12,6 @@
 
 #include "MY_LED.h"
 
+#define CHASSIS_MAXSPEED 2000
+
 #endif

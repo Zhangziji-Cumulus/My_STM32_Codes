@@ -15,7 +15,7 @@
   ****************************(C) COPYRIGHT 2019 DJI****************************
   */
 
-#include "pid.h"
+#include "IMU_PID.h"
 #include "main.h"
 
 #define LimitMax(input, max)   \

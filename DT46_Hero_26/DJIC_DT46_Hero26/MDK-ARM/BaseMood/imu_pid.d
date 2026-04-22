@@ -1,6 +1,6 @@
-basemood\imu_pid.o: UAP_IMU\IMU_PID.c
+basemood\imu_pid.o: UAP_IMU\IMU_pid.c
 basemood\imu_pid.o: UAP_IMU\IMU_PID.h
-basemood\imu_pid.o: ./UAP_IMU/IMU/struct_typedef.h
+basemood\imu_pid.o: UAP_IMU\struct_typedef.h
 basemood\imu_pid.o: ../Core/Inc/main.h
 basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 basemood\imu_pid.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -36,3 +36,4 @@ basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\imu_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h

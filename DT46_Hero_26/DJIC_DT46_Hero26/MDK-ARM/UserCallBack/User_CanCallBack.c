@@ -4,21 +4,17 @@
 //** ================= 串口 ================= **//
 //** ####################################### **//
 
-/* UART接受回调函数 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART3)
-    {
-				HOTRC_CallBack(huart);
-    }
-}
+extern UART_HandleTypeDef huart3; // 确保引用你的串口句柄
+extern uint8_t sbusRxBuffer[];
+extern SBUS_Data_t sbusData;
 
-/* UART错误回调（掉电重启瞬间必触发，不处理必卡死） */
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART3)
-    {
-				HOTRC_ErrorCallback(huart);
+// 重写DMA接收完成回调
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART3) {
+        // DMA刚刚填满缓冲区，此时缓冲区里就是一帧完整的数据
+        // 我们只做一件事：标记有新数据
+        // 具体的解析工作留给 main loop 去做，避免阻塞中断
+        sbusData.newDataAvailable = 1;
     }
 }
 
