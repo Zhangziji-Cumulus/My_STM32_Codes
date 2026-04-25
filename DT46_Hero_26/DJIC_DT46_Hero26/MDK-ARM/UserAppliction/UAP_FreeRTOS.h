@@ -13,5 +13,6 @@
 #include "sound_effects_task.h" 
 #include "HOTRC_HT10A.h"
 
+void UAP_FreeRTOS_Init(void);
 
 #endif

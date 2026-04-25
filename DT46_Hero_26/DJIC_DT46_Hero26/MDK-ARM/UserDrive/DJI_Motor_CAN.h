@@ -37,10 +37,10 @@ typedef struct {
 } DJI_MotorFeedback_t;
 
 
-extern DJI_MotorFeedback_t DJI_MFeedback[8];
+extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
+extern DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
 
-
-void CAN_DJI_Motor_Feedback(uint32_t std_id, uint8_t* data);
+void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback,uint32_t std_id, uint8_t* data);
 
 //** ·¢ËÍ¿ØÖÆÃüÁî **//
 

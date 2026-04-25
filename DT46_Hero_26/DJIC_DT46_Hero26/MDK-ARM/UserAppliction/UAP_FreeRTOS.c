@@ -1,77 +1,81 @@
 #include "UAP_FreeRTOS.h"
 
-
-extern osThreadId_t HEROChassisHandle;
-extern osThreadId_t HEROGimbalHandle;
-extern osThreadId_t HEROShootingHandle;
-extern osThreadId_t HERODialHandle;
-
 extern osMessageQueueId_t Queue_DJI_MDHandle;
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern HOTRC_Ctl_t RC_Ctl;
 
+uint8_t g_motor_run_enable  = 0;
 
+uint8_t last_switch = 0;
 
+void UAP_FreeRTOS_Init(void)
+{
+	last_switch = RC_Ctl.Switch.S2_L;
+}
 
 static UBaseType_t remain_StartRealTime_TASK;
 __attribute__((used)) void StartRealTime_TASK(void *argument)
 {
 	 remain_StartRealTime_TASK = uxTaskGetStackHighWaterMark(NULL);
-	 // 定义要发送的结构体变量
 	 buzzer_t *buzzer = get_buzzer_effect_point();
-	 uint8_t last_switch = 0; // 记录上一次拨杆状态
-	
+
+	 // ==================== 核心安全变量 ====================
+	 uint8_t  last_switch        = 0;    // 上一次拨杆值
+	 uint8_t  system_allowed     = 0;    // 【关键】是否允许运行
+	 uint32_t power_on_lock_time = 0;    // 上电延时等SBUS
+
+	 // 上电强制停机
+	 g_motor_run_enable = 0;
+	 DJI_MOTOR_STOP_ALL(&hcan1);
+
+	 vTaskDelay(300);  // 直接等SBUS稳定，最简单有效
+
+	 // 读取上电时的初始拨杆值
+	 last_switch = RC_Ctl.Switch.S2_L;
+
 	 for(;;)
-  { 
-		
-			if(RC_Ctl.Switch.S2_R == HOTRC_SWITCH_DOWN)
+	 {
+		uint8_t current_switch = RC_Ctl.Switch.S2_L;
+
+		// ====================== 核心逻辑 ======================
+		// 只有 【从非3 → 拨到3】 才允许启动
+		// ======================================================
+		if(current_switch != last_switch)
+		{
+			last_switch = current_switch;
+
+			// 拨到 3 → 允许启动
+			if(current_switch == HOTRC_SWITCH_DOWN)
 			{
-				buzzer->sound_effect = D_D_D_;
+				system_allowed = 1;
+				g_motor_run_enable = 1;
 			}
-			
-			// 2. 状态变化才执行，防止抖动
-			if(RC_Ctl.Switch.S2_L != last_switch)
+			// 拨到非3 → 禁止
+			else
 			{
-					last_switch = RC_Ctl.Switch.S2_L;
+				system_allowed = 0;
+				g_motor_run_enable = 0;
+				DJI_MOTOR_STOP_ALL(&hcan1);
+			}
+		}
 
-					if(RC_Ctl.Switch.S2_L == 3)  // 拨杆 = 运行
-					{
-							// 唤醒应用任务
-							if(HEROChassisHandle != NULL)
-									vTaskResume(HEROChassisHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskResume(HEROGimbalHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskResume(HEROShootingHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskResume(HERODialHandle);
-							
-					}
-					else  // 拨杆 = 停止
-					{
-							// 挂起应用任务
-							if(HEROChassisHandle != NULL)
-									vTaskSuspend(HEROChassisHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskSuspend(HEROGimbalHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskSuspend(HEROChassisHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskSuspend(HEROShootingHandle);
-							if(HEROChassisHandle != NULL)
-									vTaskSuspend(HERODialHandle);
-																																			
-							DJI_MOTOR_STOP_ALL(&hcan1);
-					}
-			 }
+		// ====================== 强制安全 ======================
+		// 只要不在3 → 绝对停机
+		if(current_switch != HOTRC_SWITCH_DOWN)
+		{
+			g_motor_run_enable = 0;
+			DJI_MOTOR_STOP_ALL(&hcan1);
+		}
 
-				// 3. 任务延时（消抖+释放CPU）
-				vTaskDelay(50);
-   }
-	
-		
-    osDelay(1);
- }
+		// 提示音
+		if(RC_Ctl.Switch.S2_R == HOTRC_SWITCH_DOWN)
+		{
+			buzzer->sound_effect = D_D_D_;
+		}
+
+		vTaskDelay(50);
+	 }
+}
 
 static UBaseType_t Start_DJI_RecieveData_TASK;
 __attribute__((used)) void Start_DJI_RecieveData(void *argument)
@@ -80,11 +84,13 @@ __attribute__((used)) void Start_DJI_RecieveData(void *argument)
   for(;;)
   { Start_DJI_RecieveData_TASK = uxTaskGetStackHighWaterMark(NULL);
 		
-		    // 检查是否有新数据
+		
+		// 检查是否有新数据
     if (sbusData.newDataAvailable) {
         // 解析数据
         SBUS_Parse();
     }
+		
     osDelay(1);
   }
 }

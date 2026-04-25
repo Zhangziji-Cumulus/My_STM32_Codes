@@ -1,6 +1,7 @@
 #include "DJI_Motor_Contral.h"
+#include "DJI_Motor_CAN.h"
 
-extern DJI_MotorFeedback_t DJI_MFeedback[8];
+extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 
 
 PID_HandleTypeDef test2;
@@ -38,11 +39,12 @@ void Motor_Init(void)
 
 void Motor_DJI_Speed_SingleContral(int16_t MotorVel)
 {
-	//int16_t PIDoutput = PID_FF_Calculate_AutoFF(&test_FF,DJI_MFeedback[0].speed_rpm,MotorVel,PID_FF_MODE_VELOCITY);
+	//int16_t PIDoutput = PID_FF_Calculate_AutoFF(&test_FF,DJI_MFeedback_CAN1[0].speed_rpm,MotorVel,PID_FF_MODE_VELOCITY);
 	//ESC_Control_Raw_Single(&hcan1,1,PIDoutput);
 }
 
-void Motor_DJI_SpeedCtl_1_4(CAN_HandleTypeDef *hcan,
+void Motor_DJI_SpeedCtl_1_4(DJI_MotorFeedback_t* DJI_MFeedback,
+														CAN_HandleTypeDef *hcan,
 	                          float   MError,
 														int16_t MotorVel_1,
 														int16_t MotorVel_2,
@@ -82,7 +84,8 @@ void Motor_DJI_SpeedCtl_1_4(CAN_HandleTypeDef *hcan,
 	ESC_Control_Raw_Group(&hcan1,1,PIDoutput);
 }
 															
-void Motor_DJI_SpeedCtl_5_8(CAN_HandleTypeDef *hcan,
+void Motor_DJI_SpeedCtl_5_8(DJI_MotorFeedback_t* DJI_MFeedback,
+	                          CAN_HandleTypeDef *hcan,
 	                          float   MError,
 														int16_t MotorVel_1,
 														int16_t MotorVel_2,
@@ -122,7 +125,8 @@ void Motor_DJI_SpeedCtl_5_8(CAN_HandleTypeDef *hcan,
 	ESC_Control_Raw_Group(hcan,5,PIDoutput);
 }
 
-void Motor_DJI_Speed_8Contral(CAN_HandleTypeDef *hcan,
+void Motor_DJI_Speed_8Contral(DJI_MotorFeedback_t* DJI_MFeedback,
+	                            CAN_HandleTypeDef *hcan,
 															float   MError,
 	                            int16_t MotorVel_1,
 															int16_t MotorVel_2,
@@ -199,7 +203,7 @@ void Motor_DJI_Speed_8Contral(CAN_HandleTypeDef *hcan,
 
 float Angletest = 0.0;
 
-void Motor_DJI_Angle_SingleContral(float TargetAngle,uint8_t ID,uint16_t gear_ratio)
+void Motor_DJI_Angle_SingleContral(DJI_MotorFeedback_t* DJI_MFeedback,float TargetAngle,uint8_t ID,uint16_t gear_ratio)
 {
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
 	Angletest = MyMath_cal_output_angle(DJI_MFeedback[ID - 1].angle_deg,gear_ratio); //计算减速比后的输出轴角度
@@ -211,7 +215,7 @@ void Motor_DJI_Angle_SingleContral(float TargetAngle,uint8_t ID,uint16_t gear_ra
 	ESC_Control_Raw_Single(&hcan1,ID,PIDoutput);
 }
 
-void Motor_DJI_IMUPitchContral(float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio)
+void Motor_DJI_IMUPitchContral(DJI_MotorFeedback_t* DJI_MFeedback,float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio)
 {
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
 	//Angletest = MyMath_cal_output_angle(DJI_MFeedback[ID - 1].angle_deg,gear_ratio); //计算减速比后的输出轴角度
@@ -222,7 +226,7 @@ void Motor_DJI_IMUPitchContral(float TargetAngle,float IMUAngle,uint8_t ID,uint1
 	ESC_Control_Raw_Single(&hcan1,ID,PIDoutput);
 }
 
-void Motor_DJI_IMUYawContral(float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio)
+void Motor_DJI_IMUYawContral(DJI_MotorFeedback_t* DJI_MFeedback,float TargetAngle,float IMUAngle,uint8_t ID,uint16_t gear_ratio)
 {
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
 	//Angletest = MyMath_cal_output_angle(DJI_MFeedback[ID - 1].angle_deg,gear_ratio); //计算减速比后的输出轴角度

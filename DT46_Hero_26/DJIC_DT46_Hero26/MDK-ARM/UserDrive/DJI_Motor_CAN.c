@@ -19,8 +19,8 @@
 //** 接受电机反馈数据 **//
 
 //* 定义结构体 *//
-DJI_MotorFeedback_t DJI_MFeedback[8];
-
+DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
+DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
 //* 对外函数 *//
 /**
   * @brief  解析电调反馈报文 (基于图片协议)
@@ -28,7 +28,7 @@ DJI_MotorFeedback_t DJI_MFeedback[8];
   * @param  data: 8字节数据数组
   * @retval None
   */
-void CAN_DJI_Motor_Feedback(uint32_t std_id, uint8_t* data)
+void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback,uint32_t std_id, uint8_t* data)
 {
     // 1. 检查 ID 是否在反馈范围内 (0x200 + ID)
     // 假设支持 ID 1 到 8，即 0x201 到 0x208

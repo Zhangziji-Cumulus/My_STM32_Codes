@@ -16,8 +16,8 @@ void HERO_Gimbal_YawStable(Gimbal_Data_t* GD,int16_t RC_ctl)
 
 void HERO_Gimbal_PitchStable(Gimbal_Data_t* GD,int16_t RC_ctl)
 {
-	GD->TAngle.Pitch = GD->TAngle.Pitch - MyMath_Map_Range(RC_ctl,-HOTRC_RANGE,HOTRC_RANGE,-0.1f,0.1f);
-	GD->TAngle.Pitch = MyMath_Limit_Float(GD->TAngle.Pitch,-15.00f,45.00f,0);
+	GD->TAngle.Pitch = GD->TAngle.Pitch + MyMath_Map_Range(RC_ctl,-HOTRC_RANGE,HOTRC_RANGE,-0.1f,0.1f);
+	GD->TAngle.Pitch = MyMath_Limit_Float(GD->TAngle.Pitch,-45.00f,15.00f,0);
 	GD->CAngle.Pitch = MyMath_Limit_Float(GD->IMU.Pitch,-180.00f,180.00f,1);
 	
 	HERO_IMUStable_PID(GD);

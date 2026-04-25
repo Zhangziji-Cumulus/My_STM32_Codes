@@ -27,7 +27,14 @@ Project File Date:  04/22/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-"BaseMood\BaseMood.axf" - 0 Error(s), 0 Warning(s).
+compiling User_CanCallBack.c...
+UserCallBack\User_CanCallBack.c(27): warning:  #177-D: function "FloatToBytes"  was declared but never referenced
+  static void FloatToBytes(float value, uint8_t* bytes) {
+UserCallBack\User_CanCallBack.c: 1 warning, 0 errors
+linking...
+Program Size: Code=49292 RO-data=1448 RW-data=496 ZI-data=28256  
+FromELF: creating hex file...
+"BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,7 +58,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

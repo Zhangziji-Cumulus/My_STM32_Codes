@@ -6,7 +6,7 @@ HOTRC_Ctl_t RC_Ctl;
 
 // 全局变量
 UART_HandleTypeDef *sbusHuart;
-uint8_t sbusRxBuffer[SBUS_DMA_BUFFER_SIZE]; // 50字节缓冲区
+uint8_t sbusRxBuffer[SBUS_DMA_BUFFER_SIZE] = {0}; // 50字节缓冲区
 SBUS_Data_t sbusData;
 
 ////** #################################################### **//
@@ -91,9 +91,12 @@ void SBUS_Parse(void) {
         // 解析成功，数据已更新到 sbusData 结构体中
 		HORRC_HT10A_GET_Ctl(&sbusData);
     } else {
-        // 如果遍历完都没找到合法的帧头帧尾组合
-        // 说明这一轮 DMA 数据全是错的（比如正好跨在两个帧中间）
-        // 此时不清除标志位也没关系，等待下一次 DMA 中断带来新数据
+			
+		// 清除旧数据
+		 sbusData.newDataAvailable = 0;
+     memset(sbusRxBuffer, 0, sizeof(sbusRxBuffer));
+     memset(&sbusData, 0, sizeof(sbusData));
+
     }
     
     // 清除标志位，准备接收下一次 DMA 完成通知

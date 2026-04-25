@@ -152,12 +152,18 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
        if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
        {
            // 处理 DJI 电机数据
-           CAN_DJI_Motor_Feedback(RxHeader.StdId, RxData);
+           CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1,RxHeader.StdId, RxData);
        } 
 		}
     else if (hcan->Instance == CAN2)
     {
-			CAN2_RxProcess(hcan);
+			  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
+       {
+           // 处理 DJI 电机数据
+           CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN2,RxHeader.StdId, RxData);
+       } 
+			 
+			// CAN2_RxProcess(hcan);
 		}
 }
 	

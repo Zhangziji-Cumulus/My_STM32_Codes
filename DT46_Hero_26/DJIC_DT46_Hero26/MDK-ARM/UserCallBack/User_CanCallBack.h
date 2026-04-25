@@ -19,4 +19,6 @@ typedef struct {
     uint8_t Data[8];
 } CAN2_RxMsg_t;
 
+
+
 #endif

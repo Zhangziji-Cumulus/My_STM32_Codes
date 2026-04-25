@@ -32,7 +32,7 @@
 #include "bsp_delay.h"
 #include "MY_Time.h"
 #include "UAP_Init.h"
-
+#include "UAP_FreeRTOS.h"
 
 
 //#include "CAN_PART.h"
@@ -111,9 +111,6 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	delay_init();
-
-	//HAL_TIM_Base_Start_IT(&htim2);
-	
 	UAP_Init();
 	
   /* USER CODE END 2 */

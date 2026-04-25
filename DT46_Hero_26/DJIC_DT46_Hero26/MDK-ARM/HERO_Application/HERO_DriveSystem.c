@@ -3,11 +3,14 @@
 
 extern Dual_Board_Transmit_t DBT_RX;
 
-
 extern HOTRC_Ctl_t RC_Ctl;
-extern DJI_MotorFeedback_t DJI_MFeedback[8];
+extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
+extern DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
+
 extern fp32 INS_angle[3];
 
+// 全局标志：0=停止电机  1=正常运行
+extern uint8_t g_motor_run_enable;
 
 //定义地盘数据
 extern PID_HandleTypeDef Chassis_Follow_PID;
@@ -49,8 +52,15 @@ __attribute__((used)) void HEROChassisTask(void *argument)
 		
 		Chassis_Move_Calc(&Chassis_Move,&Chassis_Mec,&Chassis_Follow_PID,RC_Ctl.Switch.S2_R);
 			
-		Motor_DJI_SpeedCtl_1_4(&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm);
-		
+		if(g_motor_run_enable == 0)
+		{
+			DJI_MOTOR_STOP_ALL(&hcan1);
+		}
+		else
+		{			
+			Motor_DJI_SpeedCtl_1_4(DJI_MFeedback_CAN1,&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm);
+		}
+					
 //==============================================================//
 		remain_HEROChassisTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
@@ -63,13 +73,20 @@ __attribute__((used)) void HEROGimbalTask(void *argument)
   for(;;)
   {
 		get_gimbal_data();
-		
 		HERO_Gimbal_YawStable(&GD,RC_Ctl.Stick.RX);
 		HERO_Gimbal_PitchStable(&GD,RC_Ctl.Stick.RY);
 		
-		Motor_DJI_IMUYawContral(GD.TAngle.Pitch,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[2]),6,36);
-		Motor_DJI_IMUPitchContral(GD.TAngle.Yaw,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[0]),5,36);
-		//Motor_DJI_Angle_SingleContral(GD.TAngle.Yaw,5,36);
+		if(g_motor_run_enable == 0)
+		{
+				DJI_MOTOR_STOP_ALL(&hcan1);
+		}
+		else
+		{			
+			Motor_DJI_IMUYawContral(DJI_MFeedback_CAN1,GD.TAngle.Pitch,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[2]),6,1);
+			Motor_DJI_IMUPitchContral(DJI_MFeedback_CAN1,GD.TAngle.Yaw,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[0]),7,36);
+			//Motor_DJI_Angle_SingleContral(GD.TAngle.Yaw,5,36);
+		}
+
 		
 //==============================================================//
 		remain_HEROGimbalTask = uxTaskGetStackHighWaterMark(NULL);
@@ -104,14 +121,13 @@ __attribute__((used)) void HERODialTask(void *argument)
 
 void get_chassis_data(void)
 { 
-	 Chassis_Move.RelativeAngle_Radian = DJI_MFeedback[5].angle_raw;
-	 Chassis_Move.RelativeAngle_Radian = DJI_MFeedback[5].angle_deg;
+	 Chassis_Move.RelativeAngle_Radian = DJI_MFeedback_CAN1[5].angle_raw;
+	 Chassis_Move.RelativeAngle_Radian = DJI_MFeedback_CAN1[5].angle_deg;
 	
 	 Chassis_Move.Vel.FB = MyMath_Map_Range(RC_Ctl.Stick.LX,-HOTRC_RANGE,HOTRC_RANGE,-100.0f,100.0f);
 	 Chassis_Move.Vel.RL = MyMath_Map_Range(RC_Ctl.Stick.LY,-HOTRC_RANGE,HOTRC_RANGE,-100.0f,100.0f);	
-	 Chassis_Mec.FL.C_rpm  = DJI_MFeedback[0].speed_rpm;
-	 Chassis_Mec.FL.C_Curr = DJI_MFeedback[0].current_ma;
-	
+	 Chassis_Mec.FL.C_rpm  = DJI_MFeedback_CAN1[0].speed_rpm;
+	 Chassis_Mec.FL.C_Curr = DJI_MFeedback_CAN1[0].current_ma;
 }
 
 void get_gimbal_data(void)

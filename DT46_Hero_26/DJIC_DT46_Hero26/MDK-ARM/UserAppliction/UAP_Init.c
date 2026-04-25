@@ -4,9 +4,12 @@
 #include "usart.h"
 
 #include "CAN_PART.h"
+#include "UAP_FreeRTOS.h"
 
 void UAP_Init(void)
 {
+	
+	
 	can_filter_init();
 	
 	//CAN_Filter_AcceptAllID(&hcan1,0);
@@ -15,4 +18,5 @@ void UAP_Init(void)
 	//can_filter_init();
 	Motor_Init();
 	SBUS_Init(&huart3);
+	UAP_FreeRTOS_Init();
 }
