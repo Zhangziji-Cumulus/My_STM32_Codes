@@ -4,19 +4,19 @@
 //** ================= 串口 ================= **//
 //** ####################################### **//
 
-extern UART_HandleTypeDef huart3; // 确保引用你的串口句柄
-extern uint8_t sbusRxBuffer[];
-extern SBUS_Data_t sbusData;
+//extern UART_HandleTypeDef huart3; // 确保引用你的串口句柄
+//extern uint8_t sbusRxBuffer[];
+//extern SBUS_Data_t sbusData;
 
-// 重写DMA接收完成回调
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART3) {
-        // DMA刚刚填满缓冲区，此时缓冲区里就是一帧完整的数据
-        // 我们只做一件事：标记有新数据
-        // 具体的解析工作留给 main loop 去做，避免阻塞中断
-        sbusData.newDataAvailable = 1;
-    }
-}
+//// 重写DMA接收完成回调
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+//    if (huart->Instance == USART3) {
+//        // DMA刚刚填满缓冲区，此时缓冲区里就是一帧完整的数据
+//        // 我们只做一件事：标记有新数据
+//        // 具体的解析工作留给 main loop 去做，避免阻塞中断
+//        sbusData.newDataAvailable = 1;
+//    }
+//}
 
 //** ########################################### **//
 //** ================= CAN总线 ================= **//
@@ -55,17 +55,17 @@ typedef struct {
 static Can2RxState_t g_can2RxState = {0};
 
 /**
-  * @brief  CAN2 接收回调函数 (替换原 HAL_CAN_RxFifo0MsgPendingCallback 中的逻辑)
+  * @brief  CAN 接收回调函数 (替换原 HAL_CAN_RxFifo0MsgPendingCallback 中的逻辑)
   */
-void CAN2_RxProcess(CAN_HandleTypeDef *hcan)
+void CAN_RxProcess(CAN_HandleTypeDef *hcan,CAN_RxHeaderTypeDef *pHeader, uint8_t aData[])
 {
     CAN_RxHeaderTypeDef RxHeader;
     uint8_t RxData[8] = {0};
 
     /* 1. 安全读取消息，失败直接返回(不阻塞中断) */
-    if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
-        return;
-    }
+    //if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
+    //    return;
+    //}
 
     /* 2. 解析扩展ID */
     uint32_t baseId  = RxHeader.ExtId & 0xFFFFFFE0; /* 高27位基ID */
@@ -156,14 +156,19 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
        } 
 		}
     else if (hcan->Instance == CAN2)
-    {
-			  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
-       {
-           // 处理 DJI 电机数据
-           CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN2,RxHeader.StdId, RxData);
-       } 
-			 
-			// CAN2_RxProcess(hcan);
+    {	
+				if(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
+				{
+						if (RxHeader.IDE == CAN_ID_STD)// 标准帧
+						{
+								// 处理 DJI 电机数据
+								CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN2,RxHeader.StdId, RxData);
+						}
+						else if(RxHeader.IDE == CAN_ID_EXT)// 扩展帧
+						{
+								 CAN_RxProcess(hcan,&RxHeader, RxData);
+						} 
+				}
 		}
 }
 	

@@ -1,6 +1,5 @@
 basemood\hotrc_ht10a.o: UserDrive\HOTRC_HT10A.c
 basemood\hotrc_ht10a.o: UserDrive\HOTRC_HT10A.h
-basemood\hotrc_ht10a.o: ../Core/Inc/main.h
 basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 basemood\hotrc_ht10a.o: ../Core/Inc/stm32f4xx_hal_conf.h
 basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
@@ -36,6 +35,7 @@ basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\hotrc_ht10a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+basemood\hotrc_ht10a.o: ../Core/Inc/main.h
 basemood\hotrc_ht10a.o: ../Core/Inc/usart.h
 basemood\hotrc_ht10a.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\hotrc_ht10a.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h

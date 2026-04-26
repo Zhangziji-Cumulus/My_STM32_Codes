@@ -124,23 +124,23 @@ static uint32_t Get_CAN_ID(uint8_t motor_start_id) {
 
 /* ================= 底层发送 (STM32 HAL) ================= */
 
-extern CAN_HandleTypeDef hcan1;
+//extern CAN_HandleTypeDef hcan1;
 
-void CAN_DJI_SendSTD(uint32_t id, uint8_t* data) {
-    CAN_TxHeaderTypeDef TxHeader;
-    uint32_t TxMailbox;
+//void CAN_DJI_SendSTD(uint32_t id, uint8_t* data) {
+//    CAN_TxHeaderTypeDef TxHeader;
+//    uint32_t TxMailbox;
 
-    TxHeader.StdId = id;
-    TxHeader.IDE = CAN_ID_STD;
-    TxHeader.RTR = CAN_RTR_DATA;
-    TxHeader.DLC = 8;
-    TxHeader.TransmitGlobalTime = DISABLE;
+//    TxHeader.StdId = id;
+//    TxHeader.IDE = CAN_ID_STD;
+//    TxHeader.RTR = CAN_RTR_DATA;
+//    TxHeader.DLC = 8;
+//    TxHeader.TransmitGlobalTime = DISABLE;
 
-    // 等待发送邮箱空闲
-    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan1) == 0);
+//    // 等待发送邮箱空闲
+//    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan1) == 0);
 
-    HAL_CAN_AddTxMessage(&hcan1, &TxHeader, data, &TxMailbox);
-}
+//    HAL_CAN_AddTxMessage(&hcan1, &TxHeader, data, &TxMailbox);
+//}
 
 /* ================= 安培值控制函数 ================= */
 
@@ -152,7 +152,7 @@ void CAN_DJI_SendSTD(uint32_t id, uint8_t* data) {
  * @param current_amps: 目标电流 (单位：安培 A)，如 5.5f 或 -3.0f
  */
 void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_id, float current_amps){
-    uint8_t data[8] = 0;
+    uint8_t data[8] = {0};
     uint32_t can_id = 0;
     int data_index = 0;
 
@@ -178,7 +178,7 @@ void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan,const ESC_Config_t* config,
  * @param currents_amps: 长度为 4 的浮点数组，对应 4 个电机的电流
  */
 void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]) {
-    uint8_t data[8];
+    uint8_t data[8] = {0};
     uint32_t can_id = Get_CAN_ID(motor_start_id);
     
     if (can_id == 0) return;
@@ -191,28 +191,28 @@ void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, 
     CAN_Send_STD(hcan,can_id, data);
 }
 
-/**
- * @brief 安培值控制所有电机 (8个)
- * @param config: 电调配置指针
- * @param currents_amps: 长度为 8 的浮点数组，索引 0 对应电机 1
- */
-void ESC_Control_Amps_All(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, float currents_amps[8]) {
-    uint8_t data[8];
+///**
+// * @brief 安培值控制所有电机 (8个)
+// * @param config: 电调配置指针
+// * @param currents_amps: 长度为 8 的浮点数组，索引 0 对应电机 1
+// */
+//void ESC_Control_Amps_All(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, float currents_amps[8]) {
+//    uint8_t data[8] = {0};
 
-    // 发送第一帧 (电机 1-4)
-    for (int i = 0; i < 4; i++) {
-        int16_t raw_val = Amps_To_Raw(config, currents_amps[i]);
-        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
-    }
-    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
+//    // 发送第一帧 (电机 1-4)
+//    for (int i = 0; i < 4; i++) {
+//        int16_t raw_val = Amps_To_Raw(config, currents_amps[i]);
+//        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
+//    }
+//    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
 
-    // 发送第二帧 (电机 5-8)
-    for (int i = 0; i < 4; i++) {
-        int16_t raw_val = Amps_To_Raw(config, currents_amps[i + 4]);
-        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
-    }
-    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
-}
+//    // 发送第二帧 (电机 5-8)
+//    for (int i = 0; i < 4; i++) {
+//        int16_t raw_val = Amps_To_Raw(config, currents_amps[i + 4]);
+//        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
+//    }
+//    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
+//}
 
 /* ================= 原始值控制函数 ================= */
 
@@ -258,22 +258,22 @@ void ESC_Control_Raw_Group(CAN_HandleTypeDef *hcan,uint8_t motor_start_id, int16
     CAN_Send_STD(hcan,can_id, data);
 }
 
-/**
- * @brief 原始值控制所有电机 (8个)
- * @param raw_values: 长度为 8 的整型数组，索引 0 对应电机 1
- */
-void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]) {
-    uint8_t data[8];
+///**
+// * @brief 原始值控制所有电机 (8个)
+// * @param raw_values: 长度为 8 的整型数组，索引 0 对应电机 1
+// */
+//void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]) {
+//    uint8_t data[8];
 
-    // 发送第一帧 (电机 1-4)
-    for (int i = 0; i < 4; i++) {
-        Int16_To_BigEndian(raw_values[i], &data[i*2], &data[i*2 + 1]);
-    }
-    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
+//    // 发送第一帧 (电机 1-4)
+//    for (int i = 0; i < 4; i++) {
+//        Int16_To_BigEndian(raw_values[i], &data[i*2], &data[i*2 + 1]);
+//    }
+//    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
 
-    // 发送第二帧 (电机 5-8)
-    for (int i = 0; i < 4; i++) {
-        Int16_To_BigEndian(raw_values[i + 4], &data[i*2], &data[i*2 + 1]);
-    }
-    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
-}
+//    // 发送第二帧 (电机 5-8)
+//    for (int i = 0; i < 4; i++) {
+//        Int16_To_BigEndian(raw_values[i + 4], &data[i*2], &data[i*2 + 1]);
+//    }
+//    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
+//}

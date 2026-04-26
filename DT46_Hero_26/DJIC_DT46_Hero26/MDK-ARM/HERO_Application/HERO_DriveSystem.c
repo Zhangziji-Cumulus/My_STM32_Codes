@@ -8,6 +8,7 @@ extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
 
 extern fp32 INS_angle[3];
+extern float IMU_DegAngle[3];
 
 // 全局标志：0=停止电机  1=正常运行
 extern uint8_t g_motor_run_enable;
@@ -21,11 +22,8 @@ Wheels_Data_t wheels;
 //定义云台数据
 Gimbal_Data_t GD;
 
-
 void get_chassis_data(void);
 void get_gimbal_data(void);
-
-
 
 void HERO_DriveSystem_Init(void)
 {
@@ -49,18 +47,22 @@ __attribute__((used)) void HEROChassisTask(void *argument)
   for(;;)
   { 
 		get_chassis_data();
+		static uint16_t timecount2 = 200;
 		
-		Chassis_Move_Calc(&Chassis_Move,&Chassis_Mec,&Chassis_Follow_PID,RC_Ctl.Switch.S2_R);
-			
 		if(g_motor_run_enable == 0)
 		{
-			DJI_MOTOR_STOP_ALL(&hcan1);
+			if(timecount2 < 150)
+			{
+				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN1,&hcan1,30.0f);
+				timecount2++;
+			}
 		}
 		else
-		{			
-			Motor_DJI_SpeedCtl_1_4(DJI_MFeedback_CAN1,&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm,Chassis_Mec.FL.T_rpm);
+		{	
+			timecount2 = 0;
+			Chassis_Move_Calc(&Chassis_Move,&Chassis_Mec,&Chassis_Follow_PID,RC_Ctl.Switch.S3_R);
+			Motor_DJI_SpeedCtl_1_4(DJI_MFeedback_CAN1,&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FR.T_rpm,Chassis_Mec.BL.T_rpm,Chassis_Mec.BR.T_rpm);	
 		}
-					
 //==============================================================//
 		remain_HEROChassisTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
@@ -73,21 +75,31 @@ __attribute__((used)) void HEROGimbalTask(void *argument)
   for(;;)
   {
 		get_gimbal_data();
-		HERO_Gimbal_YawStable(&GD,RC_Ctl.Stick.RX);
-		HERO_Gimbal_PitchStable(&GD,RC_Ctl.Stick.RY);
+		
+		static uint16_t timecount1 = 0;
 		
 		if(g_motor_run_enable == 0)
 		{
-				DJI_MOTOR_STOP_ALL(&hcan1);
+			if(timecount1 < 150)
+			{
+				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN2,&hcan2,30.0f);
+				timecount1++;
+			}
 		}
 		else
-		{			
-			Motor_DJI_IMUYawContral(DJI_MFeedback_CAN1,GD.TAngle.Pitch,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[2]),6,1);
-			Motor_DJI_IMUPitchContral(DJI_MFeedback_CAN1,GD.TAngle.Yaw,MyMath_Radians_To_Degrees(DBT_RX.B2.IMU[0]),7,36);
-			//Motor_DJI_Angle_SingleContral(GD.TAngle.Yaw,5,36);
+		{		
+			timecount1 = 0;
+			if(abs(DJI_MFeedback_CAN2[0].current_ma) < 1000)
+			{
+				HERO_Gimbal_PitchStable(&GD,RC_Ctl.Stick.RY);
+				Motor_DJI_IMUPitchContral(DJI_MFeedback_CAN2,GD.TAngle.Pitch,-(IMU_DegAngle[2]),1,1);
+			}
+			if(DJI_MFeedback_CAN2[3].current_ma < 1000)
+			{
+				HERO_Gimbal_YawStable(&GD,RC_Ctl.Stick.RX);
+				Motor_DJI_IMUYawContral(DJI_MFeedback_CAN2,GD.TAngle.Yaw,IMU_DegAngle[0],5,2);
+			}
 		}
-
-		
 //==============================================================//
 		remain_HEROGimbalTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
@@ -100,6 +112,7 @@ __attribute__((used)) void HEROShootingTask(void *argument)
   for(;;)
   {
 
+		
 //=============================检测剩余栈=================================//
 		remain_HEROShootingTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
@@ -126,8 +139,18 @@ void get_chassis_data(void)
 	
 	 Chassis_Move.Vel.FB = MyMath_Map_Range(RC_Ctl.Stick.LX,-HOTRC_RANGE,HOTRC_RANGE,-100.0f,100.0f);
 	 Chassis_Move.Vel.RL = MyMath_Map_Range(RC_Ctl.Stick.LY,-HOTRC_RANGE,HOTRC_RANGE,-100.0f,100.0f);	
+	
 	 Chassis_Mec.FL.C_rpm  = DJI_MFeedback_CAN1[0].speed_rpm;
 	 Chassis_Mec.FL.C_Curr = DJI_MFeedback_CAN1[0].current_ma;
+	
+	 Chassis_Mec.FR.C_rpm  = DJI_MFeedback_CAN1[1].speed_rpm;
+	 Chassis_Mec.FR.C_Curr = DJI_MFeedback_CAN1[1].current_ma;
+	
+	 Chassis_Mec.BL.C_rpm  = DJI_MFeedback_CAN1[2].speed_rpm;
+	 Chassis_Mec.BL.C_Curr = DJI_MFeedback_CAN1[2].current_ma;
+	
+	 Chassis_Mec.BR.C_rpm  = DJI_MFeedback_CAN1[2].speed_rpm;
+	 Chassis_Mec.BR.C_Curr = DJI_MFeedback_CAN1[2].current_ma;
 }
 
 void get_gimbal_data(void)

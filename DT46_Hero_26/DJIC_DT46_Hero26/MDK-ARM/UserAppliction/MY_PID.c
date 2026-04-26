@@ -80,15 +80,62 @@ void PID_Init(PID_HandleTypeDef *pid, float kp, float ki, float kd,
 //* ================= 【单环PID计算】 ================= *//
 //* ================================================== *//
 
-float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val) {
-    pid->current = current_val;
+//float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val) {
+//    pid->current = current_val;
+//    pid->target = target_val;
+//    
+//    // 计算线性误差
+//    float error = pid->target - pid->current;
+//    pid->error = error;
+//    
+//    return PID_CalcCore(pid, error);
+//}
+
+/**
+  * @brief 安全型PID计算（含抗积分饱和与双向限幅）
+  * @note  调用前请确保 output_min/max 和 integral_min/max 已正确配置
+  */
+float PID_Calculate(PID_HandleTypeDef *pid, float current_val, float target_val)
+{
     pid->target = target_val;
-    
-    // 计算线性误差
-    float error = pid->target - pid->current;
-    pid->error = error;
-    
-    return PID_CalcCore(pid, error);
+    pid->current = current_val;
+    pid->error = target_val - current_val;
+
+    // 1. 积分累加（带硬限幅，防止数值溢出）
+    pid->error_sum += pid->error;
+    if (pid->error_sum > pid->integral_max) pid->error_sum = pid->integral_max;
+    if (pid->error_sum < pid->integral_min) pid->error_sum = pid->integral_min;
+
+    // 2. 计算原始输出
+    float p_out = pid->kp * pid->error;
+    float i_out = pid->ki * pid->error_sum;
+    float d_out = pid->kd * (pid->error - pid->last_error); // 假设控制周期固定为 1ms
+    float raw_output = p_out + i_out + d_out;
+
+    // 3. 输出限幅（保护电调与机械结构）
+    if (raw_output > pid->output_max) pid->Output = pid->output_max;
+    else if (raw_output < pid->output_min) pid->Output = pid->output_min;
+    else pid->Output = raw_output;
+
+    // 4. 抗积分饱和（条件积分法）
+    // 当输出被限幅时，冻结积分累加，防止“积分风车”效应导致过零超调
+    if (pid->Output != raw_output) {
+        pid->error_sum -= pid->error; // 回退本次累加，保持饱和前的积分值
+    }
+
+    pid->last_error = pid->error;
+    return pid->Output;
+}
+
+/**
+  * @brief PID状态重置（必须在运行模式切换瞬间调用）
+  */
+void PID_Reset(PID_HandleTypeDef *pid)
+{
+    pid->error = 0.0f;
+    pid->last_error = 0.0f;
+    pid->error_sum = 0.0f;
+    pid->Output = 0.0f;
 }
 
 //* ============================================================= *//
@@ -153,7 +200,7 @@ float PID_Double_Calculate(PID_HandleTypeDef* PID_In, PID_HandleTypeDef* PID_Ex,
 {
     // 外环计算
     float PID_ExOutput = PID_Calculate(PID_Ex, Current_Ex, Target);
-
+		
     float PID_InOutput = 0.0f;
     // 死区判断：误差小于阈值时内环清零（防抖动）
     if (fabsf(Current_Ex - Target) > MError) {
@@ -173,6 +220,9 @@ float PID_Triple_Calculate(PID_HandleTypeDef* PID_Angle,
                            float current_speed, float current_current,
                            float max_angle_error)
 {
+		PID_Angle->current   = current_angle;
+		PID_Speed->current   = current_speed;
+	  PID_Current->current = current_current;
     // 1. 外环：角度 -> 目标速度
     float pid_angle_output = PID_Calculate(PID_Angle, current_angle, target_angle);
     PID_Angle->Output = pid_angle_output;

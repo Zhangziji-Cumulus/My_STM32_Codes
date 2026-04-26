@@ -223,6 +223,67 @@ void buzzer_effects_task(void const *argument)
 				buzzer_drv_off();
 				buzzer_is_busy = FALSE;
 				break;
+			
+			// ===================== 新增：播放 稻香 片段 =====================
+			case RICE_DAOXIANG:
+				buzzer_control.sound_effect = STOP;
+				buzzer_is_busy = TRUE;
+				
+				// 还记得 你说家是唯一的城堡
+				buzzer_drv_on(3, 10000); osDelay(250);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(4, 10000); osDelay(125);
+				buzzer_drv_on(4, 10000); osDelay(250);
+				buzzer_drv_on(4, 10000); osDelay(125);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(2, 10000); osDelay(250);
+				buzzer_drv_off();        osDelay(80);
+
+				// 随着稻香 河流继续奔跑
+				buzzer_drv_on(2, 10000); osDelay(250);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(4, 10000); osDelay(125);
+				buzzer_drv_on(4, 10000); osDelay(380);
+				buzzer_drv_off();        osDelay(80);
+
+				// 微微笑 小时候的梦我知道
+				buzzer_drv_on(4, 10000); osDelay(250);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(2, 10000); osDelay(125);
+				buzzer_drv_on(1, 10000); osDelay(250);
+				buzzer_drv_on(1, 10000); osDelay(125);
+				buzzer_drv_on(2, 10000); osDelay(125);
+				buzzer_drv_on(3, 10000); osDelay(250);
+				buzzer_drv_off();        osDelay(80);
+
+				// 不要哭 让萤火虫带着你逃跑
+				buzzer_drv_on(3, 10000); osDelay(250);
+				buzzer_drv_on(2, 10000); osDelay(125);
+				buzzer_drv_on(1, 10000); osDelay(125);
+				buzzer_drv_on(1, 10000); osDelay(380);
+				buzzer_drv_off();        osDelay(80);
+
+				// 乡间的歌谣 永远的依靠
+				buzzer_drv_on(1, 10000); osDelay(250);
+				buzzer_drv_on(2, 10000); osDelay(125);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(2, 10000); osDelay(250);
+				buzzer_drv_on(1, 10000); osDelay(125);
+				buzzer_drv_on(1, 10000); osDelay(125);
+				buzzer_drv_on(1, 10000); osDelay(250);
+				buzzer_drv_off();        osDelay(80);
+
+				// 回家吧 回到最初的美好
+				buzzer_drv_on(1, 10000); osDelay(250);
+				buzzer_drv_on(2, 10000); osDelay(125);
+				buzzer_drv_on(3, 10000); osDelay(125);
+				buzzer_drv_on(4, 10000); osDelay(380);
+
+				buzzer_drv_off();
+				buzzer_is_busy = FALSE;
+				break;
+		
+			// =================================================================
 
 			default:
 				buzzer_control.sound_effect = STOP;

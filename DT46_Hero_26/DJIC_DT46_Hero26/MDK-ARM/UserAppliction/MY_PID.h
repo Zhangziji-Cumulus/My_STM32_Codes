@@ -135,9 +135,8 @@ float PID_Triple_Calculate(PID_HandleTypeDef *PID_Angle,
                            float current_speed, float current_current,
                            float max_angle_error);
 													 
-													 
-													 													 
-													 
+void PID_Reset(PID_HandleTypeDef *pid);
+												 
 //** @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ **//
 //** =========================================================== **//
 //** ================= 【带前馈的PID计算函数】 ================= **//

@@ -27,14 +27,24 @@ Project File Date:  04/22/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling User_CanCallBack.c...
-UserCallBack\User_CanCallBack.c(27): warning:  #177-D: function "FloatToBytes"  was declared but never referenced
-  static void FloatToBytes(float value, uint8_t* bytes) {
-UserCallBack\User_CanCallBack.c: 1 warning, 0 errors
+compiling HERO_DriveSystem.c...
+HERO_Application\HERO_DriveSystem.c(159): warning:  #1-D: last line of file ends without a newline
+  }
+HERO_Application\HERO_DriveSystem.c(33): warning:  #550-D: variable "remain_HEROSystemTask"  was set but never used
+  static UBaseType_t remain_HEROSystemTask;
+HERO_Application\HERO_DriveSystem.c(44): warning:  #550-D: variable "remain_HEROChassisTask"  was set but never used
+  static UBaseType_t remain_HEROChassisTask;
+HERO_Application\HERO_DriveSystem.c(72): warning:  #550-D: variable "remain_HEROGimbalTask"  was set but never used
+  static UBaseType_t remain_HEROGimbalTask;
+HERO_Application\HERO_DriveSystem.c(109): warning:  #550-D: variable "remain_HEROShootingTask"  was set but never used
+  static UBaseType_t remain_HEROShootingTask;
+HERO_Application\HERO_DriveSystem.c(122): warning:  #550-D: variable "remain_HERODialTask"  was set but never used
+  static UBaseType_t remain_HERODialTask;
+HERO_Application\HERO_DriveSystem.c: 6 warnings, 0 errors
 linking...
-Program Size: Code=49292 RO-data=1448 RW-data=496 ZI-data=28256  
+Program Size: Code=51316 RO-data=1412 RW-data=500 ZI-data=28900  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 

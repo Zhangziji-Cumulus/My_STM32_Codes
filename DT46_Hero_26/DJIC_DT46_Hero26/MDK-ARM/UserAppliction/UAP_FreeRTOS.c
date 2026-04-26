@@ -1,5 +1,6 @@
 #include "UAP_FreeRTOS.h"
 
+
 extern osMessageQueueId_t Queue_DJI_MDHandle;
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern HOTRC_Ctl_t RC_Ctl;
@@ -26,9 +27,8 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 
 	 // 上电强制停机
 	 g_motor_run_enable = 0;
-	 DJI_MOTOR_STOP_ALL(&hcan1);
-
-	 vTaskDelay(300);  // 直接等SBUS稳定，最简单有效
+	
+	 vTaskDelay(100);  // 直接等SBUS稳定，最简单有效
 
 	 // 读取上电时的初始拨杆值
 	 last_switch = RC_Ctl.Switch.S2_L;
@@ -55,24 +55,20 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 			{
 				system_allowed = 0;
 				g_motor_run_enable = 0;
-				DJI_MOTOR_STOP_ALL(&hcan1);
 			}
 		}
-
 		// ====================== 强制安全 ======================
 		// 只要不在3 → 绝对停机
 		if(current_switch != HOTRC_SWITCH_DOWN)
 		{
 			g_motor_run_enable = 0;
-			DJI_MOTOR_STOP_ALL(&hcan1);
-		}
 
+		}
 		// 提示音
 		if(RC_Ctl.Switch.S2_R == HOTRC_SWITCH_DOWN)
 		{
-			buzzer->sound_effect = D_D_D_;
+			buzzer->sound_effect = D_B_B_;
 		}
-
 		vTaskDelay(50);
 	 }
 }
@@ -83,14 +79,8 @@ __attribute__((used)) void Start_DJI_RecieveData(void *argument)
 	
   for(;;)
   { Start_DJI_RecieveData_TASK = uxTaskGetStackHighWaterMark(NULL);
-		
-		
-		// 检查是否有新数据
-    if (sbusData.newDataAvailable) {
-        // 解析数据
-        SBUS_Parse();
-    }
-		
+
+    SBUS_Process();		
     osDelay(1);
   }
 }

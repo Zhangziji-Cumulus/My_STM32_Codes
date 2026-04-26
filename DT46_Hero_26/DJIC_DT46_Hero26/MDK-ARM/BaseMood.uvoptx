@@ -161,32 +161,52 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DBT_RX,0x0A</ItemText>
+          <ItemText>DJI_MFeedback_CAN2,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>RC_Ctl,0x0A</ItemText>
+          <ItemText>Gimbal_Pitch_In</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>GD</ItemText>
+          <ItemText>Gimbal_Pitch_Ex</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>IMU_DegAngle</ItemText>
+          <ItemText>DJI_MFeedback_CAN1[0].speed_rpm,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Yaw_Ex</ItemText>
+          <ItemText>Chassis_Mec,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DJI_MFeedback_CAN2,0x0A</ItemText>
+          <ItemText>Gimbal_Pitch_In</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Gimbal_Pitch_Ex</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Gimbal_Yaw_In</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Gimbal_Yaw_Ex</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>IMU_DegAngle[0]</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
