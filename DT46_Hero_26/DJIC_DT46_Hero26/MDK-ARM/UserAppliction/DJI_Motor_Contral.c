@@ -1,5 +1,4 @@
 #include "DJI_Motor_Contral.h"
-#include "DJI_Motor_CAN.h"
 
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 
@@ -29,12 +28,24 @@ PID_FF_HandleTypeDef Gimbal_Pitch_FF;
 PID_HandleTypeDef Gimbal_Pitch_In;
 PID_HandleTypeDef Gimbal_Pitch_Ex;
 
+PID_HandleTypeDef SFri_UL_In;
+PID_HandleTypeDef SFri_UL_Ex;
+
+PID_HandleTypeDef SFri_UR_In;
+PID_HandleTypeDef SFri_UR_Ex;
+
+PID_HandleTypeDef SFri_DM_In;
+PID_HandleTypeDef SFri_DM_Ex;
 
 
 void Motor_Init(void)
 {
+	uint8_t board_id = BOARD_ID; 
+	
+	//3508µç»ú¼±Í£
   PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
+	//µØÅÌPID
 	PID_Init(&Chassis_MotorFL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
 	PID_Init(&Chassis_MotorFL_Ex,10.0f,0.0f,0.0f,-800,800,-10.0f, 10.0f);
 
@@ -49,6 +60,7 @@ void Motor_Init(void)
 	
 	PID_Init(&Chassis_Follow_PID,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
 	
+	//ÔÆÌ¨PID
 	PID_FF_Init(&Gimbal_Yaw_FF,3.0f,0.0f,0.0f,1.0,-DJI_M2006_R,DJI_M2006_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Yaw_In,1.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Yaw_Ex,1.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
@@ -56,21 +68,19 @@ void Motor_Init(void)
 	PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_Ex,100.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+	
+	//Ä¦²ÁÂÖPID
+	PID_Init(&SFri_UL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&SFri_UL_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	
+	PID_Init(&SFri_UR_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&SFri_UR_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	
+	PID_Init(&SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 }
 
-void Motor_DJI_Speed_SingleContral(int16_t MotorVel)
-{
-//int16_t PIDoutput = PID_FF_Calculate_AutoFF(&test_FF,DJI_MFeedback_CAN1[0].speed_rpm,MotorVel,PID_FF_MODE_VELOCITY);
-//	int16_t PIDoutput = PID_Double_Calculate(&Chassis_Motor_In,
-//														 &Chassis_Motor_Ex, 
-//														 MotorVel,
-//														 DJI_MFeedback_CAN1[0].current_ma,
-//														 DJI_MFeedback_CAN1[0].speed_rpm,
-//														 1);
-//	ESC_Control_Raw_Single(&hcan1,1,PIDoutput);
-}
-
-void Motor_DJI_SpeedCtl_1_4(DJI_MotorFeedback_t DJI_MFeedback[],
+void Motor_DJI_Chassis(DJI_MotorFeedback_t DJI_MFeedback[],
 														CAN_HandleTypeDef *hcan,
 	                          float   MError,
 														int16_t MotorVel_1,
@@ -100,15 +110,43 @@ void Motor_DJI_SpeedCtl_1_4(DJI_MotorFeedback_t DJI_MFeedback[],
 															 DJI_MFeedback[2].current_ma,
 															 DJI_MFeedback[2].speed_rpm,
 															 MError);
+															 
+	ESC_Control_Raw_Group(hcan,1,PIDoutput);
+}
 
-  PIDoutput[3] = PID_Double_Calculate(&Chassis_MotorBR_In,
-															 &Chassis_MotorBR_Ex, 
-															 MotorVel_4,
-															 DJI_MFeedback[3].current_ma,
-															 DJI_MFeedback[3].speed_rpm,
-															 MError);
+void Motor_DJI_ShootingFri(DJI_MotorFeedback_t DJI_MFeedback[],
+														CAN_HandleTypeDef *hcan,
+	                          float   MError,
+														int16_t SFri_UL_M,
+														int16_t SFri_UR_M,
+														int16_t SFri_MD_M){
+					
+	int16_t PIDoutput[4];	
+																
+	PIDoutput[0] = PID_Double_Calculate(&SFri_UL_In,
+																		  &SFri_UL_Ex, 
+																		  SFri_UL_M,
+																		  DJI_MFeedback[0].current_ma,
+																		  DJI_MFeedback[0].speed_rpm,
+																		  MError);
+																
+	PIDoutput[1] = PID_Double_Calculate(&SFri_UR_In,
+																		  &SFri_UR_Ex, 
+																			SFri_UR_M,
+																		  DJI_MFeedback[1].current_ma,
+																		  DJI_MFeedback[1].speed_rpm,
+																		  MError);
+																
+  PIDoutput[2] = PID_Double_Calculate(&SFri_DM_In,
+																		  &SFri_DM_Ex, 
+																		  SFri_MD_M,
+																		  DJI_MFeedback[2].current_ma,
+																		  DJI_MFeedback[2].speed_rpm,
+																		  MError);
 
-	ESC_Control_Raw_Group(&hcan1,1,PIDoutput);
+  PIDoutput[3] = 0;
+
+	ESC_Control_Raw_Group(hcan,1,PIDoutput);
 }
 															
 //void Motor_DJI_SpeedCtl_5_8(DJI_MotorFeedback_t DJI_MFeedback[],
@@ -151,81 +189,6 @@ void Motor_DJI_SpeedCtl_1_4(DJI_MotorFeedback_t DJI_MFeedback[],
 
 //	ESC_Control_Raw_Group(hcan,5,PIDoutput);
 //}
-
-void Motor_DJI_Speed_8Contral(DJI_MotorFeedback_t DJI_MFeedback[],
-	                            CAN_HandleTypeDef *hcan,
-															float   MError,
-	                            int16_t MotorVel_1,
-															int16_t MotorVel_2,
-															int16_t MotorVel_3,
-															int16_t MotorVel_4,
-															int16_t MotorVel_5,
-															int16_t MotorVel_6,
-															int16_t MotorVel_7,
-															int16_t MotorVel_8){
-	
-	int16_t PIDoutput[8];	
-																
-//	PIDoutput[0] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																		  MotorVel_1,
-//																			DJI_MFeedback[0].current_ma,
-//																			DJI_MFeedback[0].speed_rpm,
-//																			MError);
-//																
-//	PIDoutput[1] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_2,
-//																			DJI_MFeedback[1].current_ma,
-//																			DJI_MFeedback[1].speed_rpm,
-//																			MError);
-//																
-//  PIDoutput[2] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_3,
-//																			DJI_MFeedback[2].current_ma,
-//																			DJI_MFeedback[2].speed_rpm,
-//																			MError);
-
-//  PIDoutput[3] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_4,
-//																			DJI_MFeedback[3].current_ma,
-//																			DJI_MFeedback[3].speed_rpm,
-//																			MError);
-//																
-//	PIDoutput[4] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_5,
-//																			DJI_MFeedback[4].current_ma,
-//																			DJI_MFeedback[4].speed_rpm,
-//																			MError);
-//																
-//	PIDoutput[5] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_6,
-//																			DJI_MFeedback[5].current_ma,
-//																			DJI_MFeedback[5].speed_rpm,
-//																			MError);
-//																
-//  PIDoutput[6] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_7,
-//																		  DJI_MFeedback[6].current_ma,
-//																		  DJI_MFeedback[6].speed_rpm,
-//																		  MError);
-
-//  PIDoutput[7] = PID_Double_Calculate(&Chassis_Motor_In,
-//																			&Chassis_Motor_Ex, 
-//																			MotorVel_8,
-//																			DJI_MFeedback[7].current_ma,
-//																			DJI_MFeedback[7].speed_rpm,
-//																			MError);
-}
-
-
-
-
 
 
 void Motor_DJI_Angle_SingleContral(DJI_MotorFeedback_t DJI_MFeedback[],float TargetAngle,uint8_t ID,uint16_t gear_ratio)

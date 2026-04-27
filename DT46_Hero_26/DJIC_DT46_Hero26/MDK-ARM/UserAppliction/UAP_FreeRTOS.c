@@ -1,7 +1,10 @@
 #include "UAP_FreeRTOS.h"
 
+extern osMessageQueueId_t HEROChassisHandle;
+extern osMessageQueueId_t HEROGimbalHandle;
+extern osMessageQueueId_t HEROShootingHandle;
+extern osMessageQueueId_t HERODialHandle;
 
-extern osMessageQueueId_t Queue_DJI_MDHandle;
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern HOTRC_Ctl_t RC_Ctl;
 
@@ -11,6 +14,35 @@ uint8_t last_switch = 0;
 
 void UAP_FreeRTOS_Init(void)
 {
+	//FreeRTOS 任务不同板子之前挂起或停止
+	uint8_t board_id = BOARD_ID;
+	if(board_id == GIMBAL_BOAD)
+	{
+		 if(HEROChassisHandle != NULL)
+     {
+        vTaskDelete(HEROChassisHandle);
+        HEROChassisHandle = NULL;
+     }
+		 if(HERODialHandle != NULL)
+     {
+        vTaskDelete(HERODialHandle);
+        HERODialHandle = NULL; 
+     }
+	}
+	else if(board_id == CHASSIS_BOAD)
+	{
+		 if(HEROGimbalHandle != NULL)
+     {
+        vTaskDelete(HEROGimbalHandle);
+        HEROGimbalHandle = NULL; 
+     }
+		 if(HEROShootingHandle != NULL)
+     {
+        vTaskDelete(HEROShootingHandle);
+        HEROShootingHandle = NULL; 
+     }
+	}
+	
 	last_switch = RC_Ctl.Switch.S2_L;
 }
 
@@ -65,7 +97,7 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 
 		}
 		// 提示音
-		if(RC_Ctl.Switch.S2_R == HOTRC_SWITCH_DOWN)
+		if(RC_Ctl.Switch.S3_L == HOTRC_SWITCH_UP)
 		{
 			buzzer->sound_effect = D_B_B_;
 		}

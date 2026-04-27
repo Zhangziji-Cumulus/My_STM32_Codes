@@ -48,9 +48,8 @@ basemood\uap_init.o: ./UserDrive/CAN_PART.h
 basemood\uap_init.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\uap_init.o: ../Core/Inc/can.h
 basemood\uap_init.o: UserAppliction\My_Math.h
-basemood\uap_init.o: ./UserDrive/HOTRC_HT10A.h
-basemood\uap_init.o: ../Core/Inc/usart.h
-basemood\uap_init.o: UserAppliction\UAP_FreeRTOS.h
+basemood\uap_init.o: ./UserDrive/Dual_board_Transmit.h
+basemood\uap_init.o: ./UAP_IMU/struct_typedef.h
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 basemood\uap_init.o: ../Core/Inc/FreeRTOSConfig.h
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -60,10 +59,13 @@ basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/AR
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\uap_init.o: ./UAP_IMU/INS_task.h
+basemood\uap_init.o: ./UserDrive/HOTRC_HT10A.h
+basemood\uap_init.o: ../Core/Inc/usart.h
+basemood\uap_init.o: UserAppliction\UAP_FreeRTOS.h
 basemood\uap_init.o: UserAppliction\MY_LED.h
 basemood\uap_init.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_init.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\uap_init.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
-basemood\uap_init.o: ./UAP_IMU/struct_typedef.h
-basemood\uap_init.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h

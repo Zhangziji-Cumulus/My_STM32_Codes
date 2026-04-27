@@ -3,6 +3,8 @@
 
 #include "HERO_API.h"
 #include "MY_PID.h"
+#include "HERO_Math.h"
+
 
 #define MECANUM_WHEEL_RADIUS_MM 150.0f
 #define CHASSIS_FORWARD_MAX_SPEED 100.0f; //线速度，单位：m/s

@@ -166,47 +166,22 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_In</ItemText>
+          <ItemText>SFri_UL_Ex</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_Ex</ItemText>
+          <ItemText>SFri_UR_Ex</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DJI_MFeedback_CAN1[0].speed_rpm,0x0A</ItemText>
+          <ItemText>SFri_DM_Ex</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Chassis_Mec,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_In</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_Ex</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Yaw_In</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Yaw_Ex</ItemText>
-        </Ww>
-        <Ww>
-          <count>10</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>IMU_DegAngle[0]</ItemText>
+          <ItemText>SFri_DM_In</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -1238,7 +1213,7 @@
       <GroupNumber>11</GroupNumber>
       <FileNumber>75</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\HERO_Application\HERO_Math.c</PathWithFileName>

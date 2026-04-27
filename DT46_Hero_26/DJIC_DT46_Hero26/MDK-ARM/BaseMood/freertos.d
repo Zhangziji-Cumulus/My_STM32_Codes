@@ -69,8 +69,8 @@ basemood\freertos.o: ./HERO_Application/HERO_API.h
 basemood\freertos.o: ./UserAppliction/MY_PID.h
 basemood\freertos.o: ./UserAppliction/MY_PID.h
 basemood\freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-basemood\freertos.o: ./HERO_Application/HERO_Gimbal.h
 basemood\freertos.o: ./HERO_Application/HERO_Math.h
+basemood\freertos.o: ./HERO_Application/HERO_Gimbal.h
 basemood\freertos.o: ./HERO_Application/HERO_Shooting.h
 basemood\freertos.o: ./UserAppliction/My_Math.h
 basemood\freertos.o: ./UserAppliction/DJI_Motor_Contral.h

@@ -47,3 +47,19 @@ basemood\dji_motor_contral.o: ./UserDrive/CAN_PART.h
 basemood\dji_motor_contral.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\dji_motor_contral.o: ../Core/Inc/can.h
 basemood\dji_motor_contral.o: UserAppliction\My_Math.h
+basemood\dji_motor_contral.o: ./UserDrive/Dual_board_Transmit.h
+basemood\dji_motor_contral.o: ./UAP_IMU/struct_typedef.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+basemood\dji_motor_contral.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\dji_motor_contral.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\dji_motor_contral.o: ./UAP_IMU/INS_task.h
+basemood\dji_motor_contral.o: ./UserDrive/HOTRC_HT10A.h
+basemood\dji_motor_contral.o: ../Core/Inc/usart.h

@@ -12,6 +12,7 @@
 #include "MY_LED.h"
 #include "sound_effects_task.h" 
 #include "HOTRC_HT10A.h"
+#include "Dual_board_Transmit.h"
 
 void UAP_FreeRTOS_Init(void);
 

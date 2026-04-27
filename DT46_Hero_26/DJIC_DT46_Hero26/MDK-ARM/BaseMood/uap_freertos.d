@@ -58,11 +58,13 @@ basemood\uap_freertos.o: UserAppliction\MY_PID.h
 basemood\uap_freertos.o: UserAppliction\MY_PID.h
 basemood\uap_freertos.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\uap_freertos.o: UserAppliction\My_Math.h
+basemood\uap_freertos.o: ./UserDrive/Dual_board_Transmit.h
+basemood\uap_freertos.o: ./UAP_IMU/struct_typedef.h
+basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\uap_freertos.o: ./UAP_IMU/INS_task.h
+basemood\uap_freertos.o: ./UserDrive/HOTRC_HT10A.h
+basemood\uap_freertos.o: ../Core/Inc/usart.h
 basemood\uap_freertos.o: UserAppliction\MY_LED.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/sound_effects_task.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
 basemood\uap_freertos.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
-basemood\uap_freertos.o: ./UAP_IMU/struct_typedef.h
-basemood\uap_freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
-basemood\uap_freertos.o: ./UserDrive/HOTRC_HT10A.h
-basemood\uap_freertos.o: ../Core/Inc/usart.h

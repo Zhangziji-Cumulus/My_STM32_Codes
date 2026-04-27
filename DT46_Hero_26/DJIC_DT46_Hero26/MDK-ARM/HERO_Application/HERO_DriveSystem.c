@@ -22,6 +22,10 @@ Wheels_Data_t wheels;
 //定义云台数据
 Gimbal_Data_t GD;
 
+//定义摩擦轮数据
+ShootingVel_t SV;
+
+
 void get_chassis_data(void);
 void get_gimbal_data(void);
 
@@ -51,9 +55,10 @@ __attribute__((used)) void HEROChassisTask(void *argument)
 		
 		if(g_motor_run_enable == 0)
 		{
+			//电机急刹车
 			if(timecount2 < 150)
 			{
-				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN1,&hcan1,30.0f);
+				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN1,&hcan1,10.0f);
 				timecount2++;
 			}
 		}
@@ -61,7 +66,7 @@ __attribute__((used)) void HEROChassisTask(void *argument)
 		{	
 			timecount2 = 0;
 			Chassis_Move_Calc(&Chassis_Move,&Chassis_Mec,&Chassis_Follow_PID,RC_Ctl.Switch.S3_R);
-			Motor_DJI_SpeedCtl_1_4(DJI_MFeedback_CAN1,&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FR.T_rpm,Chassis_Mec.BL.T_rpm,Chassis_Mec.BR.T_rpm);	
+			Motor_DJI_Chassis(DJI_MFeedback_CAN1,&hcan1,1.0f,Chassis_Mec.FL.T_rpm,Chassis_Mec.FR.T_rpm,Chassis_Mec.BL.T_rpm,Chassis_Mec.BR.T_rpm);	
 		}
 //==============================================================//
 		remain_HEROChassisTask = uxTaskGetStackHighWaterMark(NULL);
@@ -80,9 +85,10 @@ __attribute__((used)) void HEROGimbalTask(void *argument)
 		
 		if(g_motor_run_enable == 0)
 		{
+			//电机急刹车
 			if(timecount1 < 150)
 			{
-				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN2,&hcan2,30.0f);
+				DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN2,&hcan2,10.0f);
 				timecount1++;
 			}
 		}
@@ -111,7 +117,22 @@ __attribute__((used)) void HEROShootingTask(void *argument)
 {
   for(;;)
   {
-
+		static uint16_t timecount1 = 0;
+		
+		if(g_motor_run_enable == 0)
+		{
+			//电机急刹车
+			if(timecount1 < 150)
+			{
+				//DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN1,&hcan1,10.0f);
+				timecount1++;
+			}
+		}
+		else
+		{
+			ShootingVel_Calc(5,&SV,RC_Ctl.Switch.S2_R);
+			Motor_DJI_ShootingFri(DJI_MFeedback_CAN1,&hcan1,1.0f,SV.UP_Lrpm,SV.UP_Rrpm,SV.Dowm_Mrpm);	
+		}
 		
 //=============================检测剩余栈=================================//
 		remain_HEROShootingTask = uxTaskGetStackHighWaterMark(NULL);
