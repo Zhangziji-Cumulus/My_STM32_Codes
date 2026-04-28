@@ -76,3 +76,4 @@ basemood\freertos.o: ./UserAppliction/My_Math.h
 basemood\freertos.o: ./UserAppliction/DJI_Motor_Contral.h
 basemood\freertos.o: ./UserCallBack/User_CanCallBack.h
 basemood\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+basemood\freertos.o: ./UserAppliction/UAP_FreeRTOS.h

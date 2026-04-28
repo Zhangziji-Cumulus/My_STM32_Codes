@@ -14,17 +14,12 @@ typedef struct{
 	struct{
 		float Yaw;
 		float Pitch;
-	}IMU;
-	
-	struct{
-		float Yaw;
-		float Pitch;
 	}CAngle;
 	
 }Gimbal_Data_t;
 
 
-void HERO_Gimbal_YawStable(Gimbal_Data_t* GD,int16_t RC_ctl);
-void HERO_Gimbal_PitchStable(Gimbal_Data_t* GD,int16_t RC_ctl);
+void HERO_Gimbal_YawStable(Gimbal_Data_t* GD,int16_t RC_ctl,float IMU_Yaw);
+void HERO_Gimbal_PitchStable(Gimbal_Data_t* GD,int16_t RC_ctl,float IMU_Pitch);
 
 #endif

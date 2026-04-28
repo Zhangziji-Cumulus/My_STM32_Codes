@@ -61,13 +61,13 @@ void Motor_Init(void)
 	PID_Init(&Chassis_Follow_PID,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
 	
 	//云台PID
-	PID_FF_Init(&Gimbal_Yaw_FF,3.0f,0.0f,0.0f,1.0,-DJI_M2006_R,DJI_M2006_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Yaw_In,1.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Yaw_Ex,1.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+	PID_FF_Init(&Gimbal_Yaw_FF,750.0f,0.05f,40.0f,0.0,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
 	
 	PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,100.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_In,1.0f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_Ex,300.0f,0.0f,0.0f,-1500,1500,-10.0f, 10.0f);
 	
 	//摩擦轮PID
 	PID_Init(&SFri_UL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
@@ -219,8 +219,8 @@ void Motor_DJI_IMUYawContral(DJI_MotorFeedback_t DJI_MFeedback[],float TargetAng
 	TargetAngle = MyMath_normalize_m180_to_p180(TargetAngle);	
 	//Angletest = MyMath_cal_output_angle(DJI_MFeedback[ID - 1].angle_deg,gear_ratio); //计算减速比后的输出轴角度
 	
-	int16_t PIDoutput = PID_Double_CycleAngle(&Gimbal_Yaw_In,&Gimbal_Yaw_Ex,TargetAngle,DJI_MFeedback[ID - 1].speed_rpm,IMUAngle,1.00f);
-	//int16_t PIDoutput = PID_FF_Calculate_CycleAngle(&Gimbal_Yaw_FF,Angletest,TargetAngle);
+	//int16_t PIDoutput = PID_Double_CycleAngle(&Gimbal_Yaw_In,&Gimbal_Yaw_Ex,TargetAngle,DJI_MFeedback[ID - 1].speed_rpm,IMUAngle,1.00f);
+	int16_t PIDoutput = PID_FF_Calculate_CycleAngle(&Gimbal_Yaw_FF,IMUAngle,TargetAngle);
 
 	ESC_Control_Raw_Single(&hcan2,ID,PIDoutput);
 }

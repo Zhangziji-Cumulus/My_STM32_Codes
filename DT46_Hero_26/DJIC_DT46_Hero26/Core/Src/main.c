@@ -32,11 +32,6 @@
 #include "bsp_delay.h"
 #include "MY_Time.h"
 #include "UAP_Init.h"
-#include "UAP_FreeRTOS.h"
-
-
-//#include "CAN_PART.h"
-//#include "DJI_Motor.h"
 
 /* USER CODE END Includes */
 
@@ -128,6 +123,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	
 	
   while (1)
   {

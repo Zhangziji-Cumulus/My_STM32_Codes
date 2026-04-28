@@ -72,7 +72,3 @@ basemood\main.o: ./UserAppliction/MY_PID.h
 basemood\main.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\main.o: ./UserAppliction/My_Math.h
 basemood\main.o: ./UserAppliction/UAP_Init.h
-basemood\main.o: ./UserAppliction/UAP_FreeRTOS.h
-basemood\main.o: ./UserAppliction/Buzzer/sound_effects_task.h
-basemood\main.o: ./UserAppliction/Buzzer/buzzer_TIM_init.h
-basemood\main.o: ./UserAppliction/Buzzer/bsp_buzzer_driver.h
