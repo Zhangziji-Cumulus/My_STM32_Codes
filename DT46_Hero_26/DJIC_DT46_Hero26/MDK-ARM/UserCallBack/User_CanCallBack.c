@@ -57,19 +57,19 @@ static Can2RxState_t g_can2RxState = {0};
 /**
   * @brief  CAN 接收回调函数 (替换原 HAL_CAN_RxFifo0MsgPendingCallback 中的逻辑)
   */
-void CAN_RxProcess(CAN_HandleTypeDef *hcan,CAN_RxHeaderTypeDef *pHeader, uint8_t aData[])
+void CAN_RxProcess(CAN_HandleTypeDef *hcan,CAN_RxHeaderTypeDef *pHeader, uint8_t RxData[])
 {
-    CAN_RxHeaderTypeDef RxHeader;
-    uint8_t RxData[8] = {0};
+//    CAN_RxHeaderTypeDef RxHeader;
+//    uint8_t RxData[8] = {0};
 
-    /* 1. 安全读取消息，失败直接返回(不阻塞中断) */
-    //if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
-    //    return;
-    //}
+//    /* 1. 安全读取消息，失败直接返回(不阻塞中断) */
+//    if(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
+//        return;
+//    }
 
     /* 2. 解析扩展ID */
-    uint32_t baseId  = RxHeader.ExtId & 0xFFFFFFE0; /* 高27位基ID */
-    uint32_t frameId = RxHeader.ExtId & 0x1F;       /* 低5位帧序号 */
+    uint32_t baseId  = pHeader->ExtId & 0xFFFFFFE0; /* 高27位基ID */
+    uint32_t frameId = pHeader->ExtId & 0x1F;       /* 低5位帧序号 */
 
     if (baseId != RX_BASE_ID) {
         return; /* 非目标设备数据，丢弃 */
@@ -137,37 +137,45 @@ void CAN_RxProcess(CAN_HandleTypeDef *hcan,CAN_RxHeaderTypeDef *pHeader, uint8_t
     }
 }
 
-
-
-
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-	  CAN_RxHeaderTypeDef RxHeader;
-	  static uint8_t RxData[8];
-	
 
 		if(hcan->Instance == CAN1)
 		{
-			 // 读取 CAN1 数据
-       if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
-       {
-           // 处理 DJI 电机数据
-           CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1,RxHeader.StdId, RxData);
-       } 
+			CAN_RxHeaderTypeDef Temp_RxHeader;
+			uint8_t Temp_RxData[8];
+			
+			while(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &Temp_RxHeader, Temp_RxData) == HAL_OK)
+			{
+					if (Temp_RxHeader.IDE == CAN_ID_STD)// 标准帧
+					{
+							// 处理 DJI 电机数据
+							CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1,Temp_RxHeader.StdId, Temp_RxData);
+					}
+					else if(Temp_RxHeader.IDE == CAN_ID_EXT)// 扩展帧
+					{
+							CAN_RxProcess(hcan,&Temp_RxHeader, Temp_RxData);
+					} 	
+				}
 		}
     else if (hcan->Instance == CAN2)
     {	
-				if(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
+				CAN_RxHeaderTypeDef Temp_RxHeader;
+				uint8_t Temp_RxData[8];
+
+				// 循环读空FIFO
+				while(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &Temp_RxHeader, Temp_RxData) == HAL_OK)
 				{
-						if (RxHeader.IDE == CAN_ID_STD)// 标准帧
+						if (Temp_RxHeader.IDE == 0)
 						{
-								// 处理 DJI 电机数据
-								CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN2,RxHeader.StdId, RxData);
+								// 标准帧 - 电机
+								CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN2, Temp_RxHeader.StdId, Temp_RxData);
 						}
-						else if(RxHeader.IDE == CAN_ID_EXT)// 扩展帧
+						else if(Temp_RxHeader.IDE == 4)
 						{
-								 CAN_RxProcess(hcan,&RxHeader, RxData);
-						} 
+								// 扩展帧 - 双板通信 【现在绝对正确！】
+								CAN_RxProcess(hcan, &Temp_RxHeader, Temp_RxData);
+						}
 				}
 		}
 }
