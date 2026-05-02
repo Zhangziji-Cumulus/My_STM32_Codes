@@ -3,7 +3,7 @@
 <title>Static Call Graph - [BaseMood\BaseMood.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image BaseMood\BaseMood.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat May 02 14:32:17 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat May 02 19:51:47 2026
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -149,8 +149,8 @@ Function Pointers
 Global Symbols
 </H3>
 <P><STRONG><a name="[72]"></a>__main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, __main.o(!!!main))
-<BR><BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<BR><BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
 <P><STRONG><a name="[73]"></a>__scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
@@ -238,8 +238,8 @@ Global Symbols
 <P><STRONG><a name="[21f]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
 
 <P><STRONG><a name="[74]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<BR><BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
 </UL>
 
 <P><STRONG><a name="[220]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
@@ -1027,7 +1027,7 @@ Global Symbols
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_STD
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUYawContral
-<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
+<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
 </UL>
 
 <P><STRONG><a name="[13]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.EXTI0_IRQHandler))
@@ -1708,16 +1708,16 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(i.MX_FREERTOS_Init)
 </UL>
-<P><STRONG><a name="[68]"></a>HEROGimbalTask</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, hero_drivesystem.o(i.HEROGimbalTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = HEROGimbalTask &rArr; HERO_Gimbal_YawStable &rArr; MyMath_Limit_Float &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
+<P><STRONG><a name="[68]"></a>HEROGimbalTask</STRONG> (Thumb, 198 bytes, Stack size 8 bytes, hero_drivesystem.o(i.HEROGimbalTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = HEROGimbalTask &rArr; HERO_Gimbal_YawStable &rArr; MyMath_Limit_Float &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uxTaskGetStackHighWaterMark
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUYawContral
-<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
+<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DJI_MOTOR_EmergencySTOP_ALL
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_YawStable
-<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
+<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(i.MX_FREERTOS_Init)
 </UL>
@@ -1740,7 +1740,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(i.MX_FREERTOS_Init)
 </UL>
-<P><STRONG><a name="[13d]"></a>HERO_Gimbal_PitchStable</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, hero_gimbal.o(i.HERO_Gimbal_PitchStable))
+<P><STRONG><a name="[13e]"></a>HERO_Gimbal_PitchStable</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, hero_gimbal.o(i.HERO_Gimbal_PitchStable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = HERO_Gimbal_PitchStable &rArr; MyMath_Limit_Float &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyMath_Map_Range
@@ -1911,7 +1911,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HEROChassisTask
 </UL>
 
-<P><STRONG><a name="[13e]"></a>Motor_DJI_IMUPitchContral</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, dji_motor_contral.o(i.Motor_DJI_IMUPitchContral))
+<P><STRONG><a name="[13d]"></a>Motor_DJI_IMUPitchContral</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, dji_motor_contral.o(i.Motor_DJI_IMUPitchContral))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = Motor_DJI_IMUPitchContral &rArr; ESC_Control_Raw_Single &rArr; CAN_Send_STD &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Double_Calculate
@@ -1941,7 +1941,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HEROShootingTask
 </UL>
 
-<P><STRONG><a name="[168]"></a>Motor_Init</STRONG> (Thumb, 840 bytes, Stack size 40 bytes, dji_motor_contral.o(i.Motor_Init))
+<P><STRONG><a name="[168]"></a>Motor_Init</STRONG> (Thumb, 848 bytes, Stack size 40 bytes, dji_motor_contral.o(i.Motor_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = Motor_Init &rArr; PID_FF_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Init
@@ -1969,13 +1969,13 @@ Global Symbols
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_YawStable
-<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
+<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
 </UL>
 
 <P><STRONG><a name="[143]"></a>MyMath_Map_Range</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, my_math.o(i.MyMath_Map_Range))
 <BR><BR>[Called By]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_chassis_data
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_YawStable
-<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
+<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HERO_Gimbal_PitchStable
 </UL>
 
 <P><STRONG><a name="[166]"></a>MyMath_normalize_m180_to_p180</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, my_math.o(i.MyMath_normalize_m180_to_p180))
@@ -2026,7 +2026,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_ShootingFri
-<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
+<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_IMUPitchContral
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_DJI_Chassis
 </UL>
 
@@ -2121,7 +2121,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(i.MX_FREERTOS_Init)
 </UL>
-<P><STRONG><a name="[62]"></a>StartRealTime_TASK</STRONG> (Thumb, 84 bytes, Stack size 0 bytes, uap_freertos.o(i.StartRealTime_TASK))
+<P><STRONG><a name="[62]"></a>StartRealTime_TASK</STRONG> (Thumb, 90 bytes, Stack size 0 bytes, uap_freertos.o(i.StartRealTime_TASK))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = StartRealTime_TASK &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay

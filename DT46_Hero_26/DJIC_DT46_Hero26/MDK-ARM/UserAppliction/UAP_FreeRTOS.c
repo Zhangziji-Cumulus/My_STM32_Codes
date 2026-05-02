@@ -97,7 +97,7 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 
 		}
 		// ÌáÊ¾Òô
-		if(RC_Ctl.Switch.S3_L == HOTRC_SWITCH_UP)
+		if(RC_Ctl.Knob.KL > 992 - 20 && RC_Ctl.Knob.KL < 992 + 20)
 		{
 			buzzer->sound_effect = D_B_B_;
 		}

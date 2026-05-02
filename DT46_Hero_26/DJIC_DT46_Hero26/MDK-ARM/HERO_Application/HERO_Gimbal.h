@@ -4,6 +4,9 @@
 #include "main.h"
 #include "HERO_API.h"
 
+#define GIMBAL_PITCH_MAX_ELE 17.0f
+#define GIMBAL_PITCH_MAX_DEP 43.0f
+
 typedef struct{
 
 	struct{

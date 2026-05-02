@@ -21,13 +21,13 @@ void Chassis_Move_Calc(Chassis_Move_t* pCM,Mecanum_Data_t* pMD,PID_HandleTypeDef
 	{
 		pMD->Target.FB = ((pCM->Vel.RL * sin(pCM->RelativeAngle_Radian)) + (pCM->Vel.FB * cos(pCM->RelativeAngle_Radian)));
 		pMD->Target.RL = ((pCM->Vel.RL * cos(pCM->RelativeAngle_Radian)) - (pCM->Vel.FB * sin(pCM->RelativeAngle_Radian)));
-		pMD->Target.Rv = 5;//Ë³Ê±Õë
+		pMD->Target.Rv = 25;//Ë³Ê±Õë
 	}
 	else if(state == 3)
 	{
-		pMD->Target.FB = (-(pCM->Vel.RL * sin(pCM->RelativeAngle_Radian)) + (pCM->Vel.FB * cos(pCM->RelativeAngle_Radian)));
-		pMD->Target.RL = (-(pCM->Vel.RL * cos(pCM->RelativeAngle_Radian)) - (pCM->Vel.FB * sin(pCM->RelativeAngle_Radian)));
-		pMD->Target.Rv = -5;//ÄæÊ±Õë
+		pMD->Target.FB = ((pCM->Vel.RL * sin(pCM->RelativeAngle_Radian)) + (pCM->Vel.FB * cos(pCM->RelativeAngle_Radian)));
+		pMD->Target.RL = ((pCM->Vel.RL * cos(pCM->RelativeAngle_Radian)) - (pCM->Vel.FB * sin(pCM->RelativeAngle_Radian)));
+		pMD->Target.Rv = -25;//ÄæÊ±Õë
 	}
 	
 	Chassis_Mecanum_Calc(pMD);

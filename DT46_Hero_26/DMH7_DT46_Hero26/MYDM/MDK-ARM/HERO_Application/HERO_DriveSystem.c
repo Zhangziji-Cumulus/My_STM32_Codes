@@ -184,7 +184,8 @@ __attribute__((used)) void HERODialTask(void *argument)
 
 void get_chassis_data(void)
 { 
-	 Chassis_Move.RelativeAngle_Degree = MyMath_cal_output_angle(DJI_MFeedback_CAN3[4].angle_deg,2)- ERRORANGLE;
+	 float testangle = MyMath_normalize_m180_to_p180(DJI_MFeedback_CAN3[4].angle_deg - 269.0f);
+	 Chassis_Move.RelativeAngle_Degree = MyMath_cal_output_angle(testangle,2);//- ERRORANGLE
 	 Chassis_Move.RelativeAngle_Degree = MyMath_normalize_m180_to_p180(Chassis_Move.RelativeAngle_Degree);
 	
 	 Chassis_Move.RelativeAngle_Radian = MyMath_Degrees_To_Radians(Chassis_Move.RelativeAngle_Degree);

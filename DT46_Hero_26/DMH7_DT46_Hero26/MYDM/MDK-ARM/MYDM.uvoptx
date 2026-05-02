@@ -166,12 +166,17 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_In</ItemText>
+          <ItemText>Chassis_Move</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_Ex</ItemText>
+          <ItemText>DJI_MFeedback_CAN3,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Chassis_Follow_PID</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

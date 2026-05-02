@@ -92,15 +92,19 @@ __attribute__((used)) void HEROGimbalTask(void *argument)
 		}
 		else
 		{		
-			timecount = 0;
-			if(abs(DJI_MFeedback_CAN2[0].current_ma) < 2000)
+			if(abs(DJI_MFeedback_CAN2[0].current_ma) > 2000 
+				     || DJI_MFeedback_CAN2[3].current_ma > 2000 
+			       ){
+					Motor_DJI_IMUPitchContral(DJI_MFeedback_CAN2,0,0,1,1);
+					Motor_DJI_IMUYawContral(DJI_MFeedback_CAN2,0,0,5,2);
+			}
+			else
 			{
+				timecount = 0;
 				HERO_Gimbal_PitchStable(&GD,RC_Ctl.Stick.RY,-(IMU_DegAngle[2]));
 				Motor_DJI_IMUPitchContral(DJI_MFeedback_CAN2,GD.TAngle.Pitch,GD.CAngle.Pitch,1,1);
-			}
-			if(DJI_MFeedback_CAN2[3].current_ma < 2000)
-			{
-				HERO_Gimbal_YawStable(&GD,RC_Ctl.Stick.RX,IMU_DegAngle[0]);				
+			
+				HERO_Gimbal_YawStable(&GD,RC_Ctl.Stick.RX,IMU_DegAngle[0]);
 				Motor_DJI_IMUYawContral(DJI_MFeedback_CAN2,GD.TAngle.Yaw,GD.CAngle.Yaw,5,2);
 			}
 		}
