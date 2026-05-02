@@ -24,7 +24,7 @@
 
 //** ================= 板子的ID ================= **//
 
-#define BOARD_ID 2//主发送板1（云台板），主接受板2（地盘板）
+#define BOARD_ID 1//主发送板1（云台板），主接受板2（地盘板）
 #define TX_BASE_ID ((BOARD_ID == 1) ? 0x100 : 0x200)  /* 发送基ID */
 #define RX_BASE_ID ((BOARD_ID == 1) ? 0x200 : 0x100)  /* 接收基ID */
 

@@ -108,7 +108,6 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 static UBaseType_t Start_DJI_RecieveData_TASK;
 __attribute__((used)) void Start_DJI_RecieveData(void *argument)
 {
-	
   for(;;)
   { Start_DJI_RecieveData_TASK = uxTaskGetStackHighWaterMark(NULL);
 

@@ -19,7 +19,6 @@ __attribute__((used)) void Dual_Board_Transmit_Task(void *argument)
 		
 		Dual_Board_MainSend();
 		
-		
 		remain_DBTT = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
