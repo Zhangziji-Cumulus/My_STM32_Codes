@@ -67,6 +67,12 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 
 	 for(;;)
 	 {
+		  if (SBUS_IsRemoteLost())
+     {
+			 g_motor_run_enable = 0;
+			 continue;
+		 }
+		 
 		uint8_t current_switch = RC_Ctl.Switch.S2_L;
 
 		// ====================== ºËÐÄÂß¼­ ======================
@@ -96,11 +102,13 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 			g_motor_run_enable = 0;
 
 		}
+				
 		// ÌáÊ¾Òô
 		if(RC_Ctl.Knob.KL > 992 - 20 && RC_Ctl.Knob.KL < 992 + 20)
 		{
 			buzzer->sound_effect = D_B_B_;
 		}
+		
 		vTaskDelay(50);
 	 }
 }
@@ -110,8 +118,9 @@ __attribute__((used)) void Start_DJI_RecieveData(void *argument)
 {
   for(;;)
   { Start_DJI_RecieveData_TASK = uxTaskGetStackHighWaterMark(NULL);
-
-    SBUS_Process();		
+		
+    SBUS_Process();
+		
     osDelay(1);
   }
 }

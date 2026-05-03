@@ -21,13 +21,13 @@ void Chassis_Move_Calc(Chassis_Move_t* pCM,Mecanum_Data_t* pMD,PID_HandleTypeDef
 	{
 		pMD->Target.FB = ((pCM->Vel.RL * sin(pCM->RelativeAngle_Radian)) + (pCM->Vel.FB * cos(pCM->RelativeAngle_Radian)));
 		pMD->Target.RL = ((pCM->Vel.RL * cos(pCM->RelativeAngle_Radian)) - (pCM->Vel.FB * sin(pCM->RelativeAngle_Radian)));
-		pMD->Target.Rv = 25;//Ë³Ê±Õë
+		pMD->Target.Rv = CHASSIS_ROTATE_MAX_SPEED;//Ë³Ê±Õë
 	}
 	else if(state == 3)
 	{
 		pMD->Target.FB = ((pCM->Vel.RL * sin(pCM->RelativeAngle_Radian)) + (pCM->Vel.FB * cos(pCM->RelativeAngle_Radian)));
 		pMD->Target.RL = ((pCM->Vel.RL * cos(pCM->RelativeAngle_Radian)) - (pCM->Vel.FB * sin(pCM->RelativeAngle_Radian)));
-		pMD->Target.Rv = -25;//ÄæÊ±Õë
+		pMD->Target.Rv = -CHASSIS_ROTATE_MAX_SPEED;//ÄæÊ±Õë
 	}
 	
 	Chassis_Mecanum_Calc(pMD);
@@ -42,10 +42,10 @@ void Chassis_Mecanum_Calc(Mecanum_Data_t* pMD)
 	pMD->FR.T_Speed =  (pMD->Target.RL) - (pMD->Target.FB) + (pMD->Target.Rv);
 	pMD->BR.T_Speed = -(pMD->Target.RL) - (pMD->Target.FB) + (pMD->Target.Rv);
 	
-	pMD->FL.T_rpm = calc_wheel_rpm(pMD->FL.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f));
-	pMD->FR.T_rpm = calc_wheel_rpm(pMD->FR.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f));
-	pMD->BL.T_rpm = calc_wheel_rpm(pMD->BL.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f));
-	pMD->BR.T_rpm = calc_wheel_rpm(pMD->BR.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f));
+	pMD->FL.T_rpm = (int16_t)calc_motor_rpm_from_speed(pMD->FL.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f),M3508_RATIO);
+	pMD->FR.T_rpm = (int16_t)calc_motor_rpm_from_speed(pMD->FR.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f),M3508_RATIO);
+	pMD->BL.T_rpm = (int16_t)calc_motor_rpm_from_speed(pMD->BL.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f),M3508_RATIO);
+	pMD->BR.T_rpm = (int16_t)calc_motor_rpm_from_speed(pMD->BR.T_Speed,(MECANUM_WHEEL_RADIUS_MM/1000.0f),M3508_RATIO);
 }
 
 

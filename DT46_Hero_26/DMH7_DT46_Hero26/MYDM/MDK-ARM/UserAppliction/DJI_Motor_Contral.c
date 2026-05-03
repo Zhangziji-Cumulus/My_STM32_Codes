@@ -52,19 +52,19 @@ void Motor_Init(void)
   PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
 	//µÿ≈ÃPID
-	PID_Init(&Chassis_MotorFL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
-	PID_Init(&Chassis_MotorFL_Ex,15.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
-
-	PID_Init(&Chassis_MotorFR_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
-	PID_Init(&Chassis_MotorFR_Ex,15.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&Chassis_MotorFL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
+	PID_Init(&Chassis_MotorFL_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
 	
-	PID_Init(&Chassis_MotorBL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
-	PID_Init(&Chassis_MotorBL_Ex,15.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&Chassis_MotorFR_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
+	PID_Init(&Chassis_MotorFR_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
 	
-	PID_Init(&Chassis_MotorBR_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
-	PID_Init(&Chassis_MotorBR_Ex,15.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&Chassis_MotorBL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
+	PID_Init(&Chassis_MotorBL_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
 	
-	PID_Init(&Chassis_Follow_PID,1.7f,0.05f,0.0f,-10,10,-1.0f, 1.0f);
+	PID_Init(&Chassis_MotorBR_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
+	PID_Init(&Chassis_MotorBR_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
+	
+	PID_Init(&Chassis_Follow_PID,0.05f,0.002,0.15f,-1.5f,1.5f,-0.75f,0.75f);
 	
 	//‘∆Ã®PID
 	PID_FF_Init(&Gimbal_Yaw_FF,750.0f,0.05f,40.0f,0.0,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);

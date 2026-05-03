@@ -7,6 +7,7 @@ extern osMessageQueueId_t HERODialHandle;
 
 extern DJI_MotorFeedback_t DJI_MFeedback[8];
 extern HOTRC_Ctl_t RC_Ctl;
+extern Dual_Board_Transmit_t DBT_RX;
 
 uint8_t g_motor_run_enable  = 0;
 
@@ -50,8 +51,10 @@ static UBaseType_t remain_HOTRCCtlTask;
 __attribute__((used)) void HOTRCCtlTask(void *argument)
 {
 	 remain_HOTRCCtlTask = uxTaskGetStackHighWaterMark(NULL);
-//	 buzzer_t *buzzer = get_buzzer_effect_point();
 
+
+	
+	
 	 // ==================== 核心安全变量 ====================
 	 uint8_t  last_switch        = 0;    // 上一次拨杆值
 	 uint8_t  system_allowed     = 0;    // 【关键】是否允许运行
@@ -66,7 +69,7 @@ __attribute__((used)) void HOTRCCtlTask(void *argument)
 	 last_switch = RC_Ctl.Switch.S2_L;
 
 	 for(;;)
-	 {
+	 {		 
 		uint8_t current_switch = RC_Ctl.Switch.S2_L;
 
 		// ====================== 核心逻辑 ======================

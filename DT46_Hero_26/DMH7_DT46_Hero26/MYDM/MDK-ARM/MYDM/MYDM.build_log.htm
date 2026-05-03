@@ -27,11 +27,26 @@ Project File Date:  05/01/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'MYDM'
-compiling HERO_Chassis.c...
+compiling HERO_DriveSystem.c...
+./UserDrive/DJI_Motor_CAN.h(87): warning:  #1-D: last line of file ends without a newline
+  #endif
+./UserAppliction/DJI_Motor_Contral.h(49): warning:  #1-D: last line of file ends without a newline
+  #endif
+HERO_Application\HERO_DriveSystem.c(40): warning:  #550-D: variable "remain_HEROSystemTask"  was set but never used
+  static UBaseType_t remain_HEROSystemTask;
+HERO_Application\HERO_DriveSystem.c(51): warning:  #550-D: variable "remain_HEROChassisTask"  was set but never used
+  static UBaseType_t remain_HEROChassisTask;
+HERO_Application\HERO_DriveSystem.c(89): warning:  #550-D: variable "remain_HEROGimbalTask"  was set but never used
+  static UBaseType_t remain_HEROGimbalTask;
+HERO_Application\HERO_DriveSystem.c(125): warning:  #550-D: variable "remain_HEROShootingTask"  was set but never used
+  static UBaseType_t remain_HEROShootingTask;
+HERO_Application\HERO_DriveSystem.c(154): warning:  #550-D: variable "remain_HERODialTask"  was set but never used
+  static UBaseType_t remain_HERODialTask;
+HERO_Application\HERO_DriveSystem.c: 7 warnings, 0 errors
 linking...
-Program Size: Code=37996 RO-data=1548 RW-data=272 ZI-data=27040  
+Program Size: Code=38112 RO-data=1552 RW-data=272 ZI-data=27048  
 FromELF: creating hex file...
-"MYDM\MYDM.axf" - 0 Error(s), 0 Warning(s).
+"MYDM\MYDM.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +69,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

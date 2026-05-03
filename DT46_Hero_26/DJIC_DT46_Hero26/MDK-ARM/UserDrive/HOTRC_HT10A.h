@@ -17,28 +17,6 @@
 #define HOTRC_SWITCH_MID   2
 #define HOTRC_SWITCH_DOWN  3
 
-///* 定义缓冲区大小 */
-///* 设置为 50 字节（2帧长度），这是实现自动同步的关键。
-//   如果缓冲区只有25字节，当发生错位时，DMA填满缓冲区可能刚好把一帧切成两半，导致永远解析不出完整数据。
-//   50字节保证缓冲区里至少躺着完整的一帧。 */
-//#define SBUS_DMA_BUFFER_SIZE 50 
-//// SBUS帧长度
-//#define SBUS_FRAME_LEN 25
-//// SBUS通道数
-//#define SBUS_CHANNEL_NUM 16
-
-
-
-//// SBUS数据结构体
-//typedef struct {
-//    uint16_t channels[SBUS_CHANNEL_NUM]; // 16个通道数据 (0-2047)
-//    uint8_t ch17;                        // 数字通道1 (0或1)
-//    uint8_t ch18;                        // 数字通道2 (0或1)
-//    uint8_t frameLost;                   // 丢帧标志 (1表示丢帧)
-//    uint8_t failsafe;                    // 故障安全标志 (1表示触发)
-//    uint8_t newDataAvailable;            // 新数据标志 (1表示有新一帧数据)
-//} SBUS_Data_t;
-
 typedef struct{
 	
 	//摇杆
@@ -70,19 +48,6 @@ typedef struct{
 
 }HOTRC_Ctl_t;
 
-///* 全局变量声明 */
-//extern uint8_t sbusRxBuffer[SBUS_DMA_BUFFER_SIZE];
-//extern SBUS_Data_t sbusData;
-
-//void SBUS_Init(UART_HandleTypeDef *huart);
-//void SBUS_Parse(void);
-
-//#endif
-
-
-
-
-
 // ================= 配置宏定义 =================
 #define SBUS_FRAME_LEN         25      // SBUS 标准帧长：25字节
 #define SBUS_RX_BUF_SIZE       50      // DMA 接收缓冲区大小 (建议是帧长的2倍，防止溢出)
@@ -113,6 +78,6 @@ extern SbusData_t sbusData;
 // ================= 函数声明 =================
 void SBUS_Init(UART_HandleTypeDef *huart);
 void SBUS_Process(void); // 这个函数必须在 main 循环中高频调用
-
-
+uint8_t SBUS_IsRemoteLost(void);//检测遥控器掉线
+	
 #endif /* __SBUS_H */

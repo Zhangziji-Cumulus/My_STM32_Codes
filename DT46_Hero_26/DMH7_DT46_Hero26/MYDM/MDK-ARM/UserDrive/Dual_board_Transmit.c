@@ -55,6 +55,11 @@ void Dual_Board_ReceiveCallBack(void)
 		
 		DBT_RX.B2.RC_Ctl.Knob.KL = DualBoard_ReceiveDataBuff[11];
 		DBT_RX.B2.RC_Ctl.Knob.KR = DualBoard_ReceiveDataBuff[12];
+		
+//		DBT_RX.B2.RC_Ctl.Flag.ch17 = DualBoard_ReceiveDataBuff[13];
+//		DBT_RX.B2.RC_Ctl.Flag.ch18 = DualBoard_ReceiveDataBuff[14];
+//		DBT_RX.B2.RC_Ctl.Flag.failsafe = DualBoard_ReceiveDataBuff[15];
+		DBT_RX.B2.RC_Ctl.Flag.frameLost = DualBoard_ReceiveDataBuff[13];
 		//** Other data **//	
 		RXRC_TO_HOTRC();
 	}
@@ -83,6 +88,11 @@ static void Dual_Board_MainSend(void)
 		
 		DualBoard_SendDataBuff[11] = RC_Ctl.Knob.KL;
 		DualBoard_SendDataBuff[12] = RC_Ctl.Knob.KR;
+		
+//		DualBoard_SendDataBuff[13] = RC_Ctl.Flag.ch17;
+//		DualBoard_SendDataBuff[14] = RC_Ctl.Flag.ch18;
+//		DualBoard_SendDataBuff[15] = RC_Ctl.Flag.failsafe;
+//		DualBoard_SendDataBuff[16] = RC_Ctl.Flag.frameLost;
 		
 		FDCAN_SendFloatArray(&hfdcan2,DualBoard_SendDataBuff,(13 + 1),TX_BASE_ID);
 		//Receive

@@ -4,6 +4,8 @@
 extern Dual_Board_Transmit_t DBT_RX;
 
 extern HOTRC_Ctl_t RC_Ctl;
+extern Dual_Board_Transmit_t DBT_RX;
+
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN3[8];
@@ -54,7 +56,16 @@ __attribute__((used)) void HEROChassisTask(void *argument)
 		get_chassis_data();
 		static uint16_t timecount = 200;
 		
-		if(g_motor_run_enable == 0)
+		if (DBT_RX.B2.RC_Ctl.Flag.frameLost)
+     {
+			 	//电机急刹车
+				if(timecount < 150)
+				{
+					DJI_MOTOR_EmergencySTOP_ALL(DJI_MFeedback_CAN2,&hfdcan2,10.0f);
+					timecount++;
+				}
+		 }
+		else if(g_motor_run_enable == 0)
 		{
 			//电机急刹车
 			if(timecount < 150)
@@ -184,7 +195,7 @@ __attribute__((used)) void HERODialTask(void *argument)
 
 void get_chassis_data(void)
 { 
-	 float testangle = MyMath_normalize_m180_to_p180(DJI_MFeedback_CAN3[4].angle_deg - 269.0f);
+	 float testangle = MyMath_normalize_m180_to_p180(DJI_MFeedback_CAN3[4].angle_deg - YAW_ZERO_ANGLE);
 	 Chassis_Move.RelativeAngle_Degree = MyMath_cal_output_angle(testangle,2);//- ERRORANGLE
 	 Chassis_Move.RelativeAngle_Degree = MyMath_normalize_m180_to_p180(Chassis_Move.RelativeAngle_Degree);
 	

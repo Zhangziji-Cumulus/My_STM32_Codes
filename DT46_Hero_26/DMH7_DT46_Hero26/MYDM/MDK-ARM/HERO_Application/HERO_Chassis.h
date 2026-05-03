@@ -6,23 +6,25 @@
 #include "HERO_Math.h"
 
 
-#define MECANUM_WHEEL_RADIUS_MM 		76.0f
-#define CHASSIS_FORWARD_MAX_SPEED 	15.0f //线速度，单位：m/s
+#define MECANUM_WHEEL_RADIUS_MM 		76.0f //轮子半径
+#define CHASSIS_FORWARD_MAX_SPEED 	2.0f //线速度，单位：m/s
+#define CHASSIS_ROTATE_MAX_SPEED		2.0f
+#define M3508_RATIO									19
 
-#define ERRORANGLE 135.0f
+#define YAW_ZERO_ANGLE 271.5f //云台Yaw电机归零角
 
 typedef struct{
 
-	int16_t FB;// 前后
-  int16_t RL;// 左右
-  int16_t Rv;// 旋转
+	float FB;// 前后
+  float RL;// 左右
+  float Rv;// 旋转
 	
 }Mecanum_Target_t;
 
 //每个轮子单独的数据
 typedef struct{
 
-	int16_t T_Speed;
+	float T_Speed;
 	int16_t T_rpm;     //目标转速
 	int16_t C_rpm;     //当前速度
 	int16_t C_Curr;    //当前电流
@@ -59,14 +61,12 @@ typedef struct{
 
 	float Theta_Radian;
 	float Theta_Degree;
-	float Gimbal_FWVector;//云台向前向量
-  float Chassis_FWVector;//地盘向前向量
 	float RelativeAngle_Radian;
 	float RelativeAngle_Degree;
 	
 	struct{
-		int16_t FB;
-		int16_t RL;
+		float FB;
+		float RL;
 	}Vel;
 
 	

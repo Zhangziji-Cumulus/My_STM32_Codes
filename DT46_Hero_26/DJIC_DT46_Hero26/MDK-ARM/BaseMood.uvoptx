@@ -193,6 +193,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>Gimbal_Pitch_In</ItemText>
         </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sbusData,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
