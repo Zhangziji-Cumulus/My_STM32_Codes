@@ -27,20 +27,22 @@ Project File Date:  04/22/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling UAP_FreeRTOS.c...
-UserAppliction\UAP_FreeRTOS.c(57): warning:  #550-D: variable "system_allowed"  was set but never used
-  	 uint8_t  system_allowed     = 0;    // 【关键】是否允许运行
-UserAppliction\UAP_FreeRTOS.c(58): warning:  #177-D: variable "power_on_lock_time"  was declared but never referenced
-  	 uint32_t power_on_lock_time = 0;    // 上电延时等SBUS
-UserAppliction\UAP_FreeRTOS.c(49): warning:  #550-D: variable "remain_StartRealTime_TASK"  was set but never used
-  static UBaseType_t remain_StartRealTime_TASK;
-UserAppliction\UAP_FreeRTOS.c(116): warning:  #550-D: variable "Start_DJI_RecieveData_TASK"  was set but never used
-  static UBaseType_t Start_DJI_RecieveData_TASK;
-UserAppliction\UAP_FreeRTOS.c: 4 warnings, 0 errors
+compiling HERO_DriveSystem.c...
+HERO_Application\HERO_DriveSystem.c(37): warning:  #550-D: variable "remain_HEROSystemTask"  was set but never used
+  static UBaseType_t remain_HEROSystemTask;
+HERO_Application\HERO_DriveSystem.c(48): warning:  #550-D: variable "remain_HEROChassisTask"  was set but never used
+  static UBaseType_t remain_HEROChassisTask;
+HERO_Application\HERO_DriveSystem.c(85): warning:  #550-D: variable "remain_HEROGimbalTask"  was set but never used
+  static UBaseType_t remain_HEROGimbalTask;
+HERO_Application\HERO_DriveSystem.c(134): warning:  #550-D: variable "remain_HEROShootingTask"  was set but never used
+  static UBaseType_t remain_HEROShootingTask;
+HERO_Application\HERO_DriveSystem.c(172): warning:  #550-D: variable "remain_HERODialTask"  was set but never used
+  static UBaseType_t remain_HERODialTask;
+HERO_Application\HERO_DriveSystem.c: 5 warnings, 0 errors
 linking...
 Program Size: Code=52440 RO-data=1416 RW-data=500 ZI-data=29212  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 4 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -64,7 +66,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
