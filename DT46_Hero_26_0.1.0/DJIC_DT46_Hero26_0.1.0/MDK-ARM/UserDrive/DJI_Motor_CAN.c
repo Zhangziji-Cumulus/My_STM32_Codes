@@ -2,109 +2,109 @@
 //#include "can.h"
 
 /*
-	3508Ê¹ÓÃC620µçµ÷Ö§³ÖID 1-8£¬´Ó0x200+ID¿ªÊ¼£¬0x201/0x202/0x203/0x204/0x205/0x206/0x207/0x208
-	¿ØÖÆµçÁ÷Öµ·¶Î§ -16384~0~16384£¬¶ÔÓ¦µçµ÷Êä³öµÄ×ª¾ØµçÁ÷·¶Î§-20~0~20A
-	£¡£¡µ«ÊÇ£¡£¡M3508´îÅäC620µçµ÷¶î¶¨µçÁ÷ÊÇ10A
+	3508Ê¹ï¿½ï¿½C620ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ID 1-8ï¿½ï¿½ï¿½ï¿½0x200+IDï¿½ï¿½Ê¼ï¿½ï¿½0x201/0x202/0x203/0x204/0x205/0x206/0x207/0x208
+	ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Öµï¿½ï¿½Î§ -16384~0~16384ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Î§-20~0~20A
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½M3508ï¿½ï¿½ï¿½ï¿½C620ï¿½ï¿½ï¿½ï¿½î¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10A
 	
-	2006Ê¹ÓÃC610µçµ÷Ö§³ÖID 1-8£¬´Ó0x200+ID¿ªÊ¼£¬0x201/0x202/0x203/0x204/0x205/0x206/0x207/0x208
-	¿ØÖÆ×ª¾ØµçÁ÷Öµ·¶Î§ -10000~0~10000£¬¶ÔÓ¦µçµ÷Êä³öµÄ×ª¾ØµçÁ÷·¶Î§ -10~0~10A
-	£¡£¡µ«ÊÇ£¡£¡M2006´îÅäC610µçµ÷¶î¶¨µçÁ÷3A
+	2006Ê¹ï¿½ï¿½C610ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ID 1-8ï¿½ï¿½ï¿½ï¿½0x200+IDï¿½ï¿½Ê¼ï¿½ï¿½0x201/0x202/0x203/0x204/0x205/0x206/0x207/0x208
+	ï¿½ï¿½ï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½Öµï¿½ï¿½Î§ -10000~0~10000ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Î§ -10~0~10A
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½M2006ï¿½ï¿½ï¿½ï¿½C610ï¿½ï¿½ï¿½ï¿½î¶¨ï¿½ï¿½ï¿½ï¿½3A
 	
-	6020×Ô´øÇý¶¯Ö§³Ö ID1-7£¬´Ó0x204+ID¿ªÊ¼£¬0x205/0x206/0x207/0x208/0x209/0x20A/0x20B
-	¿ØÖÆµçÑ¹Öµ·¶Î§£º-25000~0~25000
-	¿ØÖÆµçÁ÷Öµ·¶Î§£º-16384~0~16384, ¶ÔÓ¦×î´ó×ª¾ØµçÁ÷·¶Î§ -3A~0~3A
+	6020ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ ID1-7ï¿½ï¿½ï¿½ï¿½0x204+IDï¿½ï¿½Ê¼ï¿½ï¿½0x205/0x206/0x207/0x208/0x209/0x20A/0x20B
+	ï¿½ï¿½ï¿½Æµï¿½Ñ¹Öµï¿½ï¿½Î§ï¿½ï¿½-25000~0~25000
+	ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Öµï¿½ï¿½Î§ï¿½ï¿½-16384~0~16384, ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Î§ -3A~0~3A
 	
 */
 
-//** ½ÓÊÜµç»ú·´À¡Êý¾Ý **//
+//** ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ **//
 
-//* ¶¨Òå½á¹¹Ìå *//
+//* ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ *//
 DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
-//* ¶ÔÍâº¯Êý *//
+//* ï¿½ï¿½ï¿½âº¯ï¿½ï¿½ *//
 /**
-  * @brief  ½âÎöµçµ÷·´À¡±¨ÎÄ (»ùÓÚÍ¼Æ¬Ð­Òé)
-  * @param  std_id: CAN ±ê×¼Ö¡ ID (ÀýÈç 0x201)
-  * @param  data: 8×Ö½ÚÊý¾ÝÊý×é
+  * @brief  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½Í¼Æ¬Ð­ï¿½ï¿½)
+  * @param  std_id: CAN ï¿½ï¿½×¼Ö¡ ID (ï¿½ï¿½ï¿½ï¿½ 0x201)
+  * @param  data: 8ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   * @retval None
   */
 void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback,uint32_t std_id, uint8_t* data)
 {
-    // 1. ¼ì²é ID ÊÇ·ñÔÚ·´À¡·¶Î§ÄÚ (0x200 + ID)
-    // ¼ÙÉèÖ§³Ö ID 1 µ½ 8£¬¼´ 0x201 µ½ 0x208
+    // 1. ï¿½ï¿½ï¿½ ID ï¿½Ç·ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½ï¿½ (0x200 + ID)
+    // ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ ID 1 ï¿½ï¿½ 8ï¿½ï¿½ï¿½ï¿½ 0x201 ï¿½ï¿½ 0x208
     if (std_id >= 0x201 && std_id <= 0x208) 
     {
-        uint8_t index = std_id - 0x201; // ½« ID Ó³Éäµ½Êý×éË÷Òý 0-7
+        uint8_t index = std_id - 0x201; // ï¿½ï¿½ ID Ó³ï¿½äµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0-7
         
         DJI_MFeedback[index].id = index + 1;
-        DJI_MFeedback[index].is_online = true; // ÊÕµ½Êý¾Ý£¬±ê¼ÇÔÚÏß
+        DJI_MFeedback[index].is_online = true; // ï¿½Õµï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        // 2. ½âÎö½Ç¶È (DATA[0] ¸ß8Î», DATA[1] µÍ8Î»)
-        // ·¶Î§ 0-8191 ¶ÔÓ¦ 0-360¶È
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ (DATA[0] ï¿½ï¿½8Î», DATA[1] ï¿½ï¿½8Î»)
+        // ï¿½ï¿½Î§ 0-8191 ï¿½ï¿½Ó¦ 0-360ï¿½ï¿½
         DJI_MFeedback[index].angle_raw = (uint16_t)((data[0] << 8) | data[1]);
         
-        // ×ª»»Îª½Ç¶ÈÖµ (¿ÉÑ¡£¬·½±ã¼ÆËã)
+        // ×ªï¿½ï¿½Îªï¿½Ç¶ï¿½Öµ (ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
         DJI_MFeedback[index].angle_deg = (float)DJI_MFeedback[index].angle_raw * 360.0f / 8192.0f;
 
-        // 3. ½âÎö×ªËÙ (DATA[2] ¸ß8Î», DATA[3] µÍ8Î»)
-        // µ¥Î» rpm
+        // 3. ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ (DATA[2] ï¿½ï¿½8Î», DATA[3] ï¿½ï¿½8Î»)
+        // ï¿½ï¿½Î» rpm
         DJI_MFeedback[index].speed_rpm = (int16_t)((data[2] << 8) | data[3]);
 
-        // 4. ½âÎöµçÁ÷ (DATA[4] ¸ß8Î», DATA[5] µÍ8Î»)
-        // ×¢Òâ£ºÍ¼Æ¬Î´Ã÷È·µ¥Î»£¬µ«Í¨³£ DJI µçµ÷·´À¡µ¥Î»Îª mA
+        // 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (DATA[4] ï¿½ï¿½8Î», DATA[5] ï¿½ï¿½8Î»)
+        // ×¢ï¿½â£ºÍ¼Æ¬Î´ï¿½ï¿½È·ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ DJI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Îª mA
         DJI_MFeedback[index].current_ma = (int16_t)((data[4] << 8) | data[5]);
 
-        // 5. ½âÎö´íÎóÂë (DATA[7])
+        // 5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (DATA[7])
         DJI_MFeedback[index].error_code = (DJI_MotorErrorCode_t)data[7];
         
-        // DATA[6] Îª¿Õ£¬ºöÂÔ
+        // DATA[6] Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 }
 
 
 
-//** ¿ØÖÆµç»úº¯Êý **//
+//** ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ **//
 
-//* ¶ÔÍâº¯Êý *//
+//* ï¿½ï¿½ï¿½âº¯ï¿½ï¿½ *//
 
-/* ================= µçµ÷ÅäÖÃÊµÀý ================= */
+/* ================= ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ ================= */
 
-// 20A °æ±¾µçµ÷ÅäÖÃ (Ð­Òé 1: -20A~20A ¶ÔÓ¦ -16384~16384)
+// 20A ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Ð­ï¿½ï¿½ 1: -20A~20A ï¿½ï¿½Ó¦ -16384~16384)
 const ESC_Config_t ESC_C620_20A = {
     .name = "ESC_20A_Protocol",
     .max_current_amps = 20.0f,
     .max_raw_value = 16384
 };
 
-// 10A °æ±¾µçµ÷ÅäÖÃ (Ð­Òé 2: -10A~10A ¶ÔÓ¦ -10000~10000)
+// 10A ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Ð­ï¿½ï¿½ 2: -10A~10A ï¿½ï¿½Ó¦ -10000~10000)
 const ESC_Config_t ESC_C610_10A = {
     .name = "ESC_10A_Protocol",
     .max_current_amps = 10.0f,
     .max_raw_value = 10000
 };
 
-/* ================= ÄÚ²¿¸¨Öúº¯Êý ================= */
+/* ================= ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ================= */
 
-// 16 Î»ÕûÊý×ª´ó¶ËÄ£Ê½ (¸ß 8 Î»ÔÚÇ°£¬µÍ 8 Î»ÔÚºó)
+// 16 Î»ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ä£Ê½ (ï¿½ï¿½ 8 Î»ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ 8 Î»ï¿½Úºï¿½)
 static void Int16_To_BigEndian(int16_t value, uint8_t* high, uint8_t* low) {
     uint16_t u_value = (uint16_t)value;
     *high = (u_value >> 8) & 0xFF;
     *low  = u_value & 0xFF;
 }
 
-// ºËÐÄ»»Ëã£º°²Åà ¡ú Ô­Ê¼Öµ
+// ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ã£ºï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ô­Ê¼Öµ
 static int16_t Amps_To_Raw(const ESC_Config_t* config, float amps) {
     if (config == NULL || config->max_current_amps <= 0) {
         return 0;
     }
 
-    // ¼ÆËã±ÈÀýÏµÊý
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
     float ratio = (float)config->max_raw_value / config->max_current_amps;
     
-    // »»Ëã
+    // ï¿½ï¿½ï¿½ï¿½
     int32_t raw_val_32 = (int32_t)(amps * ratio);
     
-    // ÏÞ·ù±£»¤
+    // ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½
     if (raw_val_32 > config->max_raw_value) 
         raw_val_32 = config->max_raw_value;
     if (raw_val_32 < -config->max_raw_value) 
@@ -115,14 +115,14 @@ static int16_t Amps_To_Raw(const ESC_Config_t* config, float amps) {
     return (int16_t)raw_val_32;
 }
 
-// »ñÈ¡ CAN ID
+// ï¿½ï¿½È¡ CAN ID
 static uint32_t Get_CAN_ID(uint8_t motor_start_id) {
     if (motor_start_id == 1) return ESC_CAN_ID_GROUP_1;
     if (motor_start_id == 5) return ESC_CAN_ID_GROUP_2;
     return 0;
 }
 
-/* ================= µ×²ã·¢ËÍ (STM32 HAL) ================= */
+/* ================= ï¿½×²ã·¢ï¿½ï¿½ (STM32 HAL) ================= */
 
 //extern CAN_HandleTypeDef hcan1;
 
@@ -136,20 +136,20 @@ static uint32_t Get_CAN_ID(uint8_t motor_start_id) {
 //    TxHeader.DLC = 8;
 //    TxHeader.TransmitGlobalTime = DISABLE;
 
-//    // µÈ´ý·¢ËÍÓÊÏä¿ÕÏÐ
+//    // ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan1) == 0);
 
 //    HAL_CAN_AddTxMessage(&hcan1, &TxHeader, data, &TxMailbox);
 //}
 
-/* ================= °²ÅàÖµ¿ØÖÆº¯Êý ================= */
+/* ================= ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ ================= */
 
 /**
- * @brief °²ÅàÖµ¿ØÖÆµ¥¸öµç»ú
- * @param canÖ¸Õë¾ä±ú
- * @param config: µçµ÷ÅäÖÃÖ¸Õë (Èç &ESC_CONFIG_20A)
- * @param motor_id: µç»ú ID (1 ~ 8)
- * @param current_amps: Ä¿±êµçÁ÷ (µ¥Î»£º°²Åà A)£¬Èç 5.5f »ò -3.0f
+ * @brief ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param canÖ¸ï¿½ï¿½ï¿½ï¿½
+ * @param config: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ (ï¿½ï¿½ &ESC_CONFIG_20A)
+ * @param motor_id: ï¿½ï¿½ï¿½ ID (1 ~ 8)
+ * @param current_amps: Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ A)ï¿½ï¿½ï¿½ï¿½ 5.5f ï¿½ï¿½ -3.0f
  */
 void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_id, float current_amps){
     uint8_t data[8] = {0};
@@ -172,10 +172,10 @@ void ESC_Control_Amps_Single(CAN_HandleTypeDef *hcan,const ESC_Config_t* config,
 }
 
 /**
- * @brief °²ÅàÖµ¿ØÖÆÒ»×éµç»ú (4¸ö)
- * @param config: µçµ÷ÅäÖÃÖ¸Õë
- * @param motor_start_id: ÆðÊ¼µç»ú ID (1 »ò 5)
- * @param currents_amps: ³¤¶ÈÎª 4 µÄ¸¡µãÊý×é£¬¶ÔÓ¦ 4 ¸öµç»úµÄµçÁ÷
+ * @brief ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ (4ï¿½ï¿½)
+ * @param config: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+ * @param motor_start_id: ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ ID (1 ï¿½ï¿½ 5)
+ * @param currents_amps: ï¿½ï¿½ï¿½ï¿½Îª 4 ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½Ó¦ 4 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½
  */
 void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, uint8_t motor_start_id, float currents_amps[4]) {
     uint8_t data[8] = {0};
@@ -192,21 +192,21 @@ void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, 
 }
 
 ///**
-// * @brief °²ÅàÖµ¿ØÖÆËùÓÐµç»ú (8¸ö)
-// * @param config: µçµ÷ÅäÖÃÖ¸Õë
-// * @param currents_amps: ³¤¶ÈÎª 8 µÄ¸¡µãÊý×é£¬Ë÷Òý 0 ¶ÔÓ¦µç»ú 1
+// * @brief ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ (8ï¿½ï¿½)
+// * @param config: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+// * @param currents_amps: ï¿½ï¿½ï¿½ï¿½Îª 8 ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ 1
 // */
 //void ESC_Control_Amps_All(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, float currents_amps[8]) {
 //    uint8_t data[8] = {0};
 
-//    // ·¢ËÍµÚÒ»Ö¡ (µç»ú 1-4)
+//    // ï¿½ï¿½ï¿½Íµï¿½Ò»Ö¡ (ï¿½ï¿½ï¿½ 1-4)
 //    for (int i = 0; i < 4; i++) {
 //        int16_t raw_val = Amps_To_Raw(config, currents_amps[i]);
 //        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
 //    }
 //    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
 
-//    // ·¢ËÍµÚ¶þÖ¡ (µç»ú 5-8)
+//    // ï¿½ï¿½ï¿½ÍµÚ¶ï¿½Ö¡ (ï¿½ï¿½ï¿½ 5-8)
 //    for (int i = 0; i < 4; i++) {
 //        int16_t raw_val = Amps_To_Raw(config, currents_amps[i + 4]);
 //        Int16_To_BigEndian(raw_val, &data[i*2], &data[i*2 + 1]);
@@ -214,12 +214,12 @@ void ESC_Control_Amps_Group(CAN_HandleTypeDef *hcan,const ESC_Config_t* config, 
 //    CAN_Send_STD(hcan,ESC_CAN_ID_GROUP_2, data);
 //}
 
-/* ================= Ô­Ê¼Öµ¿ØÖÆº¯Êý ================= */
+/* ================= Ô­Ê¼Öµï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ ================= */
 
 /**
- * @brief Ô­Ê¼Öµ¿ØÖÆµ¥¸öµç»ú
- * @param motor_id: µç»ú ID (1 ~ 8)
- * @param raw_value: Ð­ÒéÔ­Ê¼Öµ£¬Èç 8192 »ò -10000
+ * @brief Ô­Ê¼Öµï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param motor_id: ï¿½ï¿½ï¿½ ID (1 ~ 8)
+ * @param raw_value: Ð­ï¿½ï¿½Ô­Ê¼Öµï¿½ï¿½ï¿½ï¿½ 8192 ï¿½ï¿½ -10000
  */
 void ESC_Control_Raw_Single(CAN_HandleTypeDef *hcan,uint8_t motor_id, int16_t raw_value) {
     uint8_t data[8] = {0};
@@ -241,9 +241,9 @@ void ESC_Control_Raw_Single(CAN_HandleTypeDef *hcan,uint8_t motor_id, int16_t ra
 }
 
 /**
- * @brief Ô­Ê¼Öµ¿ØÖÆÒ»×éµç»ú (4¸ö)
- * @param motor_start_id: ÆðÊ¼µç»ú ID (1 »ò 5)
- * @param raw_values: ³¤¶ÈÎª 4 µÄÕûÐÍÊý×é£¬¶ÔÓ¦ 4 ¸öµç»úµÄÔ­Ê¼Öµ
+ * @brief Ô­Ê¼Öµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ (4ï¿½ï¿½)
+ * @param motor_start_id: ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ ID (1 ï¿½ï¿½ 5)
+ * @param raw_values: ï¿½ï¿½ï¿½ï¿½Îª 4 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½Ó¦ 4 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼Öµ
  */
 void ESC_Control_Raw_Group(CAN_HandleTypeDef *hcan,uint8_t motor_start_id, int16_t raw_values[4]) {
     uint8_t data[8];
@@ -259,19 +259,19 @@ void ESC_Control_Raw_Group(CAN_HandleTypeDef *hcan,uint8_t motor_start_id, int16
 }
 
 ///**
-// * @brief Ô­Ê¼Öµ¿ØÖÆËùÓÐµç»ú (8¸ö)
-// * @param raw_values: ³¤¶ÈÎª 8 µÄÕûÐÍÊý×é£¬Ë÷Òý 0 ¶ÔÓ¦µç»ú 1
+// * @brief Ô­Ê¼Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ (8ï¿½ï¿½)
+// * @param raw_values: ï¿½ï¿½ï¿½ï¿½Îª 8 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ 1
 // */
 //void ESC_Control_Raw_All(CAN_HandleTypeDef *hcan,int16_t raw_values[8]) {
 //    uint8_t data[8];
 
-//    // ·¢ËÍµÚÒ»Ö¡ (µç»ú 1-4)
+//    // ï¿½ï¿½ï¿½Íµï¿½Ò»Ö¡ (ï¿½ï¿½ï¿½ 1-4)
 //    for (int i = 0; i < 4; i++) {
 //        Int16_To_BigEndian(raw_values[i], &data[i*2], &data[i*2 + 1]);
 //    }
 //    CAN_DJI_SendSTD(ESC_CAN_ID_GROUP_1, data);
 
-//    // ·¢ËÍµÚ¶þÖ¡ (µç»ú 5-8)
+//    // ï¿½ï¿½ï¿½ÍµÚ¶ï¿½Ö¡ (ï¿½ï¿½ï¿½ 5-8)
 //    for (int i = 0; i < 4; i++) {
 //        Int16_To_BigEndian(raw_values[i + 4], &data[i*2], &data[i*2 + 1]);
 //    }

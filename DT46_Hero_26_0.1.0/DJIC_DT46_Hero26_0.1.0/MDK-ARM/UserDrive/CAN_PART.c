@@ -142,7 +142,6 @@ void CAN_Send_STD(CAN_HandleTypeDef *hcan,uint32_t id, uint8_t* data) {
 //* ===================================================================== *//
 //* ================= 带帧序号的CAN发送函数（使用扩展帧） ================= *//
 //* ===================================================================== *//
-
 static void FloatToBytes(float value, uint8_t* bytes) {
     uint32_t* intValue = (uint32_t*)&value;
     bytes[0] = (*intValue >> 0) & 0xFF;
@@ -155,7 +154,7 @@ static float BytesToFloat(uint8_t* bytes) {
     uint32_t intValue = (bytes[3] << 24) | (bytes[2] << 16) | (bytes[1] << 8) | bytes[0];
     return *((float*)&intValue);
 }
- 
+
 bool CAN_SendFloatArray(CAN_HandleTypeDef* hcan, float* data, uint8_t length,uint16_t ID) { 
 	
 	if(length > 64 ){length = 64;}
