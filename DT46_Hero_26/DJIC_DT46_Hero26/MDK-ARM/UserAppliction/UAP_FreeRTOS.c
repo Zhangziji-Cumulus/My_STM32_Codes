@@ -43,7 +43,7 @@ void UAP_FreeRTOS_Init(void)
      }
 	}
 	
-	last_switch = RC_Ctl.Switch.S2_L;
+	//last_switch = RC_Ctl.Switch.S2_L;
 }
 
 static UBaseType_t remain_StartRealTime_TASK;
@@ -60,7 +60,7 @@ __attribute__((used)) void StartRealTime_TASK(void *argument)
 	 // 上电强制停机
 	 g_motor_run_enable = 0;
 	
-	 vTaskDelay(100);  // 直接等SBUS稳定，最简单有效
+	 vTaskDelay(300);  // 直接等SBUS稳定，最简单有效
 
 	 // 读取上电时的初始拨杆值
 	 last_switch = RC_Ctl.Switch.S2_L;

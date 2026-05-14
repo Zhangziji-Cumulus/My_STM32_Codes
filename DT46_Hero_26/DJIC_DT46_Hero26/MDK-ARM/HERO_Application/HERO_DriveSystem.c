@@ -159,7 +159,7 @@ __attribute__((used)) void HEROShootingTask(void *argument)
 		else
 		{
 			timecount = 0;
-			ShootingVel_Calc(5,&SV,RC_Ctl.Switch.S2_R);
+			ShootingVel_Calc(1,&SV,RC_Ctl.Switch.S2_R);
 			Motor_DJI_ShootingFri(DJI_MFeedback_CAN1,&hcan1,1.0f,SV.UP_Lrpm,SV.UP_Rrpm,SV.Dowm_Mrpm);	
 		}
 		
@@ -186,7 +186,7 @@ void get_chassis_data(void)
 { 
 	 //Chassis_Move.RelativeAngle_Degree = MyMath_cal_output_angle(DJI_MFeedback_CAN3[4].angle_deg,2)- ERRORANGLE;
 	 //Chassis_Move.RelativeAngle_Degree = MyMath_normalize_m180_to_p180(Chassis_Move.RelativeAngle_Degree);
-	
+
 	 //Chassis_Move.RelativeAngle_Radian = MyMath_Degrees_To_Radians(Chassis_Move.RelativeAngle_Degree);
 	 
 	 Chassis_Move.Vel.FB = MyMath_Map_Range(RC_Ctl.Stick.LY,-HOTRC_RANGE,HOTRC_RANGE,-CHASSIS_FORWARD_MAX_SPEED,CHASSIS_FORWARD_MAX_SPEED);
