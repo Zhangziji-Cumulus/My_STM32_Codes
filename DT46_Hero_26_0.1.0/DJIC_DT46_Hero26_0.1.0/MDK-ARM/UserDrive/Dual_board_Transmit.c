@@ -56,10 +56,10 @@ void Dual_Board_ReceiveCallBack(void)
 		DBT_RX.B2.RC_Ctl.Knob.KL = DualBoard_ReceiveDataBuff[11];
 		DBT_RX.B2.RC_Ctl.Knob.KR = DualBoard_ReceiveDataBuff[12];
 		
-//	DBT_RX.B2.RC_Ctl.Flag.ch17 = DualBoard_ReceiveDataBuff[13];
-//	DBT_RX.B2.RC_Ctl.Flag.ch18 = DualBoard_ReceiveDataBuff[14];
-//	DBT_RX.B2.RC_Ctl.Flag.failsafe = DualBoard_ReceiveDataBuff[15];
-	DBT_RX.B2.RC_Ctl.Flag.frameLost = DualBoard_ReceiveDataBuff[13];
+	//	DBT_RX.B2.RC_Ctl.Flag.ch17 = DualBoard_ReceiveDataBuff[13];
+	//	DBT_RX.B2.RC_Ctl.Flag.ch18 = DualBoard_ReceiveDataBuff[14];
+	//	DBT_RX.B2.RC_Ctl.Flag.failsafe = DualBoard_ReceiveDataBuff[15];
+		DBT_RX.B2.RC_Ctl.Flag.frameLost = DualBoard_ReceiveDataBuff[13];
 
 		//** Other data **//	
 		RXRC_TO_HOTRC();
@@ -120,6 +120,3 @@ static void RXRC_TO_HOTRC(void)
 	RC_Ctl.Knob.KL = DBT_RX.B2.RC_Ctl.Knob.KL;
 	RC_Ctl.Knob.KR = DBT_RX.B2.RC_Ctl.Knob.KR;
 };
-
-
-

@@ -25,6 +25,9 @@
                 "d:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\Drivers\\STM32F4xx_HAL_Driver\\Src",
                 "d:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\Middlewares\\Third_Party\\FreeRTOS\\Source",
                 "d:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang",
+                "D:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\MDK-ARM\\ABModule",
+                "D:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\MDK-ARM\\AADrivers",
+                "D:\\A_Code_GitHub\\My_STM32_Code_Free\\My_STM32_Codes\\DT46_Hero_26_0.1.0\\DJIC_DT46_Hero26_0.1.0\\MDK-ARM\\ACApplication",
                 "${default}"
             ],
             "defines": [
