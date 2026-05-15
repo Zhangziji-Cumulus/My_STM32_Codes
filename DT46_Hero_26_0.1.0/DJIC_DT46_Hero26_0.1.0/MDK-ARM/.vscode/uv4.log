@@ -1,17 +1,4 @@
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling CAN_PART.c...
-UserDrive\CAN_PART.c(27): warning:  #186-D: pointless comparison of unsigned integer with zero
-      if (hcan->Instance == 
-AN1 && (filter_bank > 13 || filter_bank < 0)) {
-UserDrive\CAN_PART.c(212): warning:  #940-D: missing return statement at end of non-void function "CAN_SendFloatArray" 
-  }
-UserDrive\CAN_PART.c(153): warning:  #177-D: function "BytesToFloat"  was declared but never referenced
-  static float BytesToFloat(uint8_t* bytes) {
-UserDrive\CAN_PART.c: 3 warnings, 0 errors
-compiling DJI_Motor_CAN.c...
-linking...
-Program Size: Code=52440 RO-data=1416 RW-data=500 ZI-data=29212  
-FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 3 Warning(s).
-Build Time Elapsed:  00:00:04
+"BaseMood\BaseMood.axf" - 0 Error(s), 0 Warning(s).
+Build Time Elapsed:  00:00:01
