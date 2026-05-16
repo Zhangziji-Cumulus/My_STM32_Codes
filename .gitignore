@@ -1,0 +1,94 @@
+# =====================================
+# STM32 / Keil / CubeMX 项目专用 .gitignore
+# =====================================
+
+# --------------------------
+# 1. 编译生成的目标文件
+# --------------------------
+*.bin
+*.elf
+*.hex
+*.axf
+*.out
+*.map
+*.srec
+*.list
+*.lst
+*.sym
+*.crf
+*.o
+*.d
+*.dep
+*.lnp
+*.bak
+*.log
+
+# --------------------------
+# 2. Keil MDK 工程文件与缓存
+# --------------------------
+# 工程配置文件（可保留）
+# *.uvprojx
+# *.uvoptx
+
+# 编译输出文件夹
+Objects/
+Listings/
+*.jlink
+*.ini
+*.dbgconf
+*.scvd
+*.sct
+
+# --------------------------
+# 3. STM32CubeMX 生成的临时文件
+# --------------------------
+.ioc_backup/
+MX/
+SW4STM32/
+STM32CubeMX/
+*.ioc.bak
+*.ioc.~*
+*.cubemx
+*.cubemx.lock
+
+# --------------------------
+# 4. 开发工具与IDE相关文件
+# --------------------------
+# VSCode
+.vscode/
+.vs/
+*.code-workspace
+*.suo
+*.user
+*.user.*
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+*.iml
+*.iws
+*.ipr
+
+# 其他编辑器
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --------------------------
+# 5. 大文件/二进制/临时文件
+# --------------------------
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.iso
+*.bin.*
+*.elf.*
+*.bak.*
+*.tmp
+*.temp
+*.log
+*.txt
