@@ -35,7 +35,7 @@ void SBUS_Init(UART_HandleTypeDef *huart);
  *
  * @return const SbusData_t* 指向当前遥控器数据的指针
  */
-const SbusData_t *get_remote_control_point(void);
+const SbusData_t *get_SBUS_Data_point(void);
 
 /**
  * @brief 处理 SBUS 数据，需在主循环中高频调用

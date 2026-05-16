@@ -33,7 +33,7 @@ void SBUS_Init(UART_HandleTypeDef *huart) {
  * @brief 获取当前遥控器数据的只读指针
  * @return const SbusData_t*
  */
-const SbusData_t *get_remote_control_point(void)
+const SbusData_t *get_SBUS_Data_point(void)
 {
     return &sbusData;
 }
