@@ -1,7 +1,12 @@
 #include "VideoTx_uart.h"
 
-VideoTx_Ctrl_t VideoTx_Ctrl;
+static VideoTx_Ctrl_t VideoTx_Ctrl;
 
+/**
+ * @brief 获取图传遥控器数据的指针
+ * 
+ * @return const VideoTx_Ctrl_t* 
+ */
 const VideoTx_Ctrl_t* get_VideoTx_Ctl_point(void)
 {
     return &VideoTx_Ctrl;

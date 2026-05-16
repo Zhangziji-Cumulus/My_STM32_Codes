@@ -6,6 +6,7 @@
 #include "cmsis_os.h"
 /* user includes */
 #include "Remote_Ctrl.h"
+#include "VideoTx_uart.h"
 
 /* enum */
 //控制模式

@@ -15,7 +15,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
   for(;;)
   {
     RC_Ctl_t* RC_Ctl = get_RC_Ctl_point();
-    VideoTx_Data_t *VideoTx_Data = get_VideoTx_Ctl_point();
+    VideoTx_Ctrl_t *VideoTx_Data = get_VideoTx_Ctl_point();
 
     // CMD.ctrl 
     // CMD.Move
