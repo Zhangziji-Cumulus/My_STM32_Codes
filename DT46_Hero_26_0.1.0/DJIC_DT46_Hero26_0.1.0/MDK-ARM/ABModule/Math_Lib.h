@@ -1,0 +1,55 @@
+#ifndef MATH_LIB_H_
+#define MATH_LIB_H_
+
+/* system includes */
+#include "math.h"
+#include <stdint.h>
+#include <float.h>
+#include <stdint.h>
+
+/* define */
+#define MY_PI 3.14159265358979323846
+
+/* extern function declarations */
+
+//** #################################################################################################### **//
+//** ========================================== 角度转化类 =============================================== **//
+//** #################################################################################################### **//
+
+/* @brief  将角度转化为弧度 */
+float MyMath_Degrees_To_Radians(float degrees);
+
+/* @brief 将弧度转化为角度 */
+float MyMath_Radians_To_Degrees(float rad);
+
+/* @brief 规范化到 [0, 360) */
+double MyMath_normalize_0_to_360(double angle);
+
+/* @brief 规范化到 (-180, 180]  (与 atan2 返回值范围一致) */
+double MyMath_normalize_m180_to_p180(double angle);
+
+
+//** #################################################################################################### **//
+//** ======================================== 范围规范、限制类 =========================================== **//
+//** #################################################################################################### **//
+
+/* @brief 将浮点数 “限制” 在范围[min, max]内，支持循环模式 */
+float MyMath_Limit_Float(float value, float min, float max, int is_cycle);
+
+/* @brief 将输入浮点数 “ 映射 ” 到目标范围[target_min, target_max] */
+float MyMath_Map_Range(float input, float input_min, float input_max, float target_min, float target_max);
+
+//** #################################################################################################### **//
+//** ============================================ 功能类 ================================================ **//
+//** #################################################################################################### **//
+
+/* @brief 计算最短路径角度差（控制算法必备）*/
+double MyMath_angle_diff_shortest(double target, double current);
+
+/* @brief 传入一个0-360度的角度，返回累计值 */
+float MyMath_get_accumulated_angle(float current_angle);
+
+/* @brief 知道当前编码器值和减速比求输出轴角度(放到1ms里计算),输出角度范围（-180°，180°）*/
+double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio);
+
+#endif // MATH_LIB_H_
