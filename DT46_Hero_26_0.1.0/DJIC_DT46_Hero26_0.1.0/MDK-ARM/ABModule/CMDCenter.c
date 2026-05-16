@@ -20,13 +20,23 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
     // CMD.ctrl 
     // CMD.Move
 
+    if(VideoTx_Data->is_valid == 1)
+    {
+      CMD.Chassis.FB = VideoTx_Data->ch1  - VTX_CHANNEL_MID;
+      CMD.Chassis.LR = VideoTx_Data->ch3  - VTX_CHANNEL_MID;
+      CMD.Chassis.RO = VideoTx_Data->dial - VTX_CHANNEL_MID;
+    }
+    else
+    {
+      CMD.Chassis.FB   = RC_Ctl->Stick.LY;
+      CMD.Chassis.LR   = RC_Ctl->Stick.LX;
+      CMD.Chassis.RO   = RC_Ctl->Stick.RX;
 
-    CMD.Chassis.FB   = RC_Ctl->Stick.LY;
-    CMD.Chassis.LR   = RC_Ctl->Stick.LX;
-    CMD.Chassis.RO   = RC_Ctl->Stick.RX;
+      CMD.Gimbal.Yaw   = RC_Ctl->Stick.RY;
+      CMD.Gimbal.Pitch = RC_Ctl->Stick.RY;
+    }
 
-    CMD.Gimbal.Yaw   = RC_Ctl->Stick.RY;
-    CMD.Gimbal.Pitch = RC_Ctl->Stick.RY;
+
 
     // CMD.Shooting.Fire
     // CMD.Shooting.Load

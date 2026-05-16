@@ -9,6 +9,18 @@
 #define RC_FRAME_SIZE 21
 #define RC_BUFFER_SIZE 32
 
+//宏定义接收到的数据范围
+
+//遥感通道最小值、最大值、中间值
+#define VTX_CHANNEL_MIN 364
+#define VTX_CHANNEL_MID 1024
+#define VTX_CHANNEL_MAX 1684
+
+//鼠标移动速度最小值、最大值、未移动为0
+#define VTX_MOUSE_VELMIN -32768
+#define VTX_MOUSE_STOP 0
+#define VTX_MOUSE_MAX 32767
+
 // 遥控器解析后的完整数据
 typedef struct
 {
@@ -64,6 +76,7 @@ typedef struct
     } keyboard;
 
     uint8_t is_valid;  // 数据是否有效（CRC校验通过）
+
 } VideoTx_Ctrl_t;
 
 const VideoTx_Ctrl_t* get_VideoTx_Ctl_point(void);
