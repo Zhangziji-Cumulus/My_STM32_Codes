@@ -202,7 +202,6 @@ void DJI_MOTOR_EmergencySTOP_ALL(DJI_MotorFeedback_t DJI_MFeedback[],CAN_HandleT
 	
 	PIDoutput2[3] = PID_Calculate(&Motor_STOP,DJI_MFeedback[7].speed_rpm,0);
 	
-	
 	ESC_Control_Raw_Group(hcan,1,PIDoutput1);
 	ESC_Control_Raw_Group(hcan,4,PIDoutput2);
 }

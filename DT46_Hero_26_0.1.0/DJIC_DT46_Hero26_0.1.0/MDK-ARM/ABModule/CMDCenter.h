@@ -21,7 +21,8 @@ typedef enum
 typedef enum
 {
     Normal      = 0,//正常模式(地盘跟随)
-    Spin        = 1,//小陀螺模式
+    Spin_CW     = 1,//小陀螺模式，CW 
+    Spin_CCW    = 2,//小陀螺模式，CCW
 } MoveMode_e;
 
 // 通用开关状态

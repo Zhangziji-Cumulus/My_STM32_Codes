@@ -24,6 +24,31 @@ float MyMath_Radians_To_Degrees(float rad) {
     return rad * (180.0 / MY_PI);
 }
 
+/**
+ * @brief 规范化到 [0, 360)
+ * 
+ * @param angle 输入角度
+ * @return double 规范化后的角度，范围 [0, 360)
+ */
+double MyMath_normalize_0_to_360(double angle) {
+    angle = fmod(angle, 360.0);
+    return angle < 0.0 ? angle + 360.0 : angle;
+}
+
+/**
+ * @brief 规范化到 (-180, 180]  (与 atan2 返回值范围一致)
+ * 
+ * @param angle 输入角度
+ * @return double 规范化后的角度，范围 (-180, 180]
+ */
+double MyMath_normalize_m180_to_p180(double angle) {
+    angle = fmod(angle, 360.0);
+    if (angle >  180.0) angle -= 360.0;
+    if (angle <= -180.0) angle += 360.0;
+    return angle;
+}
+
+
 //** #################################################################################################### **//
 //** ======================================== 范围规范、限制类 =========================================== **//
 //** #################################################################################################### **//
@@ -93,13 +118,26 @@ float MyMath_Map_Range(float input, float input_min, float input_max, float targ
 //** ============================================ 功能类 ================================================ **//
 //** #################################################################################################### **//
 
+/**
+ * @brief 计算最短路径角度差（控制算法必备）
+ * 
+ * @param target 目标角度
+ * @param current 当前角度
+ * @return 差值，范围 (-180, 180]，正=逆时针，负=顺时针
+ */
+double MyMath_angle_diff_shortest(double target, double current) {
+    double diff = fmod(target - current, 360.0);
+    if (diff >  180.0) diff -= 360.0;
+    if (diff <= -180.0) diff += 360.0;
+    return diff;
+}
 
-
-
-
-
-
-/* 传入一个0-360度的角度，返回累计值 */
+/**
+ * @brief 传入一个0-360度的角度，返回累计值
+ * 
+ * @param current_angle 当前角度
+ * @return float 累计角度，范围不限制
+ */
 float MyMath_get_accumulated_angle(float current_angle) {
     // 静态变量：保存上一次角度和累计圈数（仅初始化一次）
     static float last_angle = -1.0f;  // 初始值设为无效值，标记首次调用
@@ -131,44 +169,19 @@ float MyMath_get_accumulated_angle(float current_angle) {
 }
 
 /**
- * @brief 规范化到 [0, 360)
+ * @brief 知道当前编码器值和减速比求输出轴角度(放到1ms里计算),输出角度范围（-180°，180°）
+ * 
+ * @param current_angle 
+ * @param gear_ratio 
+ * @return double 
  */
-double MyMath_normalize_0_to_360(double angle) {
-    angle = fmod(angle, 360.0);
-    return angle < 0.0 ? angle + 360.0 : angle;
-}
-
-/**
- * @brief 规范化到 (-180, 180]  (与 atan2 返回值范围一致)
- */
-double MyMath_normalize_m180_to_p180(double angle) {
-    angle = fmod(angle, 360.0);
-    if (angle >  180.0) angle -= 360.0;
-    if (angle <= -180.0) angle += 360.0;
-    return angle;
-}
-
-/**
- * @brief 计算最短路径角度差（控制算法必备）
- * @param target 目标角度
- * @param current 当前角度
- * @return 差值，范围 (-180, 180]，正=逆时针，负=顺时针
- */
-double MyMath_angle_diff_shortest(double target, double current) {
-    double diff = fmod(target - current, 360.0);
-    if (diff >  180.0) diff -= 360.0;
-    if (diff <= -180.0) diff += 360.0;
-    return diff;
-}
-
-//知道当前编码器值和减速比求输出轴角度(放到1ms里计算),输出角度范围（-180°，180°）
 double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
 {
 		static double Last_Angle = 0.0;
 		static double changeAngle = 0.0;
 		static double add_angle = 0.0;
 	
-	    // 静态变量：保存上一次角度和累计圈数（仅初始化一次）
+	// 静态变量：保存上一次角度和累计圈数（仅初始化一次）
     static float last_angle = -1.0f;  // 初始值设为无效值，标记首次调用
     static int total_cycles = 0;      // 累计圈数（正转+，反转-）
     
@@ -205,34 +218,3 @@ double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
 	
 	return add_angle;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
