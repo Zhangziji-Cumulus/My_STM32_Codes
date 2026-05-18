@@ -22,7 +22,7 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "HOTRC_HT10A.h"
+#include "A_MCommon.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

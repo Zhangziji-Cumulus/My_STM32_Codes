@@ -1,6 +1,6 @@
 #include "CMDCenter.h"
 
-static CMD_t CMD;
+CMD_t CMD;
 
 void CMD_Center_Init(void)
 {
@@ -14,8 +14,8 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
 
   for(;;)
   {
-    RC_Ctl_t* RC_Ctl = get_RC_Ctl_point();
-    VideoTx_Ctrl_t *VideoTx_Data = get_VideoTx_Ctl_point();
+    const RC_Ctl_t* RC_Ctl = get_RC_Ctl_point();
+    const VideoTx_Ctrl_t *VideoTx_Data = get_VideoTx_Ctl_point();
 
     //判断有没有正确接受到数据、数据是否正常；不正常则设置为“停止模式”
     if(VideoTx_Data->is_valid == 1 || RC_Ctl->is_valid == 1)

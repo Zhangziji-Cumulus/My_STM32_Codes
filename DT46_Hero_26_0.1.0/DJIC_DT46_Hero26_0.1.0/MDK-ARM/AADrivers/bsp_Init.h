@@ -3,9 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "usart.h"
-#include "bsp_CAN.h"
-#include "bsp_SBUS.h"
+#include "A_MCommon.h"
 
 /* Exported functions --------------------------------------------------------*/
 

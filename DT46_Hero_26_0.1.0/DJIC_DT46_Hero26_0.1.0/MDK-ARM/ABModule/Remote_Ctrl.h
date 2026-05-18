@@ -65,7 +65,10 @@ typedef struct{
 
 }RC_Ctl_t;
 
-
+/** 获取遥控器数据指针（只读） */
+const RC_Ctl_t* get_RC_Ctl_point(void);
+/* 获取遥控器数据 */
+const RC_Ctl_t get_RC_Ctl(void);
 
 #endif
 

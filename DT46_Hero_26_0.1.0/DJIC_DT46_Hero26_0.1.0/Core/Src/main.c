@@ -30,8 +30,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bsp_delay.h"
-#include "MY_Time.h"
-#include "UAP_Init.h"
+#include "A_MCommon.h"
 
 /* USER CODE END Includes */
 
@@ -106,8 +105,8 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	delay_init();
-	UAP_Init();
-	
+	BSP_Init();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

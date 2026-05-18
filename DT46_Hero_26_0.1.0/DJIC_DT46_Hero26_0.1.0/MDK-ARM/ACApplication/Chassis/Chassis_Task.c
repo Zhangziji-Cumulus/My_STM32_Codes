@@ -21,5 +21,3 @@ __attribute__((used)) void ChassisTask(void *argument)
     osDelay(CHASSIS_TASK_TIME_MS);
   }
 }
-
-

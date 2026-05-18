@@ -8,6 +8,8 @@
 #include "main.h"
 #include "freertos.h"
 #include "cmsis_os.h"
+#include "can.h"
+#include "usart.h"
 
 //** #################################################################################################### **//
 //** ======================================== 常用库头文件 =============================================== **//
@@ -51,6 +53,8 @@
 #include "Math_Lib.h" //数学工具库
 #include "CMDCenter.h" //控制命令中心
 #include "Remote_Ctrl.h" //遥控器数据处理
+#include "sound_effects_task.h" //蜂鸣器音效
+
 
 //电机模块
 #include "MotorCtrl_DJI.h"  //DJI电机控制协议
