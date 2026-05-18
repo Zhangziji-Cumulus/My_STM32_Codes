@@ -41,7 +41,7 @@ PID_HandleTypeDef SFri_DM_Ex;
 void Motor_Init(void)
 {	
 	//3508µç»ú¼±Í£
-  PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
+ 	 PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
 	//µØÅÌPID
 	PID_Init(&Chassis_MotorFL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-50.0f, 50.0f);
@@ -108,6 +108,12 @@ void Motor_DJI_Chassis(DJI_MotorFeedback_t DJI_MFeedback[],
 															 DJI_MFeedback[2].current_ma,
 															 DJI_MFeedback[2].speed_rpm,
 															 MError);
+  PIDoutput[3] = PID_Double_Calculate(&Chassis_MotorBR_In,
+									  &Chassis_MotorBL_Ex, 
+									  MotorVel_4,
+									  DJI_MFeedback[3].current_ma,
+									  DJI_MFeedback[3].speed_rpm,
+									  MError);
 															 
 	ESC_Control_Raw_Group(hcan,1,PIDoutput);
 }
