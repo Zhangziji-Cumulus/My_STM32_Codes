@@ -1,13 +1,27 @@
 #include "CMDCenter.h"
 
-CMD_t CMD;
+static CMD_t CMD;
+
+//** ================================================================================ **//
+//** ================================== 对外函数 ==================================== **//
+//** ================================================================================ **//
 
 void CMD_Center_Init(void)
 {
     
 }
 
-//更新控制量
+//** ------------------------------------------------------------ **//
+//** ===================== 获取数据（指针） ====================== **//
+//** ------------------------------------------------------------ **//
+const CMD_t* CMD_Get(void)
+{
+    return &CMD;
+}
+
+//** ================================================================================ **//
+//** ============================== 更新控制变量任务 ================================= **//
+//** ================================================================================ **//
 static UBaseType_t remain_CMDUpdateTask;
 __attribute__((used)) void CMDUpdateTask(void *argument)
 {
@@ -57,7 +71,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
         CMD.Chassis.LR   = RC_Ctl->Stick.LX;
         CMD.Chassis.RO   = RC_Ctl->Stick.RX;
         //云台移动指令
-        CMD.Gimbal.Yaw   = RC_Ctl->Stick.RY;
+        CMD.Gimbal.Yaw   = RC_Ctl->Stick.RX;
         CMD.Gimbal.Pitch = RC_Ctl->Stick.RY;
 
         //发射机构指令
@@ -98,40 +112,9 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
     }
 
     //=============================检测剩余栈=================================//
-	remain_CMDUpdateTask = uxTaskGetStackHighWaterMark(NULL);
+	  remain_CMDUpdateTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
 }
 
-//获取控制指令数据指针
-const CMD_t* CMD_Get(void)
-{
-    return &CMD;
-}
 
-// //设置控制模式函数
-// void Set_CMD_Ctrl()
-// {
-
-// }
-// //设置移动模式函数
-// void Set_CMD_Move()
-// {
-
-// }
-// //设置地盘移动指令函数
-// void Set_CMD_Chassis()
-// {
-
-
-// }
-// //设置云台移动指令函数
-// void Set_CMD_Gimbal()
-// {
-
-// }
-// //设置发射机构指令函数
-// void Set_CMD_Shooting()
-// {
-
-// }

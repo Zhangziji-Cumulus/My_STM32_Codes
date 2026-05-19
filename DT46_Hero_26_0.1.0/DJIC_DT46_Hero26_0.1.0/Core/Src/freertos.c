@@ -28,7 +28,9 @@
 
 #include "INS_task.h"
 #include "sound_effects_task.h" 
-#include "bsp_SBUS.h"
+
+#include "A_MCommon.h"
+
 
 /* USER CODE END Includes */
 
@@ -146,6 +148,18 @@ const osThreadAttr_t SBUS_attributes = {
   .stack_size = sizeof(SBUSBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
+/* Definitions for RCUpdate */
+osThreadId_t RCUpdateHandle;
+uint32_t RCUpdateBuffer[ 128 ];
+osStaticThreadDef_t RCUpdateControlBlock;
+const osThreadAttr_t RCUpdate_attributes = {
+  .name = "RCUpdate",
+  .cb_mem = &RCUpdateControlBlock,
+  .cb_size = sizeof(RCUpdateControlBlock),
+  .stack_mem = &RCUpdateBuffer[0],
+  .stack_size = sizeof(RCUpdateBuffer),
+  .priority = (osPriority_t) osPriorityRealtime,
+};
 /* Definitions for Queue_DJI_MD */
 osMessageQueueId_t Queue_DJI_MDHandle;
 uint8_t myQueue01testBuffer[ 5 * sizeof( uint16_t ) ];
@@ -181,6 +195,7 @@ void GimbalTask(void *argument);
 void ShootingTask(void *argument);
 void CMDUpdateTask(void *argument);
 void SBUSTask(void *argument);
+void RCUpdateTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -245,6 +260,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of SBUS */
   SBUSHandle = osThreadNew(SBUSTask, NULL, &SBUS_attributes);
 
+  /* creation of RCUpdate */
+  RCUpdateHandle = osThreadNew(RCUpdateTask, NULL, &RCUpdate_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
 	
@@ -282,22 +300,6 @@ void StartDefaultTask(void *argument)
   /* USER CODE END StartDefaultTask */
 }
 
-/* USER CODE BEGIN Header_INS_task */
-/**
-* @brief Function implementing the imuTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_INS_task */
-
-/* USER CODE BEGIN Header_buzzer_effects_task */
-/**
-* @brief Function implementing the buzr thread.
-* @param argument: Not used
-* @retval None
-*/
-
-/* USER CODE END Header_buzzer_effects_task */
 
 /* USER CODE BEGIN Header_Dual_Board_Transmit_Task */
 /**
@@ -405,6 +407,24 @@ __weak void SBUSTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END SBUSTask */
+}
+
+/* USER CODE BEGIN Header_RCUpdateTask */
+/**
+* @brief Function implementing the RCUpdate thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_RCUpdateTask */
+__weak void RCUpdateTask(void *argument)
+{
+  /* USER CODE BEGIN RCUpdateTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END RCUpdateTask */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -1,8 +1,6 @@
 #include "Remote_Ctrl.h"
 
-//** #################################################################################################### **//
-//** ====================================== HOTRC遥控器 ================================================= **//
-//** #################################################################################################### **//
+
 
 //拨杆状态设置函数,根据输入的通道值和预设的最小值、中值、最大值，判断拨杆处于哪个位置，并返回对应的状态码（1、2或3）
 
@@ -18,7 +16,7 @@
  */
 static uint8_t Switch_Set(uint16_t ChValue,uint16_t min_Val,uint16_t mid_Val,uint16_t max_Val)
 {
-		if(ChValue > min_Val && ChValue < max_Val)
+		if(ChValue >= min_Val && ChValue <= max_Val)
 		{
 			if(ChValue > (min_Val - 20) && ChValue < (min_Val + 20))
 			{
@@ -39,6 +37,10 @@ static uint8_t Switch_Set(uint16_t ChValue,uint16_t min_Val,uint16_t mid_Val,uin
 		}
 
 }
+
+//** #################################################################################################### **//
+//** ====================================== HOTRC遥控器 ================================================= **//
+//** #################################################################################################### **//
 
 #if (REMOTE_CTRL_TYPE == REMOTE_HOTRC)
 
@@ -66,20 +68,36 @@ static void HORRC_HT10A_GET_Ctl(void)
 		RC_Ctl.Flag.ch18 = sbusData->ch18;
 		RC_Ctl.Flag.failsafe = sbusData->failsafe;
 		RC_Ctl.Flag.frameLost = sbusData->frameLost;
+		RC_Ctl.is_valid = sbusData->is_valid;
 }
 
 /** 获取遥控器数据指针（只读） */
 const RC_Ctl_t* get_RC_Ctl_point(void)
 {
-	HORRC_HT10A_GET_Ctl();
     return &RC_Ctl;
 }
 
 /* 获取遥控器数据 */
 const RC_Ctl_t get_RC_Ctl(void)
 {
-	HORRC_HT10A_GET_Ctl();
     return RC_Ctl;
+}
+
+//** ================================================================================ **//
+//** ============================== 更新控制量任务 =================================== **//
+//** ================================================================================ **//
+static UBaseType_t remain_RCUpdate;
+__attribute__((used)) void RCUpdateTask(void *argument)
+{
+
+  for(;;)
+  {
+
+		HORRC_HT10A_GET_Ctl();
+		//=============================检测剩余栈=================================//
+		remain_RCUpdate = uxTaskGetStackHighWaterMark(NULL);
+    osDelay(1);
+  }
 }
 
 #endif
