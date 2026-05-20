@@ -14,7 +14,7 @@ void CMD_Center_Init(void)
 //** ------------------------------------------------------------ **//
 //** ===================== 获取数据（指针） ====================== **//
 //** ------------------------------------------------------------ **//
-const CMD_t* CMD_Get(void)
+const CMD_t* CMD_Get_point(void)
 {
     return &CMD;
 }
@@ -67,12 +67,12 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
         }
 
         //底盘移动指令
-        CMD.Chassis.FB   = RC_Ctl->Stick.LY;
-        CMD.Chassis.LR   = RC_Ctl->Stick.LX;
-        CMD.Chassis.RO   = RC_Ctl->Stick.RX;
+        CMD.Chassis.FB   = MyMath_Map_Range_Int16(RC_Ctl->Stick.LY,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
+        CMD.Chassis.LR   = MyMath_Map_Range_Int16(RC_Ctl->Stick.LX,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
+        CMD.Chassis.RO   = MyMath_Map_Range_Int16(RC_Ctl->Stick.RX,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
         //云台移动指令
-        CMD.Gimbal.Yaw   = RC_Ctl->Stick.RX;
-        CMD.Gimbal.Pitch = RC_Ctl->Stick.RY;
+        CMD.Gimbal.Yaw   = MyMath_Map_Range_Int16(RC_Ctl->Stick.RX,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
+        CMD.Gimbal.Pitch = MyMath_Map_Range_Int16(RC_Ctl->Stick.RY,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
 
         //发射机构指令
         

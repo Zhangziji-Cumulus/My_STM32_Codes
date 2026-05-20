@@ -42,6 +42,7 @@ typedef struct{
 		short RY;// 右摇杆 Y 轴
 	}Stick;
 	
+	//拨杆值为1、2、3
 	struct{
 		short S2_L;// 左两段拨杆
 		short S2_R;// 右两段拨杆
@@ -49,20 +50,29 @@ typedef struct{
 		short S3_R;// 右三段拨杆
 	}Switch;
 	
+	//旋钮
 	struct{
 		short KL;//左边旋钮
 		short KR;//右边旋钮
 	}Knob;
 
+	//标志位
 	struct{
-    uint8_t ch17;                        // 数字通道1 (0或1)
-    uint8_t ch18;                        // 数字通道2 (0或1)
-    uint8_t frameLost;                   // 丢帧标志 (1表示丢帧)
-    uint8_t failsafe;                    // 故障安全标志 (1表示触发)
+		uint8_t ch17;                        // 数字通道1 (0或1)
+		uint8_t ch18;                        // 数字通道2 (0或1)
+		uint8_t frameLost;                   // 丢帧标志 (1表示丢帧)
+		uint8_t failsafe;                    // 故障安全标志 (1表示触发)
 	}Flag;
 
+	//数据是否有效
 	uint8_t is_valid;					  // 新且正确的数据有效（1为有效，0为无效）
 
+	// 摇杆数据范围
+	struct{
+		int16_t Max;
+		int16_t Min;					  
+	}Range;
+	
 }RC_Ctl_t;
 
 /** 获取遥控器数据指针（只读） */

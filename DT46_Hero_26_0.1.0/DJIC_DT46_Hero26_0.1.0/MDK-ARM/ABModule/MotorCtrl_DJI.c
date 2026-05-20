@@ -88,16 +88,56 @@ void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback, uint32_t std_id,
 //** ============================= 获取电机反馈数据 ================================== **//
 //** ================================================================================ **//
 
+#ifdef CAN1
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN1(void) {
     return DJI_MFeedback_CAN1;
 }
+#endif
 
+#ifdef CAN2
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN2(void) {
     return DJI_MFeedback_CAN2;
 }
+#endif
 
+#ifdef CAN3
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN3(void) {
     return DJI_MFeedback_CAN3;
+}
+#endif
+
+/**
+ * @brief 通用接口：通过 CAN 句柄获取对应的电机反馈数据指针数组
+ * @param  hcan: CAN 句柄指针 (hcan1, hcan2)
+ * @retval 对应的电机反馈数据数组指针，若句柄无效则返回 NULL
+ */
+const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback(CAN_HandleTypeDef* hcan) {
+    if (hcan == NULL) {
+        return NULL;
+    }
+    
+    // 通过比较 CAN 实例地址来判断是哪个 CAN 总线
+#ifdef CAN1
+    if (hcan->Instance == CAN1) {
+        return DJI_MFeedback_CAN1;
+    } 
+#endif
+
+#ifdef CAN2
+    else if (hcan->Instance == CAN2) {
+        return DJI_MFeedback_CAN2;
+    } 
+#endif
+
+#ifdef CAN3
+    else if (hcan->Instance == CAN3) {
+        return DJI_MFeedback_CAN3;
+    } 
+#endif
+
+    else {
+        return NULL;  // 无效的 CAN 实例
+    }
 }
 
 //** ================================================================================ **//

@@ -173,6 +173,16 @@ void GetIMU_Value(void)
 	IMU_DegAngle[2] = radian_to_degree(INS_angle[2]);
 }
 
+#include "IMU_Get.h"
+
+#if(IMU_TYPE == IMU_TYP_BMI088)
+const float* IMU_Get_point(void)
+{
+  return INS_angle;
+}
+
+#endif
+
 /**
   * @brief          imu task, init bmi088, ist8310, calculate the euler angle
   * @param[in]      pvParameters: NULL

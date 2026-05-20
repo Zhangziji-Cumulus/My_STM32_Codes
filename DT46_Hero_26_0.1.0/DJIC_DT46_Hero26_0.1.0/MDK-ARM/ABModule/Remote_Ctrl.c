@@ -69,6 +69,9 @@ static void HORRC_HT10A_GET_Ctl(void)
 		RC_Ctl.Flag.failsafe = sbusData->failsafe;
 		RC_Ctl.Flag.frameLost = sbusData->frameLost;
 		RC_Ctl.is_valid = sbusData->is_valid;
+
+		RC_Ctl.Range.Max =  (HOTRC_MAX_VEL - HOTRC_MID_VEL);
+		RC_Ctl.Range.Min = -(HOTRC_MAX_VEL - HOTRC_MID_VEL);
 }
 
 /** 获取遥控器数据指针（只读） */

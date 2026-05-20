@@ -33,11 +33,17 @@ double MyMath_normalize_m180_to_p180(double angle);
 //** ======================================== 范围规范、限制类 =========================================== **//
 //** #################################################################################################### **//
 
-/* @brief 将浮点数 “限制” 在范围[min, max]内，支持循环模式 */
+/* @brief 将浮点数 "限制" 在范围[min, max]内，支持循环模式 */
 float MyMath_Limit_Float(float value, float min, float max, int is_cycle);
 
-/* @brief 将输入浮点数 “ 映射 ” 到目标范围[target_min, target_max] */
-float MyMath_Map_Range(float input, float input_min, float input_max, float target_min, float target_max);
+/* @brief 将输入浮点数 " 映射 " 到目标范围[target_min, target_max] */
+float MyMath_Map_Range_Float(float input, float input_min, float input_max, float target_min, float target_max);
+
+/* @brief 将整数 "限制" 在范围[min, max]内，支持循环模式 */
+int16_t MyMath_Limit_Int16(int16_t value, int16_t min, int16_t max, int is_cycle);
+
+/* @brief 将输入整数 "映射" 到目标范围[target_min, target_max] */
+int16_t MyMath_Map_Range_Int16(int16_t input, int16_t input_min, int16_t input_max, int16_t target_min, int16_t target_max);
 
 //** #################################################################################################### **//
 //** ============================================ 功能类 ================================================ **//

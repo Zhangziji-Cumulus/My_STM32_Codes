@@ -3,11 +3,12 @@
         {
             "name": "BaseMood",
             "includePath": [
-                    "${workspaceFolder}/**",
-                    "${workspaceFolder}/MDK-ARM/AADrivers",
-                    "${workspaceFolder}/MDK-ARM/ABModule",
-                    "${workspaceFolder}/MDK-ARM/ACApplication",
-                    "${default}"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F", // 这里对应 portmacro.h
+                "${workspaceFolder}/MDK-ARM/ACApplication/Chassis",
+                "D:/A_Study & Work/STM32/Keil5/ARM/ARMCC/include",
+                "D:/A_Study & Work/STM32/Keil5/ARM/PACK/ARM/CMSIS/**/Include"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
@@ -90,7 +91,8 @@
                 "__yield()=",
                 "__vfp_status(x,y)=0"
             ],
-            "intelliSenseMode": "${default}"
+            "intelliSenseMode": "gcc-arm",
+            "compilerPath": "D:\\A_Study & Work\\STM32\\Keil5\\ARM\\ARMCC\\bin\\armcc.exe"
         }
     ],
     "version": 4

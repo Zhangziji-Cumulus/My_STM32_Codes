@@ -28,7 +28,7 @@ typedef struct{
 	int16_t C_Curr;    //当前电流
 	int16_t C_Enc;     //当前编码器值
 	int16_t Out_vel;   //输出值
-	int16_t Radius;		//
+	int16_t Radius;	   //
 
 }Wheel_Data_t;
 
@@ -60,7 +60,7 @@ typedef struct{
 	float Theta_Radian;
 	float Theta_Degree;
 	float Gimbal_FWVector;//云台向前向量
-  float Chassis_FWVector;//地盘向前向量
+    float Chassis_FWVector;//地盘向前向量
 	float RelativeAngle_Radian;
 	float RelativeAngle_Degree;
 	

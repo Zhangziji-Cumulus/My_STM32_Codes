@@ -101,7 +101,7 @@ float MyMath_Limit_Float(float value, float min, float max, int is_cycle) {
  * @param target_max 目标范围的最大值
  * @return 映射后的浮点数
  */
-float MyMath_Map_Range(float input, float input_min, float input_max, float target_min, float target_max) {
+float MyMath_Map_Range_Float(float input, float input_min, float input_max, float target_min, float target_max) {
     // 处理输入范围相同的特殊情况，避免除零
     if (input_min == input_max) {
         return (target_min + target_max) / 2.0f;
@@ -112,6 +112,88 @@ float MyMath_Map_Range(float input, float input_min, float input_max, float targ
     
     // 将比例映射到目标范围
     return target_min + ratio * (target_max - target_min);
+}
+
+/**
+ * @brief 将整数 "限制" 在范围[min, max]内，支持循环模式
+ * 
+ * @param value 待处理的整数
+ * @param min 范围最小值
+ * @param max 范围最大值
+ * @param is_cycle 是否启用循环模式（1=循环，0=普通限制）
+ * @return 处理后的 int16_t 整数
+ */
+int16_t MyMath_Limit_Int16(int16_t value, int16_t min, int16_t max, int is_cycle) {
+    // 计算范围区间长度
+    int32_t range = (int32_t)max - (int32_t)min;
+    
+    // 避免区间长度为0导致异常
+    if (range <= 0) {
+        return min; // 若max <= min，直接返回min
+    }
+    
+    if (is_cycle) {
+        // 循环模式：超出范围时从另一端循环
+        // 使用 int32_t 避免溢出
+        int32_t val = (int32_t)value - (int32_t)min;
+        
+        // 手动实现取模运算，处理负数情况
+        val = val % range;
+        if (val < 0) {
+            val += range;
+        }
+        
+        int32_t result = val + (int32_t)min;
+        
+        // 确保结果在 int16_t 范围内
+        if (result > INT16_MAX) return INT16_MAX;
+        if (result < INT16_MIN) return INT16_MIN;
+        
+        return (int16_t)result;
+    } else {
+        // 普通限制模式：超出范围时钳位到边界
+        if (value < min) {
+            return min;
+        } else if (value > max) {
+            return max;
+        } else {
+            return value;
+        }
+    }
+}
+
+/**
+ * @brief 将输入整数 "映射" 到目标范围[target_min, target_max]
+ * 
+ * @param input 输入的整数
+ * @param input_min 输入值的最小值范围
+ * @param input_max 输入值的最大值范围
+ * @param target_min 目标范围的最小值
+ * @param target_max 目标范围的最大值
+ * @return 映射后的 int16_t 整数
+ */
+int16_t MyMath_Map_Range_Int16(int16_t input, int16_t input_min, int16_t input_max, int16_t target_min, int16_t target_max) {
+    // 处理输入范围相同的特殊情况，避免除零
+    if (input_min == input_max) {
+        return (int16_t)((int32_t)target_min + (int32_t)target_max) / 2;
+    }
+    
+    // 使用 int32_t 进行中间计算，避免溢出
+    int32_t input_range = (int32_t)input_max - (int32_t)input_min;
+    int32_t target_range = (int32_t)target_max - (int32_t)target_min;
+    
+    // 计算输入值在输入范围内的偏移量
+    int32_t input_offset = (int32_t)input - (int32_t)input_min;
+    
+    // 执行映射计算：target_min + (input_offset * target_range / input_range)
+    // 先乘后除以保持精度
+    int32_t mapped_value = (int32_t)target_min + (input_offset * target_range / input_range);
+    
+    // 确保结果在 int16_t 范围内
+    if (mapped_value > INT16_MAX) return INT16_MAX;
+    if (mapped_value < INT16_MIN) return INT16_MIN;
+    
+    return (int16_t)mapped_value;
 }
 
 //** #################################################################################################### **//

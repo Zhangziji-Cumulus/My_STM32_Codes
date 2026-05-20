@@ -70,9 +70,6 @@ extern DJI_MotorFeedback_t DJI_MFeedback_CAN1[8];
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN2[8];
 extern DJI_MotorFeedback_t DJI_MFeedback_CAN3[8];
 
-// extern const ESC_Config_t ESC_C620_20A;
-// extern const ESC_Config_t ESC_C610_10A;
-
 //** #################################################################################################### **//
 //** ========================================== 对外函数 ================================================= **//
 //** #################################################################################################### **//
@@ -88,14 +85,23 @@ void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback,uint32_t std_id, 
 //** ============================= 获取电机反馈数据 ================================== **//
 //** ================================================================================ **//
 
+#ifdef CAN1
 //获取CAN1反馈数据指针数组
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN1(void);
+#endif
 
+#ifdef CAN2
 //获取CAN2反馈数据指针数组
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN2(void);
+#endif
 
+#ifdef CAN3
 //获取CAN3反馈数据指针数组
 const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback_CAN3(void);
+#endif
+
+//通用接口：通过 CAN 句柄获取对应的电机反馈数据指针数组
+const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback(CAN_HandleTypeDef* hcan);
 
 //** ================================================================================ **//
 //** ============================= 发射控制数据函数 ================================== **//
