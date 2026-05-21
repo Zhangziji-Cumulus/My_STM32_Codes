@@ -49,7 +49,7 @@ void Motor_Init(void)
 	uint8_t board_id = BOARD_ID; 
 	
 	//3508µç»ú¼±Í£
-  PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
+  	PID_Init(&Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
 	//µØÅÌPID
 	PID_Init(&Chassis_MotorFL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);

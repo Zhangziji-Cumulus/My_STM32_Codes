@@ -219,5 +219,4 @@ void get_chassis_data(void)
 	 
 	 Chassis_Move.Vel.FB = MyMath_Map_Range(RC_Ctl.Stick.LY,-HOTRC_RANGE,HOTRC_RANGE,-CHASSIS_FORWARD_MAX_SPEED,CHASSIS_FORWARD_MAX_SPEED);
 	 Chassis_Move.Vel.RL = MyMath_Map_Range(RC_Ctl.Stick.LX,-HOTRC_RANGE,HOTRC_RANGE,-CHASSIS_FORWARD_MAX_SPEED,CHASSIS_FORWARD_MAX_SPEED);	
-	
 }

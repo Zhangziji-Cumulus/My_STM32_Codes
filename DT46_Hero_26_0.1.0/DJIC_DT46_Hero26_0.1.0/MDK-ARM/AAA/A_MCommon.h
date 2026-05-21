@@ -59,8 +59,10 @@
 #include "sound_effects_task.h" //蜂鸣器音效
 
 //电机模块
-#include "MotorCtrl_DJI.h"  //DJI电机控制协议
-#include "MotorCtrl_ZDT.h"  //ZDT电机控制协议
+#include "MotorCtrl_DJI.h"      //DJI电机控制协议
+#include "MotorCtrl_DJI_STOP.h" //DJI急停模块
+#include "MotorCtrl_ZDT.h"      //ZDT电机控制协议
+
 
 //** #################################################################################################### **//
 //** ========================================= 应用层头文件 ============================================== **//

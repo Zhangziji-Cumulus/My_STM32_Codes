@@ -176,34 +176,3 @@ double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
 	
 	return add_angle;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
