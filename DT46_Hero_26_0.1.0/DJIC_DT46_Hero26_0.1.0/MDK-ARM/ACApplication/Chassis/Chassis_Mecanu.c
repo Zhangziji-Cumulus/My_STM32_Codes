@@ -32,7 +32,8 @@ static void Chassis_Mecanu_Calc(void);
 //初始化函数
 void Chassis_Init(void)
 {
-   Chassis_Instance.CMD.ctrl = STOP_MODE;
+    //初始模式STOP
+    Chassis_Instance.CMD.ctrl = STOP_MODE;
 
    	//3508电机急停
   	PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
@@ -52,32 +53,31 @@ void Chassis_Init(void)
 	
 	PID_Init(&Chassis_Follow_PID,0.05f,0.002,0.15f,-1.5f,1.5f,-0.75f,0.75f);
 
-
 }          
 
 //更新数据函数
 void Chassis_Update(void)
 {
-    //获取控制命令数据结构体
+    //获取控制命令数据结构体指针
     Chassis_Instance.CMD = *CMD_Get_point();
 
-    // 获取IMU数据指针并复制到数组中
+    //获取IMU数据数组指针
     Chassis_Instance.INS_angle = IMU_Get_point();
 
     //获取电机反馈数据指针
     Chassis_Instance.MotorData.Ptr = MotorCtrl_DJI_GetDJI_MFeedback(&CHASSIS_CAN_CTRL);
 
     //更新电机数据
-    Chassis_Instance.MotorData.W_FL = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_CAN_FL];  // 左前轮
-    Chassis_Instance.MotorData.W_FR = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_CAN_FR];  // 右前轮
-    Chassis_Instance.MotorData.W_BL = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_CAN_BL];  // 左后轮
-    Chassis_Instance.MotorData.W_BR = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_CAN_BR];  // 右后轮
+    Chassis_Instance.MotorData.W_FL = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_FBK_FL];  // 左前轮
+    Chassis_Instance.MotorData.W_FR = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_FBK_FR];  // 右前轮
+    Chassis_Instance.MotorData.W_BL = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_FBK_BL];  // 左后轮
+    Chassis_Instance.MotorData.W_BR = Chassis_Instance.MotorData.Ptr[CHASSIS_MOTOR_ID_FBK_BR];  // 右后轮
 
     //地盘和云台的夹角获取
     Chassis_Instance.Calc.Yaw_Angle.Ptr = MotorCtrl_DJI_GetDJI_MFeedback(&CHASSIS_CAN_YAW);
-    Chassis_Instance.Calc.Yaw_Angle.Degree = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_CAN_YAW].angle_deg;
+    Chassis_Instance.Calc.Yaw_Angle.Degree = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW].angle_deg;
 
-    //限幅角度，并且重映射电机零位
+    //限幅云台的夹角，并且重映射电机零位
     float tempAngle = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Yaw_Angle.Degree - YAW_ZERO_ANGLE);
     
     Chassis_Instance.Calc.Theta.Degree = MyMath_cal_output_angle(tempAngle,GIMBAL_YAW_RATIO);//使用函数计算减速比后的地盘、云台角度
@@ -102,7 +102,7 @@ void Chassis_SetMode(void)
 //更新目标量
 void Chassis_RefreshTarget(void)
 {
-    Chassis_Update_Target(Chassis_Instance.CMD.Move);
+    Chassis_Update_Target(Chassis_Instance.CMD.Move);//根据移动模式来设置：正常/小陀螺CW CCW
 }
 
 //计算控制量
@@ -114,28 +114,28 @@ void Chassis_CtrlCalc(void)
                                                                Chassis_Instance.Calc.W_FL.T_rpm,
                                                                Chassis_Instance.MotorData.W_FL.current_ma,
                                                                Chassis_Instance.MotorData.W_FL.speed_rpm,
-                                                               MECANUM_PID_MERROR);
+                                                               CHASSIS_PID_THRESHOLD);
 
     Chassis_Instance.Calc.W_FR.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorFR_In,
                                                                &Chassis_MotorFR_Ex, 
                                                                Chassis_Instance.Calc.W_FR.T_rpm,
                                                                Chassis_Instance.MotorData.W_FR.current_ma,
                                                                Chassis_Instance.MotorData.W_FR.speed_rpm,
-                                                               MECANUM_PID_MERROR);
+                                                               CHASSIS_PID_THRESHOLD);
 
     Chassis_Instance.Calc.W_BL.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorBL_In,
                                                                &Chassis_MotorBL_Ex, 
                                                                Chassis_Instance.Calc.W_BL.T_rpm,
                                                                Chassis_Instance.MotorData.W_BL.current_ma,
                                                                Chassis_Instance.MotorData.W_BL.speed_rpm,
-                                                               MECANUM_PID_MERROR);
+                                                               CHASSIS_PID_THRESHOLD);
 
     Chassis_Instance.Calc.W_BR.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorBR_In,
                                                                &Chassis_MotorBR_Ex, 
                                                                Chassis_Instance.Calc.W_BR.T_rpm,
                                                                Chassis_Instance.MotorData.W_BR.current_ma,
                                                                Chassis_Instance.MotorData.W_BR.speed_rpm,
-                                                               MECANUM_PID_MERROR);
+                                                               CHASSIS_PID_THRESHOLD);
 }
 
 //发送控制指令
@@ -155,10 +155,10 @@ void Chassis_SendCmd(void)
     {
         int16_t PIDoutput[4];
 
-        PIDoutput[CHASSIS_MOTOR_ID_CAN_FL] = Chassis_Instance.Calc.W_FL.Ctrl_Vel;
-        PIDoutput[CHASSIS_MOTOR_ID_CAN_FR] = Chassis_Instance.Calc.W_FR.Ctrl_Vel;
-        PIDoutput[CHASSIS_MOTOR_ID_CAN_BL] = Chassis_Instance.Calc.W_BL.Ctrl_Vel;
-        PIDoutput[CHASSIS_MOTOR_ID_CAN_BR] = Chassis_Instance.Calc.W_BR.Ctrl_Vel;
+        PIDoutput[CHASSIS_MOTOR_ID_FBK_FL] = Chassis_Instance.Calc.W_FL.Ctrl_Vel;
+        PIDoutput[CHASSIS_MOTOR_ID_FBK_FR] = Chassis_Instance.Calc.W_FR.Ctrl_Vel;
+        PIDoutput[CHASSIS_MOTOR_ID_FBK_BL] = Chassis_Instance.Calc.W_BL.Ctrl_Vel;
+        PIDoutput[CHASSIS_MOTOR_ID_FBK_BR] = Chassis_Instance.Calc.W_BR.Ctrl_Vel;
 
         ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL, DJI_CAN_ID_GROUP_1, PIDoutput);
     }

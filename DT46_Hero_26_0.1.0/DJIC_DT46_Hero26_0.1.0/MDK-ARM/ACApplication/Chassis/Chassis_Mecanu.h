@@ -3,6 +3,8 @@
 
 #include "A_MCommon.h"
 
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
+
 #if(CHASSIS_TYPE == CHASSIS_MECANUM)
 
 //** ------------------------------------------------------------ **//
@@ -12,7 +14,7 @@
 #ifndef MAP_CMD_RANGE_TO_M_S
 #define MAP_CMD_RANGE_TO_M_S(cmd) \
     MyMath_Map_Range_Float((float)(cmd), -CMD_CTRL_RANGE, CMD_CTRL_RANGE, \
-                           -CHASSIS_MAX_SPEED, CHASSIS_MAX_SPEED)
+                            -CHASSIS_MAX_SPEED, CHASSIS_MAX_SPEED)
 #endif
 
 //每个轮子单独的数据
@@ -76,6 +78,11 @@ typedef struct
 
 }Chassis_Instance_t;
 
+
+
+
 #endif 
+
+#endif
 
 #endif // CHASSIS_MECANU_H_

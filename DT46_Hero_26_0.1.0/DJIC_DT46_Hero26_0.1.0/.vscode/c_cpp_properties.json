@@ -7,6 +7,8 @@
                 "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
                 "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F", // 这里对应 portmacro.h
                 "${workspaceFolder}/MDK-ARM/ACApplication/Chassis",
+                "${workspaceFolder}/MDK-ARM/ACApplication/Gimbal",
+                "${workspaceFolder}/MDK-ARM/ACApplication/Auto",
                 "D:/A_Study & Work/STM32/Keil5/ARM/ARMCC/include",
                 "D:/A_Study & Work/STM32/Keil5/ARM/PACK/ARM/CMSIS/**/Include"
             ],

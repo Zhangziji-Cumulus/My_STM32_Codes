@@ -12,7 +12,7 @@
 #define GIMBAL_BOAD		1       //云台板
 #define CHASSIS_BOAD	2       //地盘板
 
-#define BOARD_ID        CHASSIS_BOAD       //云台板、地盘板
+#define BOARD_ID        GIMBAL_BOAD       //云台板、地盘板
 
 #define TX_BASE_ID ((BOARD_ID == 1) ? 0x100 : 0x200)  /* 发送基ID */
 #define RX_BASE_ID ((BOARD_ID == 1) ? 0x200 : 0x100)  /* 接收基ID */

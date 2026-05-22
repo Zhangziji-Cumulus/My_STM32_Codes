@@ -15,8 +15,33 @@
 //** ===================== Control PID ========================== **//
 //** ------------------------------------------------------------ **//
 
-#define MECANUM_PID_MERROR  1.0f
+/*
 
+PID_CTRL_MODE_NORMAL        普通PID（无特殊逻辑，单环基础模式）
+环路结构模式
+PID_CTRL_MODE_SINGLE_LOOP   单环PID（位置/速度单环）
+PID_CTRL_MODE_DOUBLE_LOOP   双环PID（位置环+速度环级联）
+PID_CTRL_MODE_TRIPLE_LOOP   三环PID（位置+速度+电流三环串级）
+带前馈模式（最常用）
+PID_CTRL_MODE_SINGLE_FF     单环PID + 前馈
+PID_CTRL_MODE_DOUBLE_FF     双环PID + 前馈
+PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
+
+*/
+
+/* 云台PID相关 */
+
+//YAW轴PID控制模式
+#define PID_CTRL_MODE_YAW           PID_CTRL_MODE_SINGLE_FF
+#define PID_CTRL_MODE_PITCH         PID_CTRL_MODE_DOUBLE_LOOP
+
+//多环PID控制精度（允许偏差/阈值）
+#define GIMBAL_PID_THRESHOLD  0.1f
+
+/* 地盘PID相关 */
+
+//多环PID控制精度（允许偏差/阈值）
+#define CHASSIS_PID_THRESHOLD  1.0f
 
 
 //** ------------------------------------------------------------ **//
@@ -32,9 +57,21 @@
 //** ------------------------------------------------------------ **//
 
 /* 云台速度相关 */
+#define GIMBAL_MAX_SPEED_YAW        
+#define GIMBAL_MAX_SPEED_PITCH      
+
+/* 云台陀螺仪 */
+
+//陀螺仪数组序号
+#define GIMBAL_IMU_INDEX_YAW      0
+#define GIMBAL_IMU_INDEX_PITCH    2
 
 /* 云台物理参数 */
 #define GIMBAL_YAW_RATIO    2       //Yaw轴减速比为 2:1
+
+//云台俯仰角范围
+#define GIMBAL_PITCH_MAX_ELE    17.0f   //仰角（抬头）
+#define GIMBAL_PITCH_MAX_DEP    43.0f   //俯角（低头）
 
 /* 云台电机控制 */
 #define GIMBAL_CAN_CTRL     hcan2   //云台CAN总线
@@ -42,8 +79,17 @@
 #define GIMBAL_YAW_MOTOR_TYPE    MOTOR_DJI_GM6020         //云台电机类型
 #define GIMBAL_PITCH_MOTOR_TYPE  MOTOR_DJI_M3508          //云台电机类型
 
-#define GIMBAL_MOTOR_ID_CAN_YAW      4
-#define GIMBAL_MOTOR_ID_CAN_PITCH    0
+#define GIMBAL_CAN_GROUP_YAW    DJI_CAN_ID_GROUP_1  //Yaw轴电机所在CAN ID组
+#define GIMBAL_CAN_GROUP_PITCH  DJI_CAN_ID_GROUP_2  //Pitch轴电机所在CAN ID组
+
+// 云台电机 CAN ID 定义
+#define GIMBAL_CAN_ID_YAW      5    // YAW 轴电机 CAN ID
+#define GIMBAL_CAN_ID_PITCH    1    // PITCH 轴电机 CAN ID
+
+// 云台电机反馈ID (CAN ID - 1，大疆电机标准规则)
+#define GIMBAL_MOTOR_ID_FBK_YAW      (GIMBAL_CAN_ID_YAW   - 1)
+#define GIMBAL_MOTOR_ID_FBK_PITCH    (GIMBAL_CAN_ID_PITCH - 1)
+
 
 //** ------------------------------------------------------------ **//
 //** ==================== Shooting Config ======================= **//
@@ -51,7 +97,7 @@
 
 /** ===== 摩擦轮配置 ===== **/
 
-/* 云台速度相关 */
+/* 摩擦轮速度相关 */
 #define FRICTION_MAX_SPEED_M_S  12.0f               //摩擦轮最大线速度(单位：m/s）
 
 /* 摩擦轮的物理参数 */
@@ -109,13 +155,19 @@
 
 #define CHASSIS_MOTOR_TYPE      MOTOR_DJI_M3508     //底盘电机类型
 
-//note: 从前左开始，顺时针数电机ID（需与实际连接的电机ID对应）
-#define CHASSIS_MOTOR_ID_CAN_FL     3                   //前左底盘电机ID
-#define CHASSIS_MOTOR_ID_CAN_FR     2                   //前右底盘电机ID
-#define CHASSIS_MOTOR_ID_CAN_BL     0                   //后左底盘电机ID
-#define CHASSIS_MOTOR_ID_CAN_BR     1                   //后右底盘电机ID
+// 底盘电机 实际 CAN ID
+#define CHASSIS_CAN_ID_FL      4    // 前左底盘电机 CAN ID
+#define CHASSIS_CAN_ID_FR      3    // 前右底盘电机 CAN ID
+#define CHASSIS_CAN_ID_BL      1    // 后左底盘电机 CAN ID
+#define CHASSIS_CAN_ID_BR      2    // 后右底盘电机 CAN ID
 
-/* */
+// 底盘电机 反馈 ID (CAN ID - 1)
+#define CHASSIS_MOTOR_ID_FBK_FL    (CHASSIS_CAN_ID_FL - 1)
+#define CHASSIS_MOTOR_ID_FBK_FR    (CHASSIS_CAN_ID_FR - 1)
+#define CHASSIS_MOTOR_ID_FBK_BL    (CHASSIS_CAN_ID_BL - 1)
+#define CHASSIS_MOTOR_ID_FBK_BR    (CHASSIS_CAN_ID_BR - 1)
+
+/* 地盘云台角 */
 #define YAW_ZERO_ANGLE 271.5f   //云台朝前零点角度重置
 
 #endif

@@ -24,6 +24,8 @@
 #define DJI_GM6020_A  3.0f
 #define DJI_GM6020_R  16384
 
+#define DJI_STOP_A    10000
+
 /* CAN ID 组定义 */ 
 #define ESC_CAN_ID_GROUP_1  0x200   // 控制电机 1, 2, 3, 4
 #define ESC_CAN_ID_GROUP_2  0x1FF   // 控制电机 5, 6, 7, 8
