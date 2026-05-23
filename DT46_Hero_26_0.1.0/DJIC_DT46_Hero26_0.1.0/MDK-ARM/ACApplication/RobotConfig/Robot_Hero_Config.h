@@ -56,9 +56,14 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //** ===================== Gimbal Config ======================== **//
 //** ------------------------------------------------------------ **//
 
-/* 云台速度相关 */
-#define GIMBAL_MAX_SPEED_YAW        
-#define GIMBAL_MAX_SPEED_PITCH      
+/* 系统配置 */
+#define GIMBAL_TASK_TIME_MS        1               //云台任务循环时间
+
+/* 云台运动、速度、增量相关 */
+#define GIMBAL_MAX_SPEED_YAW_M_S       1 
+#define GIMBAL_MAX_SPEED_PITCH_M_S     1
+
+#define GIMBAL_MAX_ANGLE_STEP_DEG       0.25   //云台目标角度增量的最大值，单位：度
 
 /* 云台陀螺仪 */
 
@@ -70,8 +75,8 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_YAW_RATIO    2       //Yaw轴减速比为 2:1
 
 //云台俯仰角范围
-#define GIMBAL_PITCH_MAX_ELE    17.0f   //仰角（抬头）
-#define GIMBAL_PITCH_MAX_DEP    43.0f   //俯角（低头）
+#define GIMBAL_PITCH_MAX_ELE    43.0f   //俯角（低头）
+#define GIMBAL_PITCH_MAX_DEP    17.0f   //仰角（抬头）
 
 /* 云台电机控制 */
 #define GIMBAL_CAN_CTRL     hcan2   //云台CAN总线
@@ -94,6 +99,9 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //** ------------------------------------------------------------ **//
 //** ==================== Shooting Config ======================= **//
 //** ------------------------------------------------------------ **//
+
+/* 系统配置 */
+#define SHOOTING_TASK_TIME_MS        1               //射击任务循环时间
 
 /** ===== 摩擦轮配置 ===== **/
 

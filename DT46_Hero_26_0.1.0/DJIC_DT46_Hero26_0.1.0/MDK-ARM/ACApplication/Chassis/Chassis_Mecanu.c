@@ -148,7 +148,7 @@ void Chassis_SendCmd(void)
                 &Chassis_Motor_STOP,
                 Chassis_Instance.MotorData.Ptr,
                 &CHASSIS_CAN_CTRL,
-                1.0f
+                DJI_MOTOR_STOP_THRESHOLD
             );
     }
     else
