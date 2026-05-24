@@ -159,6 +159,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /* 地盘电机控制 */
 #define CHASSIS_CAN_CTRL        hcan1               //底盘CAN控制总线 
 #define CHASSIS_CAN_GROUP       1                   //CAN总线控制组，组1
+
 #define CHASSIS_CAN_YAW         hcan1               //获取地盘云台相关角度电机所在总线
 
 #define CHASSIS_MOTOR_TYPE      MOTOR_DJI_M3508     //底盘电机类型

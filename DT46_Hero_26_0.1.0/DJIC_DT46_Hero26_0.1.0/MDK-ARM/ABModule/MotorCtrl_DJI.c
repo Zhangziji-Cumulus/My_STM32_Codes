@@ -124,13 +124,13 @@ const DJI_MotorFeedback_t* MotorCtrl_DJI_GetDJI_MFeedback(CAN_HandleTypeDef* hca
 #endif
 
 #ifdef CAN2
-    else if (hcan->Instance == CAN2) {
+    if (hcan->Instance == CAN2) {
         return DJI_MFeedback_CAN2;
     } 
 #endif
 
 #ifdef CAN3
-    else if (hcan->Instance == CAN3) {
+    if (hcan->Instance == CAN3) {
         return DJI_MFeedback_CAN3;
     } 
 #endif

@@ -44,14 +44,14 @@ void Gimbal_Init(void)
   	PID_Init(&Gimbal_Motor_STOP,3.0f,0.0f,0.0f,-DJI_STOP_A,DJI_STOP_A,-5.0f, 5.0f);
 
     //YAW轴PID
-		PID_FF_Init(&Gimbal_Yaw_FF,5.0f,0.0f,0.0f,0.0,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+		PID_FF_Init(&Gimbal_Yaw_FF,10.0f,0.0f,0.0f,0.0,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
 		PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
 		PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
    
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,1.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 		PID_Init(&Gimbal_Pitch_In,1.0f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
-		PID_Init(&Gimbal_Pitch_Ex,1.0f,0.0f,0.0f,-1500,1500,-1000.0f, 1000.0f);
+		PID_Init(&Gimbal_Pitch_Ex,5.0f,0.0f,0.0f,-1500,1500,-1000.0f, 1000.0f);
 
 }
 //更新状态函数
@@ -113,6 +113,9 @@ void Gimbal_SendCmd(void)
 
     if (Gimbal_Instance.CMD.ctrl == STOP_MODE)
     {
+        //ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL, GIMBAL_CAN_ID_YAW, 0);
+        //ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL, GIMBAL_CAN_ID_PITCH, 0);
+
         // 首次进入停止模式，记录时间
         if (!is_stopping)
         {
@@ -123,12 +126,10 @@ void Gimbal_SendCmd(void)
         if ((now_time - stop_start_time) < DJI_MOTOR_STOP_TIME_MS)
         {
             // 底盘电机急停
-            DJI_MOTOR_EmergencySTOP_ALL(
-                &Gimbal_Motor_STOP,
-                Gimbal_Instance.MotorData.Ptr,
-                &GIMBAL_CAN_CTRL,
-                DJI_MOTOR_STOP_THRESHOLD
-            );
+	        int16_t PIDSTOPYAW  = PID_Calculate(&Gimbal_Motor_STOP,Gimbal_Instance.MotorData.Yaw.speed_rpm,0);
+            int16_t PIDSTOPITCH = PID_Calculate(&Gimbal_Motor_STOP,Gimbal_Instance.MotorData.Pitch.speed_rpm,0);
+	        ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL,GIMBAL_CAN_ID_YAW,PIDSTOPYAW);
+	        ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL,GIMBAL_CAN_ID_PITCH,PIDSTOPITCH);
         }
         else
         {

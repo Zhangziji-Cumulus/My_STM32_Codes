@@ -5,7 +5,7 @@
 #if(CHASSIS_TYPE == CHASSIS_MECANUM)
 
 //定义内部数据
-static Chassis_Instance_t Chassis_Instance;
+static Chassis_Instance_t Chassis_Instance = {0};
 
 PID_HandleTypeDef Chassis_Motor_STOP;
 
@@ -32,11 +32,11 @@ static void Chassis_Mecanu_Calc(void);
 //初始化函数
 void Chassis_Init(void)
 {
-    //初始模式STOP
-    Chassis_Instance.CMD.ctrl = STOP_MODE;
+   //初始模式STOP
+  Chassis_Instance.CMD.ctrl = STOP_MODE;
 
-   	//3508电机急停
-  	PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
+  //3508电机急停
+  PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
 	//地盘PID初始化
 	PID_Init(&Chassis_MotorFL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
@@ -103,6 +103,7 @@ void Chassis_SetMode(void)
 void Chassis_RefreshTarget(void)
 {
     Chassis_Update_Target(Chassis_Instance.CMD.Move);//根据移动模式来设置：正常/小陀螺CW CCW
+    Chassis_Mecanu_Calc();//麦轮解算
 }
 
 //计算控制量
@@ -141,18 +142,46 @@ void Chassis_CtrlCalc(void)
 //发送控制指令
 void Chassis_SendCmd(void)
 {
+    // 静态变量：显式初始化，记录停止状态与起始时间
+    static uint32_t stop_start_time = 0;
+    static bool is_stopping = false;
+
+    // 获取当前系统时间(ms)
+    uint32_t now_time = HAL_GetTick();
+
     if(Chassis_Instance.CMD.ctrl == STOP_MODE)
     {
-        //地盘电机急停
-        DJI_MOTOR_EmergencySTOP_ALL(
-                &Chassis_Motor_STOP,
-                Chassis_Instance.MotorData.Ptr,
-                &CHASSIS_CAN_CTRL,
-                DJI_MOTOR_STOP_THRESHOLD
-            );
+        
+        if (!is_stopping)
+        {
+            stop_start_time = now_time;
+            is_stopping = true;
+        }
+        // 无溢出安全判断：急停周期内执行紧急停止
+        if ((now_time - stop_start_time) < DJI_MOTOR_STOP_TIME_MS)
+        {
+            int16_t PIDSTOP[4] = { 0 };
+
+						PIDSTOP[CHASSIS_MOTOR_ID_FBK_FL] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_FL.speed_rpm,0);
+            PIDSTOP[CHASSIS_MOTOR_ID_FBK_FR] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_FR.speed_rpm,0);
+            PIDSTOP[CHASSIS_MOTOR_ID_FBK_BL] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_BL.speed_rpm,0);
+            PIDSTOP[CHASSIS_MOTOR_ID_FBK_BR] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_BR.speed_rpm,0);
+
+	        ESC_Control_Raw_Group(&GIMBAL_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
+        }
+        else
+        {
+            // 急停超时后：发送零速度指令保持电机锁定（修复失控BUG）
+            int16_t PIDSTOP[4] = { 0 };
+            ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
+        }
+
     }
     else
     {
+        // 退出停止模式，重置状态
+        is_stopping = false;
+
         int16_t PIDoutput[4];
 
         PIDoutput[CHASSIS_MOTOR_ID_FBK_FL] = Chassis_Instance.Calc.W_FL.Ctrl_Vel;
@@ -207,10 +236,10 @@ static void Chassis_Mecanu_Calc(void)
     Chassis_Instance.Calc.W_FR.T_Speed =  (Chassis_Instance.Calc.Target.LR) - (Chassis_Instance.Calc.Target.FB) + (Chassis_Instance.Calc.Target.RO);
     Chassis_Instance.Calc.W_BR.T_Speed = -(Chassis_Instance.Calc.Target.LR) - (Chassis_Instance.Calc.Target.FB) + (Chassis_Instance.Calc.Target.RO);
 
-    Chassis_Instance.Calc.W_FL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_FL.T_Speed,CHASSIS_WHEEL_RADIUS_MM,DJI_M3508_RATIO);
-    Chassis_Instance.Calc.W_FR.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_FR.T_Speed,CHASSIS_WHEEL_RADIUS_MM,DJI_M3508_RATIO);
-    Chassis_Instance.Calc.W_BL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_BL.T_Speed,CHASSIS_WHEEL_RADIUS_MM,DJI_M3508_RATIO);
-    Chassis_Instance.Calc.W_BR.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_BR.T_Speed,CHASSIS_WHEEL_RADIUS_MM,DJI_M3508_RATIO);
+    Chassis_Instance.Calc.W_FL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_FL.T_Speed,(CHASSIS_WHEEL_RADIUS_MM / 1000),DJI_M3508_RATIO);
+    Chassis_Instance.Calc.W_FR.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_FR.T_Speed,(CHASSIS_WHEEL_RADIUS_MM / 1000),DJI_M3508_RATIO);
+    Chassis_Instance.Calc.W_BL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_BL.T_Speed,(CHASSIS_WHEEL_RADIUS_MM / 1000),DJI_M3508_RATIO);
+    Chassis_Instance.Calc.W_BR.T_rpm = (int16_t)calc_motor_rpm_from_speed(Chassis_Instance.Calc.W_BR.T_Speed,(CHASSIS_WHEEL_RADIUS_MM / 1000),DJI_M3508_RATIO);
 }
 
 #endif

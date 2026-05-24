@@ -7,11 +7,13 @@
 
 #if(BOARD_MODE == BOARD_MODE_DUAL)
 
-#define CHASSIS_BOARD   0
-#define GIMBAL_BOARD    1
+#define CHASSIS_BOARD   1
+#define GIMBAL_BOARD    2
 
-#define BOARD_ID    GIMBAL_BOARD
+#define BOARD_ID    CHASSIS_BOARD
 
+#define TX_BASE_ID ((BOARD_ID == 1) ? 0x100 : 0x200)  /* 发送基ID */
+#define RX_BASE_ID ((BOARD_ID == 1) ? 0x200 : 0x100)  /* 接收基ID */
 
 /**
  * @brief  【示例】用户自定义结构体（根据实际需求修改）
@@ -44,9 +46,10 @@ bool DualBoard_SendStruct(
 );
 
 /**
- * @brief  【接收】解析CAN接收到的结构体数据
+ * @brief  【接收】解析CAN接收到的结构体数据（带ID过滤）
  * @param  pHeader CAN接收帧头
  * @param  RxData 接收到的8字节数据
+ * @param  expectedId 期望的消息ID（用于过滤，必须与发送端一致）
  * @param  pOutStruct 输出结构体指针（自动填充）
  * @param  outStructSize 输出结构体大小
  * @retval true=成功解析并填充, false=不是目标数据或解析失败
@@ -54,6 +57,7 @@ bool DualBoard_SendStruct(
 bool DualBoard_ParseStruct(
     CAN_RxHeaderTypeDef *pHeader,
     const uint8_t *RxData,
+    uint32_t expectedId,
     void *pOutStruct,
     uint16_t outStructSize
 );

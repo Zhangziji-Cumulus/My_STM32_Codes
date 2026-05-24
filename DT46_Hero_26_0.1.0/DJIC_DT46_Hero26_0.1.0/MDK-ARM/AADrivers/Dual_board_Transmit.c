@@ -80,11 +80,18 @@ bool DualBoard_SendStruct(
 }
 
 /**
- * @brief  【接收】解析CAN接收到的结构体数据
+ * @brief  【接收】解析CAN接收到的结构体数据（带ID过滤）
+ * @param  pHeader CAN接收帧头
+ * @param  RxData 接收到的8字节数据
+ * @param  expectedId 期望的消息ID（用于过滤）
+ * @param  pOutStruct 输出结构体指针（自动填充）
+ * @param  outStructSize 输出结构体大小
+ * @retval true=成功解析并填充, false=不是目标数据或解析失败
  */
 bool DualBoard_ParseStruct(
     CAN_RxHeaderTypeDef *pHeader,
     const uint8_t *RxData,
+    uint32_t expectedId,
     void *pOutStruct,
     uint16_t outStructSize
 )
@@ -102,6 +109,11 @@ bool DualBoard_ParseStruct(
     uint32_t extId = pHeader->ExtId;
     uint8_t frameSeq = extId & 0xFF;        // 低8位是帧序号
     uint32_t baseId = extId >> 8;           // 高24位是原始ID
+    
+    // 【关键】ID过滤：只处理匹配的ID
+    if (baseId != expectedId) {
+        return false;
+    }
     
     // 帧序号从1开始
     if (frameSeq == 0) {
@@ -164,10 +176,10 @@ void DualBoardTask(void *argument)
 
   for(;;)
   {
-    
+
 	TxCMD = *CMD_Get_point();
 		
-    DualBoard_SendStruct(&hcan2,0x0001,&TxCMD,sizeof(TxCMD));
+    DualBoard_SendStruct(&hcan2,TX_BASE_ID,&TxCMD,sizeof(TxCMD));
 
     osDelay(10);
   }
