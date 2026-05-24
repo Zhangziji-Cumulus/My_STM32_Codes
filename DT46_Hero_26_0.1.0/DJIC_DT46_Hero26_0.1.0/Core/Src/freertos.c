@@ -28,7 +28,7 @@
 
 #include "INS_task.h"
 #include "sound_effects_task.h" 
-
+#include "bsp_SBUS.h" 
 #include "A_MCommon.h"
 
 
@@ -89,6 +89,7 @@ const osThreadAttr_t DualBoard_attributes = {
   .priority = (osPriority_t) osPriorityRealtime1,
 };
 /* Definitions for Chassis */
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 osThreadId_t ChassisHandle;
 uint32_t ChassisBuffer[ 128 ];
 osStaticThreadDef_t ChassisControlBlock;
@@ -100,6 +101,7 @@ const osThreadAttr_t Chassis_attributes = {
   .stack_size = sizeof(ChassisBuffer),
   .priority = (osPriority_t) osPriorityHigh7,
 };
+#endif
 /* Definitions for Gimbal */
 osThreadId_t GimbalHandle;
 uint32_t GimbalBuffer[ 128 ];
@@ -190,7 +192,11 @@ const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
 
 void StartDefaultTask(void *argument);
 void Dual_Board_Transmit_Task(void *argument);
+
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 void ChassisTask(void *argument);
+#endif
+
 void GimbalTask(void *argument);
 void ShootingTask(void *argument);
 void CMDUpdateTask(void *argument);
@@ -246,7 +252,9 @@ void MX_FREERTOS_Init(void) {
   DualBoardHandle = osThreadNew(Dual_Board_Transmit_Task, NULL, &DualBoard_attributes);
 
   /* creation of Chassis */
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
   ChassisHandle = osThreadNew(ChassisTask, NULL, &Chassis_attributes);
+#endif
 
   /* creation of Gimbal */
   GimbalHandle = osThreadNew(GimbalTask, NULL, &Gimbal_attributes);
@@ -326,6 +334,7 @@ __weak void Dual_Board_Transmit_Task(void *argument)
 * @retval None
 */
 /* USER CODE END Header_ChassisTask */
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 __weak void ChassisTask(void *argument)
 {
   /* USER CODE BEGIN ChassisTask */
@@ -336,6 +345,7 @@ __weak void ChassisTask(void *argument)
   }
   /* USER CODE END ChassisTask */
 }
+#endif
 
 /* USER CODE BEGIN Header_GimbalTask */
 /**

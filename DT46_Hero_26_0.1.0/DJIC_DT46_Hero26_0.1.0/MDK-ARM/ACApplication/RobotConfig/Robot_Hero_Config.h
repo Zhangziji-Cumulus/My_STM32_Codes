@@ -75,11 +75,11 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_YAW_RATIO    2       //Yaw轴减速比为 2:1
 
 //云台俯仰角范围
-#define GIMBAL_PITCH_MAX_ELE    43.0f   //俯角（低头）
-#define GIMBAL_PITCH_MAX_DEP    17.0f   //仰角（抬头）
+#define GIMBAL_PITCH_MAX_ELE    43.0f   //仰角（抬头）
+#define GIMBAL_PITCH_MAX_DEP    17.0f   //俯角（低头）
 
 /* 云台电机控制 */
-#define GIMBAL_CAN_CTRL     hcan2   //云台CAN总线
+#define GIMBAL_CAN_CTRL     hcan1   //云台CAN总线
 
 #define GIMBAL_YAW_MOTOR_TYPE    MOTOR_DJI_GM6020         //云台电机类型
 #define GIMBAL_PITCH_MOTOR_TYPE  MOTOR_DJI_M3508          //云台电机类型
@@ -144,7 +144,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define CHASSIS_TASK_TIME_MS        1               //地盘任务循环时间
 
 /* 地盘类型 */
-#define CHASSIS_TYPE        CHASSIS_MECANUM         //底盘类型
+#define CHASSIS_TYPE            CHASSIS_MECANUM            //底盘类型
 
 /* 地盘速度相关 */
 #define CHASSIS_MAX_SPEED            3.0f           //底盘最大移动速度（单位：m/s）

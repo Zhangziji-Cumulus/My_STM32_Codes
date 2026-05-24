@@ -3,7 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "A_MCommon.h"
+#include "A_CommonSystem.h"
 
 /* Exported constants --------------------------------------------------------*/
 #define SBUS_FRAME_LEN         25      /**< SBUS 标准帧长度 */

@@ -4,6 +4,8 @@
 #include "A_MCommon.h"
 #include "Robot_Hero_Config.h"
 
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOAD )|| BOARD_MODE == BOARD_MODE_SINGLE)
+
 __attribute__((used)) void ChassisTask(void *argument);
 
 //初始化函数
@@ -20,5 +22,7 @@ void Chassis_RefreshTarget(void);
 void Chassis_CtrlCalc(void);
 //发送控制指令
 void Chassis_SendCmd(void);
+
+#endif
 
 #endif // CHASSIS_TASK_H_

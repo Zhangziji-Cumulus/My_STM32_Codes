@@ -1,7 +1,5 @@
 #include "Remote_Ctrl.h"
 
-
-
 //拨杆状态设置函数,根据输入的通道值和预设的最小值、中值、最大值，判断拨杆处于哪个位置，并返回对应的状态码（1、2或3）
 
 
@@ -49,7 +47,7 @@ static RC_Ctl_t RC_Ctl;
 //解析对应遥控器数据
 static void HORRC_HT10A_GET_Ctl(void)
 {
-        const SbusData_t *sbusData = get_SBUS_Data_point();
+    const SbusData_t *sbusData = get_SBUS_Data_point();
 
 		RC_Ctl.Stick.LX = sbusData->channels[3] - HOTRC_MID_VEL;
 		RC_Ctl.Stick.LY = sbusData->channels[2] - HOTRC_MID_VEL;
@@ -81,7 +79,7 @@ const RC_Ctl_t* get_RC_Ctl_point(void)
 }
 
 /* 获取遥控器数据 */
-const RC_Ctl_t get_RC_Ctl(void)
+RC_Ctl_t get_RC_Ctl(void)
 {
     return RC_Ctl;
 }

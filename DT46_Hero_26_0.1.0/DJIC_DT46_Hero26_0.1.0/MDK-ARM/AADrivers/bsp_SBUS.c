@@ -240,13 +240,16 @@ void SBUS_UART_IRQHandler(void) {
     }
 }
 
-void SBUSTask(void *argument)
+static UBaseType_t remain_SBUSTask;
+__attribute__((used)) void SBUSTask(void *argument)
 {
   /* USER CODE BEGIN SBUSTask */
   /* Infinite loop */
   for(;;)
   {
     SBUS_Process();
+		//=============================检测剩余栈=================================//
+	  remain_SBUSTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);
   }
   /* USER CODE END SBUSTask */

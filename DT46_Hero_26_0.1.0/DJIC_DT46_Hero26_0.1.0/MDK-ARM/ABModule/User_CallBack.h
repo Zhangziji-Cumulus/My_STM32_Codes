@@ -1,7 +1,8 @@
 #ifndef __USER_CALLBACK_H__
 #define __USER_CALLBACK_H__
 
-#include "A_MCommon.h"
+#include "A_CommonSystem.h"
+#include "MotorCtrl_DJI.h"
 
 /* 定义一个结构体，用来把 CAN 数据传给任务 */
 typedef struct {

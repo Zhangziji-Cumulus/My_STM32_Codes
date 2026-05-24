@@ -77,8 +77,21 @@
 #define BOARD_MODE_DUAL     0   //双板模式
 #define BOARD_MODE_SINGLE   1   //单板模式
 
-#define BOARD_MODE  BOARD_MOOE_DUAL
+#define BOARD_MODE  BOARD_MODE_DUAL
 
+// ====================== 陀螺仪极性定义 ======================
+#define GYRO_NINVERT    0   // 不反转（原值）
+#define GYRO_INVERT     1   // 反转（×-1）
+
+// ====================== 在这里配置每个轴的极性 ======================
+#define GYRO_YAW_POLARITY      GYRO_NINVERT   
+#define GYRO_PITCH_POLARITY    GYRO_INVERT    
+#define GYRO_ROLL_POLARITY     GYRO_NINVERT   
+
+// ====================== 极性计算宏（核心公式） ======================
+#define GYRO_YAW(x)       (GYRO_YAW_POLARITY    == GYRO_INVERT ? -(x) : (x))
+#define GYRO_PITCH(x)     (GYRO_PITCH_POLARITY  == GYRO_INVERT ? -(x) : (x))
+#define GYRO_ROLL(x)      (GYRO_ROLL_POLARITY   == GYRO_INVERT ? -(x) : (x))
 
 //** #################################################################################################### **//
 //** ========================================= 枚举、结构体 ============================================= **//

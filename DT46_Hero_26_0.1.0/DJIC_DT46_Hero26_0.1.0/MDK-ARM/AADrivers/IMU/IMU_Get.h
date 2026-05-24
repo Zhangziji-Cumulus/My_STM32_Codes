@@ -1,7 +1,7 @@
 #ifndef IMU_GET_H_
 #define IMU_GET_H_
 
-#include "A_MCommon.h"
+#include "A_CommonSystem.h"
 
 #define IMU_TYP_BMI088  0
 

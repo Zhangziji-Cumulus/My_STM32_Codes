@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;.\AADrivers\IMU</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;.\AADrivers\IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;.\ACApplication\MotorAPP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1848,6 +1848,21 @@
               <FileType>5</FileType>
               <FilePath>.\AAA\A_MCommon.h</FilePath>
             </File>
+            <File>
+              <FileName>A_CommonDrivers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\AAA\A_CommonDrivers.h</FilePath>
+            </File>
+            <File>
+              <FileName>A_CommonModules.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\AAA\A_CommonModules.h</FilePath>
+            </File>
+            <File>
+              <FileName>A_CommonSystem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\AAA\A_CommonSystem.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2059,6 +2074,16 @@
           <GroupName>ABModule</GroupName>
           <Files>
             <File>
+              <FileName>PID_Lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PID_Lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID_Lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PID_Lib.h</FilePath>
+            </File>
+            <File>
               <FileName>CMDCenter.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ABModule\CMDCenter.c</FilePath>
@@ -2099,16 +2124,6 @@
               <FilePath>.\ABModule\MotorCtrl_ZDT.h</FilePath>
             </File>
             <File>
-              <FileName>PID_Lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ABModule\PID_Lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>PID_Lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ABModule\PID_Lib.h</FilePath>
-            </File>
-            <File>
               <FileName>Remote_Ctrl.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ABModule\Remote_Ctrl.c</FilePath>
@@ -2127,6 +2142,16 @@
               <FileName>User_CallBack.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\User_CallBack.h</FilePath>
+            </File>
+            <File>
+              <FileName>MotorCtrl_DJI_STOP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\MotorCtrl_DJI_STOP.c</FilePath>
+            </File>
+            <File>
+              <FileName>MotorCtrl_DJI_STOP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\MotorCtrl_DJI_STOP.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2279,16 +2304,6 @@
           <GroupName>ACApplication/Gimbal</GroupName>
           <Files>
             <File>
-              <FileName>Gimbal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ACApplication\Gimbal\Gimbal.c</FilePath>
-            </File>
-            <File>
-              <FileName>Gimbal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ACApplication\Gimbal\Gimbal.h</FilePath>
-            </File>
-            <File>
               <FileName>Gimbal_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Gimbal\Gimbal_Config.h</FilePath>
@@ -2302,6 +2317,16 @@
               <FileName>Gimbal_Task.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Gimbal\Gimbal_Task.h</FilePath>
+            </File>
+            <File>
+              <FileName>Gimbal_Hero.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ACApplication\Gimbal\Gimbal_Hero.c</FilePath>
+            </File>
+            <File>
+              <FileName>Gimbal_Hero.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ACApplication\Gimbal\Gimbal_Hero.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2352,6 +2377,16 @@
               <FileName>Shooting_Task.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Shooting\Shooting_Task.h</FilePath>
+            </File>
+            <File>
+              <FileName>Shooting_Hero.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ACApplication\Shooting\Shooting_Hero.c</FilePath>
+            </File>
+            <File>
+              <FileName>Shooting_Hero.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ACApplication\Shooting\Shooting_Hero.h</FilePath>
             </File>
           </Files>
         </Group>
