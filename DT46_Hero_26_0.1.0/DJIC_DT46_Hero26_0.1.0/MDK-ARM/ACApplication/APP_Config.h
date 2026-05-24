@@ -80,10 +80,24 @@
 #define BOARD_MODE  BOARD_MOOE_DUAL
 
 
+
+
 //** #################################################################################################### **//
 //** ========================================= 枚举、结构体 ============================================= **//
 //** #################################################################################################### **//
 
+// ====================== 陀螺仪极性定义 ======================
+#define GYRO_NINVERT    0   // 不反转（原值）
+#define GYRO_INVERT     1   // 反转（×-1）
 
+// ====================== 在这里配置每个轴的极性 ======================
+#define GYRO_YAW_POLARITY      GYRO_NINVERT   // YAW 不反转
+#define GYRO_PITCH_POLARITY    GYRO_INVERT    // PITCH 反转
+#define GYRO_ROLL_POLARITY     GYRO_NINVERT   // ROLL 不反转
+
+// ====================== 极性计算宏（核心公式） ======================
+#define GYRO_YAW(x)       (GYRO_YAW_POLARITY    == GYRO_INVERT ? -(x) : (x))
+#define GYRO_PITCH(x)     (GYRO_PITCH_POLARITY  == GYRO_INVERT ? -(x) : (x))
+#define GYRO_ROLL(x)      (GYRO_ROLL_POLARITY   == GYRO_INVERT ? -(x) : (x))
 
 #endif // APP_CONFIG_H_
