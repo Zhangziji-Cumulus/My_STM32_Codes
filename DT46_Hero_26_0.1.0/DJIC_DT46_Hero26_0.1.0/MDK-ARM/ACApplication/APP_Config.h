@@ -77,7 +77,7 @@
 #define BOARD_MODE_DUAL     0   //双板模式
 #define BOARD_MODE_SINGLE   1   //单板模式
 
-#define BOARD_MODE  BOARD_MOOE_DUAL
+#define BOARD_MODE  BOARD_MODE_DUAL
 
 
 

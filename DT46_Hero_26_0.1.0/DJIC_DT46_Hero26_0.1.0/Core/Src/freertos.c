@@ -31,6 +31,9 @@
 #include "bsp_SBUS.h" 
 #include "A_MCommon.h"
 
+#if(BOARD_MODE == BOARD_MODE_DUAL)
+#include "Dual_board_Transmit.h"
+#endif
 
 /* USER CODE END Includes */
 
@@ -189,7 +192,7 @@ const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
-void Dual_Board_Transmit_Task(void *argument);
+void DualBoardTask(void *argument);
 void ChassisTask(void *argument);
 void GimbalTask(void *argument);
 void ShootingTask(void *argument);
@@ -243,7 +246,7 @@ void MX_FREERTOS_Init(void) {
   buzrHandle = osThreadNew(buzzer_effects_task, NULL, &buzr_attributes);
 
   /* creation of DualBoard */
-  DualBoardHandle = osThreadNew(Dual_Board_Transmit_Task, NULL, &DualBoard_attributes);
+  DualBoardHandle = osThreadNew(DualBoardTask, NULL, &DualBoard_attributes);
 
   /* creation of Chassis */
   ChassisHandle = osThreadNew(ChassisTask, NULL, &Chassis_attributes);
@@ -300,23 +303,23 @@ void StartDefaultTask(void *argument)
   /* USER CODE END StartDefaultTask */
 }
 
-
-/* USER CODE BEGIN Header_Dual_Board_Transmit_Task */
+/* USER CODE BEGIN Header_DualBoardTask */
 /**
-* @brief Function implementing the Dual_Board_Tran thread.
+* @brief Function implementing the DualBoard thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_Dual_Board_Transmit_Task */
-__weak void Dual_Board_Transmit_Task(void *argument)
+/* USER CODE END Header_DualBoardTask */
+__weak void DualBoardTask(void *argument)
 {
-  /* USER CODE BEGIN Dual_Board_Transmit_Task */
+  /* USER CODE BEGIN DualBoardTask */
+  
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+
   }
-  /* USER CODE END Dual_Board_Transmit_Task */
+  /* USER CODE END DualBoardTask */
 }
 
 /* USER CODE BEGIN Header_ChassisTask */
