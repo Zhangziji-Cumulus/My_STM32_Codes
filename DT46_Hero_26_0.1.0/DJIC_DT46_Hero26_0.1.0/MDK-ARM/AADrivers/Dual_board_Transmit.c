@@ -1,4 +1,4 @@
-#include "Dual_board_Transmit.h"
+#include "Dual_Board_Transmit.h"
 #include "bsp_CAN.h"
 #include <string.h>
 
@@ -170,18 +170,3 @@ bool DualBoard_ParseStruct(
 
 #endif /* BOARD_MODE == BOARD_MODE_DUAL */
 
-void DualBoardTask(void *argument)
-{
-	CMD_t TxCMD  = {0};
-
-  for(;;)
-  {
-
-	TxCMD = *CMD_Get_point();
-		
-    DualBoard_SendStruct(&hcan2,TX_BASE_ID,&TxCMD,sizeof(TxCMD));
-
-    osDelay(10);
-  }
-
-}

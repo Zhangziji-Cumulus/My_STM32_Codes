@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __CMDCENTER_H__
 #define __CMDCENTER_H__
 
@@ -7,6 +9,8 @@
 /* user includes */
 #include "Remote_Ctrl.h"
 #include "VideoTx_uart.h"
+#include "IMU_Get.h"
+#include "Dual_Board_Transmit.h"
 
 //** #################################################################################################### **//
 //** ============================================= 宏定义 =============================================== **//
@@ -73,10 +77,55 @@ typedef struct {
 
 }CMD_t;
 
+//** ================================================================================ **//
+//** ============================= 定义双板通信数据结构体 ============================ **//
+//** ================================================================================ **//
+
+
+#if(BOARD_MODE == BOARD_MODE_DUAL)
+
+#if(BOARD_ID == GIMBAL_BOARD)
+
+typedef struct{
+
+    CMD_t CMD;
+
+}BoardTransmit_Gimbal_TX_t;
+
+typedef struct{
+
+    uint8_t test;
+
+}BoardTransmit_Gimbal_RX_t;
+
+#endif
+
+#if(BOARD_ID == CHASSIS_BOARD)
+
+typedef struct{
+
+    uint8_t test;
+    
+}BoardTransmit_Chassis_TX_t;
+
+typedef struct{
+
+    CMD_t CMD;
+
+}BoardTransmit_Chassis_RX_t;
+
+extern BoardTransmit_Chassis_RX_t  BoardCRX;
+
+#endif
+
+#endif
+
+
 //** #################################################################################################### **//
 //** =========================================== 对外函数声明 ============================================ **//
 //** #################################################################################################### **//
 
 const CMD_t* CMD_Get_point(void);
+
 
 #endif /* __CMDCENTER_H__ */

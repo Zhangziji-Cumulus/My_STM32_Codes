@@ -44,14 +44,14 @@ void Gimbal_Init(void)
   	PID_Init(&Gimbal_Motor_STOP,3.0f,0.0f,0.0f,-DJI_STOP_A,DJI_STOP_A,-5.0f, 5.0f);
 
     //YAW轴PID
-		PID_FF_Init(&Gimbal_Yaw_FF,10.0f,0.0f,0.0f,0.0,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
-		PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
-		PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+	PID_FF_Init(&Gimbal_Yaw_FF,3800.0f,0.05f,48000.0f,1000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
    
     //PITCH轴PID
-    PID_FF_Init(&Gimbal_Pitch_FF,1.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-		PID_Init(&Gimbal_Pitch_In,1.0f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
-		PID_Init(&Gimbal_Pitch_Ex,5.0f,0.0f,0.0f,-1500,1500,-1000.0f, 1000.0f);
+    PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_Ex,600.0f,0.01f,1500.0f,-1500,1500,-1000.0f, 1000.0f);
 
 }
 //更新状态函数
@@ -113,9 +113,7 @@ void Gimbal_SendCmd(void)
 
     if (Gimbal_Instance.CMD.ctrl == STOP_MODE)
     {
-        //ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL, GIMBAL_CAN_ID_YAW, 0);
-        //ESC_Control_Raw_Single(&GIMBAL_CAN_CTRL, GIMBAL_CAN_ID_PITCH, 0);
-
+			
         // 首次进入停止模式，记录时间
         if (!is_stopping)
         {
@@ -159,16 +157,15 @@ static void Gimbal_Update_Target(void)
     /* 更新云台Yaw Pitch角度的目标值 */
     float AddYaw = Gimbal_Instance.CMD.Gimbal.Yaw;
     Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle
-                                        - MyMath_Map_Range_Float(AddYaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG,GIMBAL_MAX_ANGLE_STEP_DEG);
+                                        - MyMath_Map_Range_Float(AddYaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_YAW,GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
     //限幅角度-180 ~ 180 循环模式
     Gimbal_Instance.Calc.Yaw.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Yaw.T_Angle,
                                             -180.00f,180.00f,1);
 
-
     float AddPitch = Gimbal_Instance.CMD.Gimbal.Pitch;
     Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle
-                                        - MyMath_Map_Range_Float(AddPitch,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG,GIMBAL_MAX_ANGLE_STEP_DEG);
+                                        - MyMath_Map_Range_Float(AddPitch,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
     //限幅俯仰角，非循环模式
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,

@@ -1918,6 +1918,16 @@
               <FileType>5</FileType>
               <FilePath>.\AADrivers\VideoTx_uart.h</FilePath>
             </File>
+            <File>
+              <FileName>Dual_Board_Transmit_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\AADrivers\Dual_Board_Transmit_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Dual_Board_Transmit_Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\AADrivers\Dual_Board_Transmit_Task.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2397,11 +2407,6 @@
               <FileName>APP_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\APP_Config.h</FilePath>
-            </File>
-            <File>
-              <FileName>Application_Logic_Core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ACApplication\Application_Logic_Core.c</FilePath>
             </File>
             <File>
               <FileName>Application_Logic_Core.h</FileName>

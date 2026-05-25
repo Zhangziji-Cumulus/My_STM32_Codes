@@ -63,7 +63,8 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_MAX_SPEED_YAW_M_S       1 
 #define GIMBAL_MAX_SPEED_PITCH_M_S     1
 
-#define GIMBAL_MAX_ANGLE_STEP_DEG       0.25   //云台目标角度增量的最大值，单位：度
+#define GIMBAL_MAX_ANGLE_STEP_DEG_YAW           0.25    //云台目标角度增量的最大值，单位：度
+#define GIMBAL_MAX_ANGLE_STEP_DEG_PITCH         0.1     //云台目标角度增量的最大值，单位：度
 
 /* 云台陀螺仪 */
 
@@ -79,7 +80,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_PITCH_MAX_DEP    17.0f   //俯角（低头）
 
 /* 云台电机控制 */
-#define GIMBAL_CAN_CTRL     hcan1   //云台CAN总线
+#define GIMBAL_CAN_CTRL     hcan2   //云台CAN总线
 
 #define GIMBAL_YAW_MOTOR_TYPE    MOTOR_DJI_GM6020         //云台电机类型
 #define GIMBAL_PITCH_MOTOR_TYPE  MOTOR_DJI_M3508          //云台电机类型

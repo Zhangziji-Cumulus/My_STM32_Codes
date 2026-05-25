@@ -29,11 +29,6 @@
 #include "INS_task.h"
 #include "sound_effects_task.h" 
 #include "bsp_SBUS.h" 
-#include "A_MCommon.h"
-
-#if(BOARD_MODE == BOARD_MODE_DUAL)
-#include "Dual_board_Transmit.h"
-#endif
 
 /* USER CODE END Includes */
 
@@ -317,7 +312,7 @@ __weak void DualBoardTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
+		osDelay(1);
   }
   /* USER CODE END DualBoardTask */
 }
@@ -434,4 +429,3 @@ __weak void RCUpdateTask(void *argument)
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
-
