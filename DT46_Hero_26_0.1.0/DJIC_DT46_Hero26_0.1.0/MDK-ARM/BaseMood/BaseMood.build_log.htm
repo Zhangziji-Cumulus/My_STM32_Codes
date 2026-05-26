@@ -27,10 +27,64 @@ Project File Date:  05/25/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
+compiling MotorCtrl_DJI.c...
+compiling bsp_Init.c...
+AADrivers\bsp_Init.c(9): warning:  #223-D: function "can_filter_init" declared implicitly
+      can_filter_init();
+AADrivers\bsp_Init.c: 1 warning, 0 errors
+compiling Chassis_leg.c...
+compiling Shooting_Task.c...
+ACApplication\Shooting\Shooting_Task.c(19): warning:  #550-D: variable "remain_ShootingTask"  was set but never used
+  static UBaseType_t remain_ShootingTask;
+ACApplication\Shooting\Shooting_Task.c: 1 warning, 0 errors
+compiling main.c...
+../Core/Src/main.c(108): warning:  #223-D: function "BSP_Init" declared implicitly
+  	BSP_Init();
+../Core/Src/main.c: 1 warning, 0 errors
+compiling Chassis_Mecanu.c...
+ACApplication\Chassis\Chassis_Mecanu.h(89): warning:  #1-D: last line of file ends without a newline
+  #endif // CHASSIS_MECANU_H_
+ACApplication\Chassis\Chassis_Mecanu.c(8): warning:  #188-D: enumerated type mixed with another type
+  static Chassis_Instance_t Chassis_Instance = {0};
+ACApplication\Chassis\Chassis_Mecanu.c(252): warning:  #1-D: last line of file ends without a newline
+  #endif
+ACApplication\Chassis\Chassis_Mecanu.c: 3 warnings, 0 errors
+compiling stm32f4xx_it.c...
+../Core/Src/stm32f4xx_it.c(285): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
+  	SBUS_UART_IRQHandler();
+../Core/Src/stm32f4xx_it.c: 1 warning, 0 errors
+compiling Chassis_Task.c...
+ACApplication\Chassis\Chassis_Task.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // CHASSIS_TASK_H_
+ACApplication\Chassis\Chassis_Task.c(20): warning:  #550-D: variable "remain_ChassisTask"  was set but never used
+  static UBaseType_t remain_ChassisTask;
+ACApplication\Chassis\Chassis_Task.c: 2 warnings, 0 errors
+compiling User_CallBack.c...
+ABModule\User_CallBack.c(163): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\User_CallBack.c(94): warning:  #550-D: variable "g_dataValid"  was set but never used
+  static uint8_t g_dataValid = 0;
+ABModule\User_CallBack.c: 2 warnings, 0 errors
+compiling CMDCenter.c...
+ABModule\CMDCenter.c(141): warning:  #550-D: variable "remain_CMDUpdateTask"  was set but never used
+  static UBaseType_t remain_CMDUpdateTask;
+ABModule\CMDCenter.c: 1 warning, 0 errors
+compiling MotorCtrl_DJI_STOP.c...
+compiling Gimbal_Hero.c...
+compiling Gimbal_Task.c...
+ACApplication\Gimbal\Gimbal_Task.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // GIMBAL_TASK_H_
+ACApplication\Gimbal\Gimbal_Task.c(19): warning:  #550-D: variable "remain_GimbalTask"  was set but never used
+  static UBaseType_t remain_GimbalTask;
+ACApplication\Gimbal\Gimbal_Task.c: 2 warnings, 0 errors
+compiling Shooting_Hero.c...
+ACApplication\Shooting\Shooting_Hero.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // SHOOTING_HERO_H_
+ACApplication\Shooting\Shooting_Hero.c: 1 warning, 0 errors
 linking...
-Program Size: Code=50796 RO-data=1344 RW-data=520 ZI-data=27704  
+Program Size: Code=50820 RO-data=1344 RW-data=520 ZI-data=27720  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 0 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +108,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:09
 </pre>
 </body>
 </html>

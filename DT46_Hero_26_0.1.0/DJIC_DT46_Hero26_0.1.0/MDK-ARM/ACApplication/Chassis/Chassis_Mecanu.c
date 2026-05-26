@@ -32,11 +32,11 @@ static void Chassis_Mecanu_Calc(void);
 //初始化函数
 void Chassis_Init(void)
 {
-   //初始模式STOP
-  Chassis_Instance.CMD.ctrl = STOP_MODE;
+    //初始模式STOP
+    Chassis_Instance.CMD.ctrl = STOP_MODE;
 
-  //3508电机急停
-  PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
+    //3508电机急停
+    PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
 	//地盘PID初始化
 	PID_Init(&Chassis_MotorFL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
@@ -51,7 +51,7 @@ void Chassis_Init(void)
 	PID_Init(&Chassis_MotorBR_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
 	PID_Init(&Chassis_MotorBR_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
 	
-	PID_Init(&Chassis_Follow_PID,0.05f,0.002,0.15f,-1.5f,1.5f,-0.75f,0.75f);
+	PID_Init(&Chassis_Follow_PID,0.05f,0.002,0.15f,-CHASSIS_MAX_SPEED_FOLLOWING,CHASSIS_MAX_SPEED_FOLLOWING,-0.75f,0.75f);
 
 }          
 
@@ -75,7 +75,8 @@ void Chassis_Update(void)
 
     //地盘和云台的夹角获取
     Chassis_Instance.Calc.Yaw_Angle.Ptr = MotorCtrl_DJI_GetDJI_MFeedback(&CHASSIS_CAN_YAW);
-    Chassis_Instance.Calc.Yaw_Angle.Degree = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW].angle_deg;
+	Chassis_Instance.Calc.Yaw_Angle.YAW = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW];
+    Chassis_Instance.Calc.Yaw_Angle.Degree = Chassis_Instance.Calc.Yaw_Angle.YAW.angle_deg;
 
     //限幅云台的夹角，并且重映射电机零位
     float tempAngle = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Yaw_Angle.Degree - YAW_ZERO_ANGLE);
@@ -151,7 +152,8 @@ void Chassis_SendCmd(void)
 
     if(Chassis_Instance.CMD.ctrl == STOP_MODE)
     {
-        
+        int16_t PIDSTOP[4] = { 0 };
+				
         if (!is_stopping)
         {
             stop_start_time = now_time;
@@ -160,36 +162,39 @@ void Chassis_SendCmd(void)
         // 无溢出安全判断：急停周期内执行紧急停止
         if ((now_time - stop_start_time) < DJI_MOTOR_STOP_TIME_MS)
         {
-            int16_t PIDSTOP[4] = { 0 };
-
-						PIDSTOP[CHASSIS_MOTOR_ID_FBK_FL] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_FL.speed_rpm,0);
+			PIDSTOP[CHASSIS_MOTOR_ID_FBK_FL] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_FL.speed_rpm,0);
             PIDSTOP[CHASSIS_MOTOR_ID_FBK_FR] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_FR.speed_rpm,0);
             PIDSTOP[CHASSIS_MOTOR_ID_FBK_BL] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_BL.speed_rpm,0);
             PIDSTOP[CHASSIS_MOTOR_ID_FBK_BR] = PID_Calculate(&Chassis_Motor_STOP,Chassis_Instance.MotorData.W_BR.speed_rpm,0);
 
-	        ESC_Control_Raw_Group(&GIMBAL_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
-        }
+			ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
+		}
         else
         {
             // 急停超时后：发送零速度指令保持电机锁定（修复失控BUG）
-            int16_t PIDSTOP[4] = { 0 };
-            ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
+            PIDSTOP[0] = 0;	
+			PIDSTOP[1] = 0;
+			PIDSTOP[2] = 0;
+			PIDSTOP[3] = 0;
+			ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
         }
-
+				
+				
+				
     }
     else
     {
         // 退出停止模式，重置状态
         is_stopping = false;
 
-        int16_t PIDoutput[4];
+        int16_t PIDoutput[4] = {0};
 
         PIDoutput[CHASSIS_MOTOR_ID_FBK_FL] = Chassis_Instance.Calc.W_FL.Ctrl_Vel;
         PIDoutput[CHASSIS_MOTOR_ID_FBK_FR] = Chassis_Instance.Calc.W_FR.Ctrl_Vel;
         PIDoutput[CHASSIS_MOTOR_ID_FBK_BL] = Chassis_Instance.Calc.W_BL.Ctrl_Vel;
         PIDoutput[CHASSIS_MOTOR_ID_FBK_BR] = Chassis_Instance.Calc.W_BR.Ctrl_Vel;
 
-        ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL, DJI_CAN_ID_GROUP_1, PIDoutput);
+        ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL, CHASSIS_CAN_GROUP, PIDoutput);
     }
 }      
 

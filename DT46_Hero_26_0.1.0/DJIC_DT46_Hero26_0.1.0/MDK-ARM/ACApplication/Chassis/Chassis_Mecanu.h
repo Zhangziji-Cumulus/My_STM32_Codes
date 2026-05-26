@@ -56,6 +56,7 @@ typedef struct
         //获取YAW轴电机数据
         struct{
             const DJI_MotorFeedback_t* Ptr;
+						DJI_MotorFeedback_t YAW;
             float Degree;
         }Yaw_Angle;
 

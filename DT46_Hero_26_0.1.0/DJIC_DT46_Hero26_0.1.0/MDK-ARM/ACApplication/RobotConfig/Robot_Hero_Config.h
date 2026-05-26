@@ -148,9 +148,9 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define CHASSIS_TYPE            CHASSIS_MECANUM            //底盘类型
 
 /* 地盘速度相关 */
-#define CHASSIS_MAX_SPEED            3.0f           //底盘最大移动速度（单位：m/s）
-#define CHASSIS_MAX_SPEED_FOLLOWING  2.0f           //底盘最大跟随速度（单位：m/s）
-#define CHASSIS_MAX_SPIN_SPEED       8.0f           //底盘最大旋转速度（单位：rad/s）
+#define CHASSIS_MAX_SPEED            1.0f           //底盘最大移动速度（单位：m/s）
+#define CHASSIS_MAX_SPEED_FOLLOWING  1.0f           //底盘最大跟随速度（单位：m/s）
+#define CHASSIS_MAX_SPIN_SPEED       1.0f           //底盘最大旋转速度（单位：rad/s）
 
 /* 地盘的物理参数 */
 #define CHASSIS_WHEEL_RADIUS_MM     76.0f           //轮子半径（单位：mm）
@@ -159,9 +159,9 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 /* 地盘电机控制 */
 #define CHASSIS_CAN_CTRL        hcan1               //底盘CAN控制总线 
-#define CHASSIS_CAN_GROUP       1                   //CAN总线控制组，组1
+#define CHASSIS_CAN_GROUP       DJI_CAN_ID_GROUP_1  //CAN总线控制组，组1
 
-#define CHASSIS_CAN_YAW         hcan1               //获取地盘云台相关角度电机所在总线
+#define CHASSIS_CAN_YAW         hcan2               //获取地盘云台相关角度电机所在总线
 
 #define CHASSIS_MOTOR_TYPE      MOTOR_DJI_M3508     //底盘电机类型
 

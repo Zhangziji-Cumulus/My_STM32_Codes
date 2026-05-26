@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __DUAL_BOARD_TRANSMIT_H__
 #define __DUAL_BOARD_TRANSMIT_H__
 

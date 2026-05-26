@@ -49,7 +49,7 @@ __attribute__((used)) void DualBoardTask(void *argument)
 		
     DualBoard_SendStruct(&hcan2,TX_BASE_ID,&Tx,sizeof(Tx));
 
-    osDelay(10);
+    osDelay(1);
   }
 
 }
