@@ -34,8 +34,8 @@ void Chassis_Init(void)
 {
     //初始模式STOP
     Chassis_Instance.CMD.ctrl = STOP_MODE;
-	
-		Chassis_Instance.Calc.Theta.Degree = 180.0f;
+
+	Chassis_Instance.Calc.Theta.Degree = 0.0f;
 
     //3508电机急停
     PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
@@ -77,16 +77,18 @@ void Chassis_Update(void)
 
     //地盘和云台的夹角获取
     Chassis_Instance.Calc.Yaw_Angle.Ptr = MotorCtrl_DJI_GetDJI_MFeedback(&CHASSIS_CAN_YAW);
-	Chassis_Instance.Calc.Yaw_Angle.YAW = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW];
-    //Chassis_Instance.Calc.Yaw_Angle.Degree = Chassis_Instance.Calc.Yaw_Angle.YAW.angle_deg;
+    Chassis_Instance.Calc.Yaw_Angle.YAW = Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW];
 
     //限幅云台的夹角，并且重映射电机零位
-    float tempAngle = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Yaw_Angle.Degree - YAW_ZERO_ANGLE);
-    
-    Chassis_Instance.Calc.Theta.Degree = MyMath_cal_output_angle(Chassis_Instance.Calc.Yaw_Angle.Ptr[GIMBAL_MOTOR_ID_FBK_YAW].angle_deg - YAW_ZERO_ANGLE,GIMBAL_YAW_RATIO);//使用函数计算减速比后的地盘、云台角度
-    
-    Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
-    
+    if(Chassis_Instance.Calc.Yaw_Angle.YAW.is_online == 1)
+    {
+				Chassis_Instance.Calc.Theta.Degree = MyMath_cal_output_angle(Chassis_Instance.Calc.Yaw_Angle.YAW.angle_deg - YAW_ZERO_ANGLE,GIMBAL_YAW_RATIO);//使用函数计算减速比后的地盘、云台角度
+    }
+        
+    //Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
+		
+		Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_0_to_360(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
+		
     Chassis_Instance.Calc.Theta.Radian = MyMath_Degrees_To_Radians(Chassis_Instance.Calc.Theta.Degree);//弧度制云台地盘角度
 }         
 
@@ -212,7 +214,7 @@ static void Chassis_Update_Target(uint8_t state)
     {
         Chassis_Instance.Calc.Target.FB = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB);
         Chassis_Instance.Calc.Target.LR = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR);
-        Chassis_Instance.Calc.Target.RO = PID_Calculate_CycleAngle(&Chassis_Follow_PID,Theta_Degree,180.0f); //MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.RO);
+        Chassis_Instance.Calc.Target.RO = PID_Calculate_CycleAngle(&Chassis_Follow_PID,Theta_Degree,0.0f); //MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.RO);
     }
     else if(state == Spin_CW)
     {

@@ -60,7 +60,12 @@ void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback, uint32_t std_id,
         uint8_t index = std_id - 0x201; // 将 CAN ID 映射为数组索引 0~7
         
         DJI_MFeedback[index].id = index + 1;
-        DJI_MFeedback[index].is_online = true; // 成功接收数据，标记该电机在线
+
+        // 收到数据 → 立刻重置超时计数器
+        DJI_MFeedback[index].offline_timeout_cnt = 0;
+
+        // 成功接收数据，标记该电机在线
+        DJI_MFeedback[index].is_online = 1; 
 
         // 2. 解析机械角度 (DATA[0] 高8位, DATA[1] 低8位)
         // 原始值范围 0 ~ 8191，对应物理角度 0° ~ 360°
@@ -83,6 +88,29 @@ void CAN_DJI_Motor_Feedback(DJI_MotorFeedback_t* DJI_MFeedback, uint32_t std_id,
         // DATA[6] 为保留字段 (部分电调版本用于表示温度)，此处按协议忽略
     }
 }
+
+/**
+ * @brief  电机在线状态检测（必须 1ms 调用一次）
+ * @param  DJI_MFeedback: 电机反馈结构体数组
+ */
+void CAN_DJI_Motor_CheckOnline(DJI_MotorFeedback_t* DJI_MFeedback)
+{
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        if (DJI_MFeedback[i].offline_timeout_cnt < 100)
+        {
+            // 没超时 → 计数器 +1
+            DJI_MFeedback[i].offline_timeout_cnt++;
+        }
+        else
+        {
+            // 超时 → 标记离线
+            DJI_MFeedback[i].is_online = 0;
+        }
+    }
+}
+
+
 
 //** ================================================================================ **//
 //** ============================= 获取电机反馈数据 ================================== **//

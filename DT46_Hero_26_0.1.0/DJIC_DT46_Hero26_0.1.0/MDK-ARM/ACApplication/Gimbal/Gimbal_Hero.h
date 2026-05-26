@@ -5,19 +5,12 @@
 
 #if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == GIMBAL_BOARD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 
+//** #################################################################################################### **//
+//** ====================================== 定义数据、结构体 ============================================= **//
+//** #################################################################################################### **//
+
 #if(ROBOT_TYPE == ROBOTTYPE_HERO)
 
-#ifndef MAP_CMD_RANGE_TO_M_S_YAW
-#define MAP_CMD_RANGE_TO_M_S_YAW(cmd) \
-    MyMath_Map_Range_Float((float)(cmd), -CMD_CTRL_RANGE, CMD_CTRL_RANGE, \
-                            -CHASSIS_MAX_SPEED, CHASSIS_MAX_SPEED)
-#endif
-
-#ifndef MAP_CMD_RANGE_TO_M_S_PITCH
-#define MAP_CMD_RANGE_TO_M_S_PITCH(cmd) \
-    MyMath_Map_Range_Float((float)(cmd), -CMD_CTRL_RANGE, CMD_CTRL_RANGE, \
-                            -CHASSIS_MAX_SPEED, CHASSIS_MAX_SPEED)
-#endif
 
 typedef struct 
 {

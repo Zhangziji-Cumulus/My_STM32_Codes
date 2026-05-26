@@ -12,6 +12,11 @@
 //** =========================================== 宏定义 ================================================= **//
 //** #################################################################################################### **//
 
+/* 在线标志 */
+
+#define DJI_MOTOR_ONLINE    true       // 在线
+#define DJI_MOTOR_LOST      false      // 掉线/离线
+
 /* 减速电机的减速比 */
 
 #define DJI_M3508_RATIO     19      //M3508减速比为 19:1
@@ -62,7 +67,8 @@ typedef struct {
     int16_t speed_rpm;      // 转速 (rpm)
     int16_t current_ma;     // 电流 (mA, 通常电调反馈单位为mA)
     DJI_MotorErrorCode_t error_code;     // 错误码	电机错误码：
-    bool is_online;         // 在线标志位，用于检测电机是否掉线
+    volatile uint8_t is_online;         // 在线标志位，用于检测电机是否掉线
+    uint32_t offline_timeout_cnt;
 } DJI_MotorFeedback_t;
 
 // 电调配置结构体

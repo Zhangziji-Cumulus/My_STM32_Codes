@@ -2163,6 +2163,16 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\MotorCtrl_DJI_STOP.h</FilePath>
             </File>
+            <File>
+              <FileName>MotorCtrl_DJI_Check_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\MotorCtrl_DJI_Check_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>MotorCtrl_DJI_Check_Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\MotorCtrl_DJI_Check_Task.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -34,7 +34,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 typedef StaticTask_t osStaticThreadDef_t;
-typedef StaticQueue_t osStaticMessageQDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -84,7 +83,7 @@ const osThreadAttr_t DualBoard_attributes = {
   .cb_size = sizeof(Dual_Board_TranControlBlock),
   .stack_mem = &Dual_Board_TranBuffer[0],
   .stack_size = sizeof(Dual_Board_TranBuffer),
-  .priority = (osPriority_t) osPriorityRealtime1,
+  .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for Chassis */
 osThreadId_t ChassisHandle;
@@ -158,27 +157,17 @@ const osThreadAttr_t RCUpdate_attributes = {
   .stack_size = sizeof(RCUpdateBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
-/* Definitions for Queue_DJI_MD */
-osMessageQueueId_t Queue_DJI_MDHandle;
-uint8_t myQueue01testBuffer[ 5 * sizeof( uint16_t ) ];
-osStaticMessageQDef_t myQueue01testControlBlock;
-const osMessageQueueAttr_t Queue_DJI_MD_attributes = {
-  .name = "Queue_DJI_MD",
-  .cb_mem = &myQueue01testControlBlock,
-  .cb_size = sizeof(myQueue01testControlBlock),
-  .mq_mem = &myQueue01testBuffer,
-  .mq_size = sizeof(myQueue01testBuffer)
-};
-/* Definitions for g_CAN2_Queue */
-osMessageQueueId_t g_CAN2_QueueHandle;
-uint8_t g_CAN2_QueueBuffer[ 16 * sizeof( uint16_t ) ];
-osStaticMessageQDef_t g_CAN2_QueueControlBlock;
-const osMessageQueueAttr_t g_CAN2_Queue_attributes = {
-  .name = "g_CAN2_Queue",
-  .cb_mem = &g_CAN2_QueueControlBlock,
-  .cb_size = sizeof(g_CAN2_QueueControlBlock),
-  .mq_mem = &g_CAN2_QueueBuffer,
-  .mq_size = sizeof(g_CAN2_QueueBuffer)
+/* Definitions for DJIMotorCheck */
+osThreadId_t DJIMotorCheckHandle;
+uint32_t DJIMotorCheckBuffer[ 128 ];
+osStaticThreadDef_t DJIMotorCheckControlBlock;
+const osThreadAttr_t DJIMotorCheck_attributes = {
+  .name = "DJIMotorCheck",
+  .cb_mem = &DJIMotorCheckControlBlock,
+  .cb_size = sizeof(DJIMotorCheckControlBlock),
+  .stack_mem = &DJIMotorCheckBuffer[0],
+  .stack_size = sizeof(DJIMotorCheckBuffer),
+  .priority = (osPriority_t) osPriorityNormal,
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -194,6 +183,7 @@ void ShootingTask(void *argument);
 void CMDUpdateTask(void *argument);
 void SBUSTask(void *argument);
 void RCUpdateTask(void *argument);
+void DJIMotorCheckTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -218,13 +208,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
-
-  /* Create the queue(s) */
-  /* creation of Queue_DJI_MD */
-  Queue_DJI_MDHandle = osMessageQueueNew (5, sizeof(uint16_t), &Queue_DJI_MD_attributes);
-
-  /* creation of g_CAN2_Queue */
-  g_CAN2_QueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &g_CAN2_Queue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -260,6 +243,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of RCUpdate */
   RCUpdateHandle = osThreadNew(RCUpdateTask, NULL, &RCUpdate_attributes);
+
+  /* creation of DJIMotorCheck */
+  DJIMotorCheckHandle = osThreadNew(DJIMotorCheckTask, NULL, &DJIMotorCheck_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -297,6 +283,23 @@ void StartDefaultTask(void *argument)
   }
   /* USER CODE END StartDefaultTask */
 }
+
+/* USER CODE BEGIN Header_INS_task */
+/**
+* @brief Function implementing the imuTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_INS_task */
+
+
+/* USER CODE BEGIN Header_buzzer_effects_task */
+/**
+* @brief Function implementing the buzr thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_buzzer_effects_task */
 
 /* USER CODE BEGIN Header_DualBoardTask */
 /**
@@ -425,7 +428,26 @@ __weak void RCUpdateTask(void *argument)
   /* USER CODE END RCUpdateTask */
 }
 
+/* USER CODE BEGIN Header_DJIMotorCheckTask */
+/**
+* @brief Function implementing the DJIMotorCheck thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_DJIMotorCheckTask */
+__weak void DJIMotorCheckTask(void *argument)
+{
+  /* USER CODE BEGIN DJIMotorCheckTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END DJIMotorCheckTask */
+}
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
+

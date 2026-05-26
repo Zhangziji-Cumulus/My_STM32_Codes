@@ -43,6 +43,11 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //多环PID控制精度（允许偏差/阈值）
 #define CHASSIS_PID_THRESHOLD  1.0f
 
+/* 发射机构相关 */
+
+//多环PID控制精度（允许偏差/阈值）
+#define DIAL_PID_THRESHOLD      1.0f
+
 
 //** ------------------------------------------------------------ **//
 //** ====================== Auto Config ========================= **//
@@ -114,7 +119,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define FRICTION_RADIUS_MM      30                  //摩擦轮半径（单位：mm）
 
 /* 摩擦轮电机控制 */
-#define FRICTION_CAN            hcan1               //摩擦轮CAN总线
+#define FRICTION_CAN_CTRL       hcan1               //摩擦轮CAN总线
 
 #define FRICTION_MOTOR_TYPE     MOTOR_DJI_M3508     //摩擦轮电机类型
 
@@ -125,17 +130,24 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /** ===== 拨盘配置 ===== **/
 
 /* 拨盘速度相关 */
-#define DIAL_MAX_SPEED_M_S      2                   //拨盘最大线速度
+#define DIAL_MAX_SPEED_M_S      0.1f                   //拨盘最大线速度
 
 /* 拨盘物理参数 */
 
-#define DIAL_RADIUS_MM          0                   //拨盘半径
+#define DIAL_RADIUS_MM          60.0f               //拨盘半径
+#define DIAL_RATIO              DJI_M3508_RATIO     //拨盘减速比
+
 
 /* 拨盘电机控制 */
-#define DIAL_CAN                hcan1               //拨盘CAN总线
+#define DIAL_CAN_CTRL           hcan1               //拨盘CAN总线
 
 #define DIAL_MOTOR_TYPE         MOTOR_DJI_M3508     //拨盘电机类型
-#define DIAL_MOTOR_ID           4                   //拨盘电机ID
+
+//拨盘实际CAN ID
+#define DIAL_CAN_ID           5         
+
+//拨盘电机 反馈 ID （CAN ID - 1）
+#define DIAL_MOTOR_ID_FBK       DIAL_CAN_ID - 1      
 
 //** ------------------------------------------------------------ **//
 //** ==================== Chassis Config ======================== **//

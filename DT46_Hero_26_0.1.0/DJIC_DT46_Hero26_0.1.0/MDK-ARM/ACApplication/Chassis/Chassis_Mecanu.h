@@ -3,6 +3,7 @@
 
 #include "A_MCommon.h"
 
+
 #if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOARD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 
 #if(CHASSIS_TYPE == CHASSIS_MECANUM)
@@ -56,8 +57,7 @@ typedef struct
         //获取YAW轴电机数据
         struct{
             const DJI_MotorFeedback_t* Ptr;
-						DJI_MotorFeedback_t YAW;
-            float Degree;
+			DJI_MotorFeedback_t YAW;
         }Yaw_Angle;
 
         //云台与地盘之间的夹角
