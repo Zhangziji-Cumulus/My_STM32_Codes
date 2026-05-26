@@ -22,7 +22,9 @@ __attribute__((used)) void ChassisTask(void *argument)
 {
   //初始化地盘
   Chassis_Init();
-
+	
+  osDelay(CHASSIS_INIT_DELAY);
+	
   for(;;)
   {	
     

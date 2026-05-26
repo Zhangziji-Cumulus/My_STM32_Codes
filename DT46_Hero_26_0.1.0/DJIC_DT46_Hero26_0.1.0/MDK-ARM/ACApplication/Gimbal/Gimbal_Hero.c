@@ -27,6 +27,8 @@ PID_HandleTypeDef Gimbal_Pitch_Ex;
 //** #################################################################################################### **//
 
 static void Gimbal_Update_Target(void);
+static void Gimbal_SetSafe_Vel(void);
+
 static void Gimbal_YawStable_Calc(void);
 static void Gimbal_PitchStable_Calc(void);
 
@@ -93,13 +95,23 @@ void Gimbal_SetMode(void)
 //更新目标量
 void Gimbal_RefreshTarget(void)
 {
-    Gimbal_Update_Target();
+
+    if (Gimbal_Instance.CMD.ctrl == STOP_MODE)
+    {
+        Gimbal_SetSafe_Vel();
+    }
+    else
+    {
+        Gimbal_Update_Target();
+    }
+
 }
 //计算控制量
 void Gimbal_CtrlCalc(void)
 {
     Gimbal_YawStable_Calc();
     Gimbal_PitchStable_Calc();
+
 }
 //发送控制指令
 void Gimbal_SendCmd(void)
@@ -170,6 +182,13 @@ static void Gimbal_Update_Target(void)
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
+
+}
+
+static void Gimbal_SetSafe_Vel(void)
+{
+    Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.C_Angle;
+    Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.C_Angle;
 }
 
 static void Gimbal_YawStable_Calc(void)

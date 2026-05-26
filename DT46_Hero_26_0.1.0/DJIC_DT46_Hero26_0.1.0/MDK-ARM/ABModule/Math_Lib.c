@@ -261,48 +261,46 @@ float MyMath_get_accumulated_angle(float current_angle) {
  * @param gear_ratio 
  * @return double 
  */
-double MyMath_cal_output_angle(double current_angle,uint16_t gear_ratio)
+// 功能：电机单圈角度(-180~180 或 0~360) → 经过减速比 → 输出轴角度(-180~180)
+// 1ms 中断安全调用，无跳变、无飞 angle、多圈累计正确
+double MyMath_cal_output_angle(double current_angle, uint16_t gear_ratio)
 {
-		static double Last_Angle = 0.0;
-		static double changeAngle = 0.0;
-		static double add_angle = 0.0;
-	
-	// 静态变量：保存上一次角度和累计圈数（仅初始化一次）
-    static float last_angle = -1.0f;  // 初始值设为无效值，标记首次调用
-    static int total_cycles = 0;      // 累计圈数（正转+，反转-）
-    
-    // 首次调用：初始化上一次角度（无需计算圈数）
-    if (last_angle < 0.0f) {
+    static double last_angle  = 0.0;   // 上一次电机角度（全用double，不丢精度）
+    static int    total_cycles = 0;    // 电机累计圈数（正转+，反转-）
+    static int    first_run    = 1;    // 首次运行标记
+
+    // 首次调用，直接记录并返回
+    if (first_run)
+    {
+        first_run = 0;
         last_angle = current_angle;
-        return current_angle;
+        return MyMath_normalize_m180_to_p180(current_angle / gear_ratio);
     }
-    
-    // 计算当前与上一次角度的差值
-    float delta = current_angle - last_angle;
-    
-    // 判断圈数变化（阈值180°：超过半圈的跳变视为跨圈）
-    if (delta > 180.0f) {
-        // 例：350°→10°，实际多转1圈，但delta= -340°，此处修正为减1圈
+
+    // 计算角度差
+    double delta = current_angle - last_angle;
+
+    // ========== 跨圈判断（标准正确写法）==========
+    if (delta > 180.0)       // 350° → 10° 跳变，反转过零
+    {
         total_cycles--;
-    } else if (delta < -180.0f) {
-        // 例：10°→350°，实际少转1圈，但delta= 340°，此处修正为加1圈
+    }
+    else if (delta < -180.0) // 10° → 350° 跳变，正转过零
+    {
         total_cycles++;
     }
-    
+
     // 更新上一次角度
     last_angle = current_angle;
-    
-    // 计算累计总角度：当前角度 + 圈数×360°
-    add_angle = current_angle + total_cycles * 360.0f;
-	
-		if(add_angle >= 360 * gear_ratio || add_angle <= -360 * gear_ratio)
-		{
-			total_cycles = 0;
-		}
-		
-		add_angle	= MyMath_normalize_m180_to_p180(add_angle / gear_ratio);
-	
-	return add_angle;
+
+    // ========== 电机总绝对角度 ==========
+    double motor_total_angle = current_angle + total_cycles * 360.0;
+
+    // ========== 输出轴角度 = 电机角度 / 减速比 ==========
+    double output_angle = motor_total_angle / gear_ratio;
+
+    // ========== 归一到 -180 ~ 180（唯一正确输出）==========
+    return MyMath_normalize_m180_to_p180(output_angle);
 }
 
 //** ================================================================================ **//

@@ -144,13 +144,15 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /* 系统配置 */
 #define CHASSIS_TASK_TIME_MS        1               //地盘任务循环时间
 
+#define CHASSIS_INIT_DELAY          100             //地盘任务初始化延迟
+
 /* 地盘类型 */
 #define CHASSIS_TYPE            CHASSIS_MECANUM            //底盘类型
 
 /* 地盘速度相关 */
 #define CHASSIS_MAX_SPEED            1.0f           //底盘最大移动速度（单位：m/s）
-#define CHASSIS_MAX_SPEED_FOLLOWING  1.0f           //底盘最大跟随速度（单位：m/s）
-#define CHASSIS_MAX_SPIN_SPEED       1.0f           //底盘最大旋转速度（单位：rad/s）
+#define CHASSIS_MAX_SPEED_FOLLOWING  1.5f           //底盘最大跟随速度（单位：m/s）
+#define CHASSIS_MAX_SPIN_SPEED       2.5f           //底盘最大旋转速度（单位：rad/s）
 
 /* 地盘的物理参数 */
 #define CHASSIS_WHEEL_RADIUS_MM     76.0f           //轮子半径（单位：mm）
