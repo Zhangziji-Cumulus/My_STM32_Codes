@@ -113,7 +113,9 @@ void Shooting_CtrlCalc(void)
 //发送控制指令
 void Shooting_SendCmd(void)
 {
-        // 静态变量：显式初始化，记录停止状态与起始时间
+    X_V2_MMCL_Vel_Control(1,0,5,100,false);
+
+    // 静态变量：显式初始化，记录停止状态与起始时间
     static uint32_t stop_start_time = 0;
     static bool is_stopping = false;
 
