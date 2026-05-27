@@ -39,7 +39,7 @@ void can_SendCmd(__IO uint8_t *cmd, uint8_t len)
 		}
 
 		// 发送数据
-		while(HAL_CAN_AddTxMessage((&hcan1), (CAN_TxHeaderTypeDef *)(&CAN1_Instance.CAN_TxMsg), (uint8_t *)(&CAN1_Instance.txData), (&TxMailbox)) != HAL_OK);
+		while(HAL_CAN_AddTxMessage((&hcan2), (CAN_TxHeaderTypeDef *)(&CAN1_Instance.CAN_TxMsg), (uint8_t *)(&CAN1_Instance.txData), (&TxMailbox)) != HAL_OK);
 
 		// 记录发送的第几包的数据
 		++packNum;
