@@ -43,23 +43,22 @@ typedef struct
         //摩擦轮
         struct{
             
+            float ShootingSpeed;
+
             struct
             {
-                float T_Speed;
 	            int16_t T_rpm;     //目标转速
                  int16_t Ctrl_Vel;  //最终控制值，(PID计算输出值)
             }UL;
 
             struct
             {
-                float T_Speed;
 	            int16_t T_rpm;      //目标转速
                  int16_t Ctrl_Vel;  //最终控制值，(PID计算输出值)
             }UR;
 
             struct
             {
-                float T_Speed;
 	            int16_t T_rpm;     //目标转速
                 int16_t Ctrl_Vel;  //最终控制值，(PID计算输出值)
             }DM;

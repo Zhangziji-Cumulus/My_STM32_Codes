@@ -46,6 +46,9 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /* 发射机构相关 */
 
 //多环PID控制精度（允许偏差/阈值）
+#define FRICTION_PID_THRESHOLD      1.0f
+
+//多环PID控制精度（允许偏差/阈值）
 #define DIAL_PID_THRESHOLD      1.0f
 
 
@@ -112,20 +115,29 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /** ===== 摩擦轮配置 ===== **/
 
 /* 摩擦轮速度相关 */
-#define FRICTION_MAX_SPEED_M_S  12.0f               //摩擦轮最大线速度(单位：m/s）
+#define FRICTION_MAX_SPEED_M_S  2.0f               //摩擦轮最大线速度(单位：m/s）
 
 /* 摩擦轮的物理参数 */
 #define FRICTION_NUM            3                   //摩擦轮数量
-#define FRICTION_RADIUS_MM      30                  //摩擦轮半径（单位：mm）
+
+#define FRICTION_RADIUS_MM      30.0f                  //摩擦轮半径（单位：mm）
+#define FRICTION_RATIO          1                   //摩擦轮减速比
 
 /* 摩擦轮电机控制 */
 #define FRICTION_CAN_CTRL       hcan1               //摩擦轮CAN总线
 
+#define FRICTION_CAN_GROUP      DJI_CAN_ID_GROUP_1
+
 #define FRICTION_MOTOR_TYPE     MOTOR_DJI_M3508     //摩擦轮电机类型
 
+//电机实际CAN ID
 #define FRICTION_MOTOR_ID_CAN_UL    1                   //上左摩擦轮电机ID
 #define FRICTION_MOTOR_ID_CAN_UR    2                   //上右摩擦轮电机ID
 #define FRICTION_MOTOR_ID_CAN_DM    3                   //下中摩擦轮电机ID
+//电机反馈数据  ID
+#define FRICTION_MOTOR_ID_FBK_UL    FRICTION_MOTOR_ID_CAN_UL - 1 
+#define FRICTION_MOTOR_ID_FBK_UR    FRICTION_MOTOR_ID_CAN_UR - 1
+#define FRICTION_MOTOR_ID_FBK_DM    FRICTION_MOTOR_ID_CAN_DM - 1
 
 /** ===== 拨盘配置 ===== **/
 
