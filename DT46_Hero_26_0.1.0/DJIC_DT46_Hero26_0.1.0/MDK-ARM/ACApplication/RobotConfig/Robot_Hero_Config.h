@@ -155,11 +155,60 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 #define DIAL_MOTOR_TYPE         MOTOR_DJI_M3508     //拨盘电机类型
 
-//拨盘实际CAN ID
-#define DIAL_CAN_ID           5         
+#define DIAL_CAN_ID             5                   //拨盘实际CAN ID
 
-//拨盘电机 反馈 ID （CAN ID - 1）
-#define DIAL_MOTOR_ID_FBK       DIAL_CAN_ID - 1      
+#define DIAL_MOTOR_ID_FBK       DIAL_CAN_ID - 1    //拨盘电机 反馈 ID （CAN ID - 1）
+
+/* ==== 推杆相关配置 ==== */
+
+
+/* 距离(mm) 转 丝杆旋转总角度(°) */
+#define PUSHROD_DIST_TO_ANGLE(dist, lead)    ((dist) * 360.0f / (lead))
+
+/* 丝杆物理参数 */
+
+#define PUSHROD_SCREW_LEAD_MM       5.0f        //丝杆导程
+
+/* 推杆速度相关 */
+
+#define PUSHROD_ACC            2000         //RPM/s
+#define PUSHROD_DEC            2000         //RPM/s
+
+#define PUSHROD_CW             0          //方向，顺时针转
+#define PUSHROD_CCW            9          //方向，逆时针转
+
+#define PUSHROD_MAX_SPEED_RPM  1500       //要计算成转速rpm/s(最大3000转)
+
+/* 推杆位置、行程 */
+
+/* 位置运动模式定义 (raf 参数) */
+#define PUSHROD_POS_MODE_RELATIVE_LAST_TARGET      0  // 相对上一次输入的目标位置
+#define PUSHROD_POS_MODE_ABSOLUTE                  1  // 绝对位置（以零点为基准）
+#define PUSHROD_POS_MODE_RELATIVE_CURRENT          2  // 相对当前实时位置
+
+#define PUSHROD_POSITION_MAX_TRAVEL_MM      105.0f       //推杆最大行程,单位：mm
+
+#define PUSHROD_POSTION_FRONT_MM            105.0f     //推杆后位置
+#define PUSHROD_POSTION_BACK_MM             10.0f       //推杆前位置
+
+//推杆后位置
+#define PUSHROD_POSTION_FRONT_DEG      PUSHROD_DIST_TO_ANGLE(PUSHROD_POSTION_FRONT_MM,PUSHROD_SCREW_LEAD_MM) 
+//推杆前位置PUSHROD_DIST_TO_ANGLE     
+#define PUSHROD_POSTION_BACK_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSTION_BACK_MM,PUSHROD_SCREW_LEAD_MM)       
+
+/* 电流检测相关 */
+
+#define PUSHROD_CURRENT_MAX         500                 //最大电流(mA)
+
+/* 推杆电机控制 */
+
+#define PUSHROD_CAN_CTRL           hcan2                //推杆CAN总线
+
+#define PUSHROD_MOTOR_TYPE         MOTOR_ZTD_42STEP     //推杆电机类型
+
+#define PUSHROD_CAN_ID             1                    //推杆实际CAN ID / Address
+
+//#define PUSHROD_MOTOR_ID_FBK       PUSHROD_CAN_ID - 1      //推杆电机 反馈 ID （CAN ID - 1）
 
 //** ------------------------------------------------------------ **//
 //** ==================== Chassis Config ======================== **//

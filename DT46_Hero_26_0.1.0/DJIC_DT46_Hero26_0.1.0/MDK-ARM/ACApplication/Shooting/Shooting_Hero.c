@@ -25,7 +25,8 @@ PID_HandleTypeDef PID_SFri_DM_Ex;
 //** ========================================= 对内函数声明 ============================================== **//
 //** #################################################################################################### **//
 
-static void Shooting_Update_Target(void);
+static void Friction_Update_Target(void);
+static void PuahRod_Update_Target(void);
 
 //** #################################################################################################### **//
 //** ====================================== 对外若定义覆盖函数 =========================================== **//
@@ -50,6 +51,9 @@ void Shooting_Init(void)
 	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&PID_SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 	
+  Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
+    //X_V2_Origin_Modify_Params(1,true,2,0,100,1000,0,500,200,true);
+
 }          
 
 //更新状态函数
@@ -79,7 +83,8 @@ void Shooting_SetMode(void)
 //更新目标量
 void Shooting_RefreshTarget(void)
 {
-    Shooting_Update_Target();
+    Friction_Update_Target();
+    PuahRod_Update_Target();
 }
 
 //计算控制量
@@ -113,8 +118,6 @@ void Shooting_CtrlCalc(void)
 //发送控制指令
 void Shooting_SendCmd(void)
 {
-    X_V2_Vel_Control(1,0,10,100,false);
-
     // 静态变量：显式初始化，记录停止状态与起始时间
     static uint32_t stop_start_time = 0;
     static bool is_stopping = false;
@@ -161,7 +164,19 @@ void Shooting_SendCmd(void)
         PIDoutput[FRICTION_MOTOR_ID_FBK_UR] = Shooting_Instance.Calc.Friction.UR.Ctrl_Vel;
         PIDoutput[FRICTION_MOTOR_ID_FBK_DM] = Shooting_Instance.Calc.Friction.DM.Ctrl_Vel;
 
-        ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL, CHASSIS_CAN_GROUP, PIDoutput);
+        ESC_Control_Raw_Group(&FRICTION_CAN_CTRL, FRICTION_CAN_GROUP, PIDoutput);
+/*
+        X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
+                                 PUSHROD_CW,
+                                 PUSHROD_ACC,
+                                 PUSHROD_DEC,
+                                 PUSHROD_MAX_SPEED_RPM,
+                                 Shooting_Instance.Calc.PushRod.T_Angle,
+                                 PUSHROD_POS_MODE_ABSOLUTE,
+                                 false,
+                                 PUSHROD_CURRENT_MAX);
+                                 */
+
     }
 
 }
@@ -170,10 +185,11 @@ void Shooting_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
-static void Shooting_Update_Target(void)
+static void Friction_Update_Target(void)
 {
-    if(Shooting_Instance.CMD.Shooting.Fire == ON)
+    if(Shooting_Instance.CMD.Shooting.Friction == ON)
     {
+
         Shooting_Instance.Calc.Friction.ShootingSpeed = -FRICTION_MAX_SPEED_M_S;
 
         Shooting_Instance.Calc.Friction.UL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Friction.ShootingSpeed,(FRICTION_RADIUS_MM / 1000),FRICTION_RATIO);
@@ -188,6 +204,28 @@ static void Shooting_Update_Target(void)
         Shooting_Instance.Calc.Friction.DM.T_rpm = 0;
     }
 }
+
+static void PuahRod_Update_Target(void)
+{
+    // if(Shooting_Instance.Calc.PushRod.ZeroState == ZERO_IDLE)
+    // {
+
+    // }
+    // else
+    // {
+
+    // }
+
+    if(Shooting_Instance.CMD.Shooting.Fire == ON)
+    {
+        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
+    }
+    else
+    {
+        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
+    }
+}
+
 
 #endif
 
@@ -212,7 +250,7 @@ PID_HandleTypeDef Dial_Ex;
 //** ========================================= 对内函数声明 ============================================== **//
 //** #################################################################################################### **//
 
-static void Shooting_Update_Target(void);
+static void Dial_Update_Target(void);
 
 //** #################################################################################################### **//
 //** ====================================== 对外若定义覆盖函数 =========================================== **//
@@ -259,7 +297,7 @@ void Shooting_SetMode(void)
 //更新目标量
 void Shooting_RefreshTarget(void)
 {
-    Shooting_Update_Target();
+    Dial_Update_Target();
 }
 
 //计算控制量
@@ -321,7 +359,7 @@ void Shooting_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
-static void Shooting_Update_Target(void)
+static void Dial_Update_Target(void)
 {
     if(Shooting_Instance.CMD.Shooting.Load == ON)
     {

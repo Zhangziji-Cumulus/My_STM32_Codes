@@ -18,6 +18,17 @@
     推杆向后给出空间后，给一个标志；拨盘上弹，检测电流过大后，给标志。
 */
 
+// 零点设置状态枚举
+typedef enum {
+
+    ZERO_IDLE           = 0,    // 空闲状态，未开始找零点
+    ZERO_FINDING        = 1,    // 正在寻找零点（运动/检测中）
+    ZERO_SUCCESS        = 2,    // 零点设置成功
+    ZERO_FAIL           = 3,    // 零点设置失败
+    ZERO_COMPLETE       = 4     // 流程完成（可选）
+
+} ZDT_Set_Zero_State_e;
+
 #if(ROBOT_TYPE == ROBOTTYPE_HERO)
 
 typedef struct 
@@ -78,6 +89,7 @@ typedef struct
         //推杆
         struct
         {
+            ZDT_Set_Zero_State_e ZeroState;  // 零点状态机
             float   T_Angle;
             int16_t Ctrl_Vel;
         }PushRod;

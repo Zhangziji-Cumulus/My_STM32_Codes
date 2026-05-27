@@ -71,6 +71,7 @@ typedef struct CMD_t{
         ONOFF_State_e Fire;//发射标志, OFF表示不发射，ON表示发射
         ONOFF_State_e Load;//上弹标志，OFF表示不上弹，ON表示上弹
         ONOFF_State_e Dial;//拨盘标志，OFF表示不转动，ON表示转动
+        ONOFF_State_e Friction;//摩擦轮开启
     }Shooting;
 
 }CMD_t;
@@ -83,6 +84,5 @@ typedef struct CMD_t{
 //** #################################################################################################### **//
 
 const CMD_t* CMD_Get_point(void);
-
 
 #endif /* __CMDCENTER_H__ */

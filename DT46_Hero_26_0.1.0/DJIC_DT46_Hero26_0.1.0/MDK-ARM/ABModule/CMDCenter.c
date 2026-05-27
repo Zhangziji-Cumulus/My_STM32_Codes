@@ -98,6 +98,16 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
         {
           CMD.Shooting.Load = OFF;
         }
+        //打开摩擦轮
+        if(RC_Ctl->Switch.S2_R == HOTRC_SWITCH_DOWN)
+        {
+          CMD.Shooting.Friction = ON;
+        }
+        else
+        {
+          CMD.Shooting.Friction = OFF;
+        }
+
       }
       //键盘控制
       else if(CMD.ctrl == KEYBOARD_MODE)

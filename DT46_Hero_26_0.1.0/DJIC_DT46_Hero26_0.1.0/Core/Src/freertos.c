@@ -169,6 +169,30 @@ const osThreadAttr_t DJIMotorCheck_attributes = {
   .stack_size = sizeof(DJIMotorCheckBuffer),
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for ShootingPushRod */
+osThreadId_t ShootingPushRodHandle;
+uint32_t PushRodBuffer[ 128 ];
+osStaticThreadDef_t PushRodControlBlock;
+const osThreadAttr_t ShootingPushRod_attributes = {
+  .name = "ShootingPushRod",
+  .cb_mem = &PushRodControlBlock,
+  .cb_size = sizeof(PushRodControlBlock),
+  .stack_mem = &PushRodBuffer[0],
+  .stack_size = sizeof(PushRodBuffer),
+  .priority = (osPriority_t) osPriorityHigh7,
+};
+/* Definitions for ShootingLoad */
+osThreadId_t ShootingLoadHandle;
+uint32_t ShootingLoadBuffer[ 128 ];
+osStaticThreadDef_t ShootingLoadControlBlock;
+const osThreadAttr_t ShootingLoad_attributes = {
+  .name = "ShootingLoad",
+  .cb_mem = &ShootingLoadControlBlock,
+  .cb_size = sizeof(ShootingLoadControlBlock),
+  .stack_mem = &ShootingLoadBuffer[0],
+  .stack_size = sizeof(ShootingLoadBuffer),
+  .priority = (osPriority_t) osPriorityHigh7,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -184,6 +208,8 @@ void CMDUpdateTask(void *argument);
 void SBUSTask(void *argument);
 void RCUpdateTask(void *argument);
 void DJIMotorCheckTask(void *argument);
+void ShootingPushRodTask(void *argument);
+void ShootingLoadTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -247,6 +273,12 @@ void MX_FREERTOS_Init(void) {
   /* creation of DJIMotorCheck */
   DJIMotorCheckHandle = osThreadNew(DJIMotorCheckTask, NULL, &DJIMotorCheck_attributes);
 
+  /* creation of ShootingPushRod */
+  ShootingPushRodHandle = osThreadNew(ShootingPushRodTask, NULL, &ShootingPushRod_attributes);
+
+  /* creation of ShootingLoad */
+  ShootingLoadHandle = osThreadNew(ShootingLoadTask, NULL, &ShootingLoad_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
 	
@@ -300,6 +332,7 @@ void StartDefaultTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_buzzer_effects_task */
+
 
 /* USER CODE BEGIN Header_DualBoardTask */
 /**
@@ -444,6 +477,42 @@ __weak void DJIMotorCheckTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END DJIMotorCheckTask */
+}
+
+/* USER CODE BEGIN Header_ShootingPushRodTask */
+/**
+* @brief Function implementing the ShootingPushRod thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ShootingPushRodTask */
+__weak void ShootingPushRodTask(void *argument)
+{
+  /* USER CODE BEGIN ShootingPushRodTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END ShootingPushRodTask */
+}
+
+/* USER CODE BEGIN Header_ShootingLoadTask */
+/**
+* @brief Function implementing the ShootingLoad thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ShootingLoadTask */
+__weak void ShootingLoadTask(void *argument)
+{
+  /* USER CODE BEGIN ShootingLoadTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END ShootingLoadTask */
 }
 
 /* Private application code --------------------------------------------------*/
