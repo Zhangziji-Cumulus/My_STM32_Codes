@@ -2243,6 +2243,11 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\ZDT\ZDT_CAN_Bsp.h</FilePath>
             </File>
+            <File>
+              <FileName>ZDT_Firmware.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\ZDT\ZDT_Firmware.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2432,6 +2437,16 @@
               <FileName>Shooting_Hero.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Shooting\Shooting_Hero.h</FilePath>
+            </File>
+            <File>
+              <FileName>Load_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ACApplication\Shooting\Load_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Load_Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ACApplication\Shooting\Load_Task.h</FilePath>
             </File>
           </Files>
         </Group>

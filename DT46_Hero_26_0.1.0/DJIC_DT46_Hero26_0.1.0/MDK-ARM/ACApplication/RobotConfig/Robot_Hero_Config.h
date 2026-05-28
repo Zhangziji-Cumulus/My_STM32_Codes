@@ -110,12 +110,12 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //** ------------------------------------------------------------ **//
 
 /* 系统配置 */
-#define SHOOTING_TASK_TIME_MS        1               //射击任务循环时间
+#define SHOOTING_TASK_TIME_MS   1               //射击任务循环时间
 
 /** ===== 摩擦轮配置 ===== **/
 
 /* 摩擦轮速度相关 */
-#define FRICTION_MAX_SPEED_M_S  2.0f               //摩擦轮最大线速度(单位：m/s）
+#define FRICTION_MAX_SPEED_M_S  5.0f               //摩擦轮最大线速度(单位：m/s）
 
 /* 摩擦轮的物理参数 */
 #define FRICTION_NUM            3                   //摩擦轮数量
@@ -188,8 +188,8 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 #define PUSHROD_POSITION_MAX_TRAVEL_MM      105.0f       //推杆最大行程,单位：mm
 
-#define PUSHROD_POSTION_FRONT_MM            105.0f     //推杆后位置
-#define PUSHROD_POSTION_BACK_MM             10.0f       //推杆前位置
+#define PUSHROD_POSTION_FRONT_MM            5.0f     //推杆前位置
+#define PUSHROD_POSTION_BACK_MM             110.0f    //推杆后位置
 
 //推杆后位置
 #define PUSHROD_POSTION_FRONT_DEG      PUSHROD_DIST_TO_ANGLE(PUSHROD_POSTION_FRONT_MM,PUSHROD_SCREW_LEAD_MM) 
@@ -198,7 +198,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 /* 电流检测相关 */
 
-#define PUSHROD_CURRENT_MAX         500                 //最大电流(mA)
+#define PUSHROD_CURRENT_MAX        1000                 //最大电流(mA)
 
 /* 推杆电机控制 */
 

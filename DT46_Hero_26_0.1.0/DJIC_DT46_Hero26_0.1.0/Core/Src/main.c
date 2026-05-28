@@ -107,6 +107,23 @@ int main(void)
 	delay_init();
 	BSP_Init();
 
+	//X_V2_Vel_Control(1,9,100,200,false);
+	//X_V2_Origin_Modify_Params(1,true,2,0,1000,3000,200,500,200,true);
+	//HAL_Delay(2000);
+	//X_V2_En_Control(1,true,false);
+	//X_V2_Origin_Trigger_Return(1,2,false);
+
+  //HAL_Delay(3000);
+  //X_V2_En_Control(1,false,false);
+	
+	
+	
+	// while(1)
+	// {
+	// 	//HAL_Delay(1);
+	// 	//X_V2_Vel_Control(1,9,100,200,false);
+	// }
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

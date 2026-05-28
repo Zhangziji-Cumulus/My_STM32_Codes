@@ -22,19 +22,59 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\A_Code_GitHub\My_STM32_Code_Free\My_STM32_Codes\DT46_Hero_26_0.1.0\DJIC_DT46_Hero26_0.1.0\MDK-ARM\BaseMood.uvprojx
-Project File Date:  05/27/2026
+Project File Date:  05/28/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
+compiling Chassis_Task.c...
+ACApplication\Chassis\Chassis_Task.c(20): warning:  #550-D: variable "remain_ChassisTask"  was set but never used
+  static UBaseType_t remain_ChassisTask;
+ACApplication\Chassis\Chassis_Task.c: 1 warning, 0 errors
+compiling bsp_Init.c...
+AADrivers\bsp_Init.c(9): warning:  #223-D: function "can_filter_init" declared implicitly
+      can_filter_init();
+AADrivers\bsp_Init.c: 1 warning, 0 errors
+compiling Chassis_Mecanu.c...
+ACApplication\Chassis\Chassis_Mecanu.h(89): warning:  #1-D: last line of file ends without a newline
+  #endif // CHASSIS_MECANU_H_
+ACApplication\Chassis\Chassis_Mecanu.c(256): warning:  #1-D: last line of file ends without a newline
+  #endif
+ACApplication\Chassis\Chassis_Mecanu.c: 2 warnings, 0 errors
+compiling Gimbal_Hero.c...
+compiling Shooting_Task.c...
+ACApplication\Shooting\Shooting_Task.c(19): warning:  #550-D: variable "remain_ShootingTask"  was set but never used
+  static UBaseType_t remain_ShootingTask;
+ACApplication\Shooting\Shooting_Task.c: 1 warning, 0 errors
+compiling main.c...
+../Core/Src/main.c(108): warning:  #223-D: function "BSP_Init" declared implicitly
+  	BSP_Init();
+../Core/Src/main.c: 1 warning, 0 errors
+compiling Load_Task.c...
+ACApplication\Shooting\Load_Task.c(23): warning:  #223-D: function "Shooting_Init" declared implicitly
+    Shooting_Init();
+ACApplication\Shooting\Load_Task.c(19): warning:  #550-D: variable "remain_LoadTask"  was set but never used
+  static UBaseType_t remain_LoadTask;
+ACApplication\Shooting\Load_Task.c: 2 warnings, 0 errors
+compiling Gimbal_Task.c...
+ACApplication\Gimbal\Gimbal_Task.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // GIMBAL_TASK_H_
+ACApplication\Gimbal\Gimbal_Task.c(19): warning:  #550-D: variable "remain_GimbalTask"  was set but never used
+  static UBaseType_t remain_GimbalTask;
+ACApplication\Gimbal\Gimbal_Task.c: 2 warnings, 0 errors
 compiling Shooting_Hero.c...
 ACApplication\Shooting\Shooting_Hero.h(106): warning:  #1-D: last line of file ends without a newline
   #endif // SHOOTING_HERO_H_
 ACApplication\Shooting\Shooting_Hero.c: 1 warning, 0 errors
+compiling Chassis_leg.c...
+compiling stm32f4xx_it.c...
+../Core/Src/stm32f4xx_it.c(285): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
+  	SBUS_UART_IRQHandler();
+../Core/Src/stm32f4xx_it.c: 1 warning, 0 errors
 linking...
-Program Size: Code=51096 RO-data=1420 RW-data=516 ZI-data=29724  
+Program Size: Code=51832 RO-data=1420 RW-data=524 ZI-data=32724  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 12 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -58,7 +98,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

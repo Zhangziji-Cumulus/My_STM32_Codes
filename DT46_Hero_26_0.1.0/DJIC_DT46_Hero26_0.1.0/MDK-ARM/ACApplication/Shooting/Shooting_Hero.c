@@ -51,10 +51,9 @@ void Shooting_Init(void)
 	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&PID_SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 	
-  Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
-    //X_V2_Origin_Modify_Params(1,true,2,0,100,1000,0,500,200,true);
+    Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
 
-}          
+}
 
 //更新状态函数
 void Shooting_Update(void)
@@ -118,6 +117,9 @@ void Shooting_CtrlCalc(void)
 //发送控制指令
 void Shooting_SendCmd(void)
 {
+    //ZDT使能标志
+    static uint8_t ZDT_Enable_Sate = 0;
+
     // 静态变量：显式初始化，记录停止状态与起始时间
     static uint32_t stop_start_time = 0;
     static bool is_stopping = false;
@@ -152,11 +154,25 @@ void Shooting_SendCmd(void)
 			PIDSTOP[3] = 0;
 			ESC_Control_Raw_Group(&FRICTION_CAN_CTRL,FRICTION_CAN_GROUP,PIDSTOP);
         }
+
+        if(ZDT_Enable_Sate <= 10)
+        {
+            //失能张大头电机
+            X_V2_En_Control(1,false,false);
+            ZDT_Enable_Sate++;
+        }
+
     }
     else
     {
         // 退出停止模式，重置状态
         is_stopping = false;
+
+        if(ZDT_Enable_Sate >= 10)
+        {
+            X_V2_En_Control(1,true,false);
+						ZDT_Enable_Sate = 0;
+        }
 
         int16_t PIDoutput[4] = {0};
 
@@ -165,20 +181,7 @@ void Shooting_SendCmd(void)
         PIDoutput[FRICTION_MOTOR_ID_FBK_DM] = Shooting_Instance.Calc.Friction.DM.Ctrl_Vel;
 
         ESC_Control_Raw_Group(&FRICTION_CAN_CTRL, FRICTION_CAN_GROUP, PIDoutput);
-/*
-        X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
-                                 PUSHROD_CW,
-                                 PUSHROD_ACC,
-                                 PUSHROD_DEC,
-                                 PUSHROD_MAX_SPEED_RPM,
-                                 Shooting_Instance.Calc.PushRod.T_Angle,
-                                 PUSHROD_POS_MODE_ABSOLUTE,
-                                 false,
-                                 PUSHROD_CURRENT_MAX);
-                                 */
-
     }
-
 }
 
 //** #################################################################################################### **//
@@ -207,22 +210,50 @@ static void Friction_Update_Target(void)
 
 static void PuahRod_Update_Target(void)
 {
-    // if(Shooting_Instance.Calc.PushRod.ZeroState == ZERO_IDLE)
-    // {
-
-    // }
-    // else
-    // {
-
-    // }
+    static uint8_t ZDT_Send_Cmd_TimeCount_F = 0;
+    static uint8_t ZDT_Send_Cmd_TimeCount_B = 0;
 
     if(Shooting_Instance.CMD.Shooting.Fire == ON)
     {
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
+
+        if(ZDT_Send_Cmd_TimeCount_F <= 10)
+        {
+            ZDT_Send_Cmd_TimeCount_B = 0;
+
+            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
+                                    PUSHROD_CCW,
+                                    PUSHROD_ACC,
+                                    PUSHROD_DEC,
+                                    PUSHROD_MAX_SPEED_RPM,
+                                    Shooting_Instance.Calc.PushRod.T_Angle,
+                                    PUSHROD_POS_MODE_ABSOLUTE,
+                                    false,
+                                    PUSHROD_CURRENT_MAX);
+            ZDT_Send_Cmd_TimeCount_F++;
+        }
     }
     else
     {
+        ZDT_Send_Cmd_TimeCount_F = 0;
+
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
+
+        if(ZDT_Send_Cmd_TimeCount_B <= 10)
+        {
+            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
+                                    PUSHROD_CCW,
+                                    PUSHROD_ACC,
+                                    PUSHROD_DEC,
+                                    PUSHROD_MAX_SPEED_RPM,
+                                    Shooting_Instance.Calc.PushRod.T_Angle,
+                                    PUSHROD_POS_MODE_ABSOLUTE,
+                                    false,
+                                    PUSHROD_CURRENT_MAX);
+
+            ZDT_Send_Cmd_TimeCount_B++;
+        }
+
     }
 }
 
@@ -265,7 +296,7 @@ void Shooting_Init(void)
     PID_Init(&Dial_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
 	//拨盘PID
-	PID_Init(&Dial_In,1.0f,0.0f,0.0f,-2500,2500,-10.0f, 10.0f);
+	PID_Init(&Dial_In,1.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 	PID_Init(&Dial_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 
 }          
@@ -309,7 +340,6 @@ void Shooting_CtrlCalc(void)
                                                                 Shooting_Instance.DJI_Motordata.DIAL.current_ma,
                                                                 Shooting_Instance.DJI_Motordata.DIAL.speed_rpm,
                                                                 DIAL_PID_THRESHOLD);
-
 }
 
 //发送控制指令
@@ -352,7 +382,6 @@ void Shooting_SendCmd(void)
 
         ESC_Control_Raw_Single(&DIAL_CAN_CTRL,DIAL_CAN_ID,Shooting_Instance.Calc.Dial.Ctrl_Vel);
     }
-
 }
 
 //** #################################################################################################### **//
@@ -365,7 +394,6 @@ static void Dial_Update_Target(void)
     {
         Shooting_Instance.Calc.Dial.T_Speed = DIAL_MAX_SPEED_M_S;
         Shooting_Instance.Calc.Dial.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Dial.T_Speed,(DIAL_RADIUS_MM / 1000),DIAL_RATIO);
-
     }
     else
     {
