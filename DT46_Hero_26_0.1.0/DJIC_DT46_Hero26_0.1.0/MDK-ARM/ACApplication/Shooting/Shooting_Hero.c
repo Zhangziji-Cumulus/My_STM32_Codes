@@ -53,6 +53,8 @@ void Shooting_Init(void)
 	
     Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
 
+    X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,10);
+
 }
 
 //更新状态函数

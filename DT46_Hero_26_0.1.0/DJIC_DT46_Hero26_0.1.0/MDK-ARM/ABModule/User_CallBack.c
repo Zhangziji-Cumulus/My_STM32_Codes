@@ -59,6 +59,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                 {
                     g_dataValid = 1;
                 }
+
+                CAN_ZDT_Motor_FeedBack(&ZDT_FeedBack,1,&Temp_RxHeader,Temp_RxData);
             }
         }
     }

@@ -3,6 +3,7 @@
 
 #include "A_CommonSystem.h"
 #include "MotorCtrl_DJI.h"
+#include "ZDT_CAN_Bsp.h"
 #include "CMDCenter.h"
 #include "bsp_CAN.h"
 
