@@ -53,20 +53,26 @@ void Shooting_Init(void)
 	
     Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
 
-    X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,10);
-
+	//X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,15);//读取张大头步进电机的实际工作电流
 }
 
 //更新状态函数
 void Shooting_Update(void)
 {
+    // static uint8_t ZDT_Time_Count = 0;
+
+    // if(ZDT_Time_Count < 10 / SHOOTING_TASK_TIME_MS)
+    // {
+    //     X_V2_Read_System_State_Params(1);
+    //     ZDT_Time_Count = 0;
+    // }
+    // ZDT_Time_Count++;
 
     Shooting_Instance.CMD = *CMD_Get_point();
     Shooting_Instance.DJI_Motordata.Ptr = MotorCtrl_DJI_GetDJI_MFeedback(&FRICTION_CAN_CTRL);
     Shooting_Instance.DJI_Motordata.UL = Shooting_Instance.DJI_Motordata.Ptr[FRICTION_MOTOR_ID_FBK_UL];
     Shooting_Instance.DJI_Motordata.UR = Shooting_Instance.DJI_Motordata.Ptr[FRICTION_MOTOR_ID_FBK_UR];
     Shooting_Instance.DJI_Motordata.DM = Shooting_Instance.DJI_Motordata.Ptr[FRICTION_MOTOR_ID_FBK_DM];
-
 }         
 
 //异常处理函数
@@ -200,7 +206,7 @@ static void Friction_Update_Target(void)
         Shooting_Instance.Calc.Friction.UL.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Friction.ShootingSpeed,(FRICTION_RADIUS_MM / 1000),FRICTION_RATIO);
         Shooting_Instance.Calc.Friction.UR.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Friction.ShootingSpeed,(FRICTION_RADIUS_MM / 1000),FRICTION_RATIO);
         Shooting_Instance.Calc.Friction.DM.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Friction.ShootingSpeed,(FRICTION_RADIUS_MM / 1000),FRICTION_RATIO);
-
+        
     }
     else
     {
@@ -219,7 +225,7 @@ static void PuahRod_Update_Target(void)
     {
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
 
-        if(ZDT_Send_Cmd_TimeCount_F <= 10)
+        if(ZDT_Send_Cmd_TimeCount_F < 1)
         {
             ZDT_Send_Cmd_TimeCount_B = 0;
 
@@ -241,7 +247,7 @@ static void PuahRod_Update_Target(void)
 
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
 
-        if(ZDT_Send_Cmd_TimeCount_B <= 10)
+        if(ZDT_Send_Cmd_TimeCount_B < 1)
         {
             X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
                                     PUSHROD_CCW,
@@ -251,11 +257,9 @@ static void PuahRod_Update_Target(void)
                                     Shooting_Instance.Calc.PushRod.T_Angle,
                                     PUSHROD_POS_MODE_ABSOLUTE,
                                     false,
-                                    PUSHROD_CURRENT_MAX);
-
+                                    PUSHROD_CURRENT_MAX);                 
             ZDT_Send_Cmd_TimeCount_B++;
         }
-
     }
 }
 

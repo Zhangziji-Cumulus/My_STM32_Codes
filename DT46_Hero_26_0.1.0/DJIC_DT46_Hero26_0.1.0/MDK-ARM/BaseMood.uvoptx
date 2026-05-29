@@ -156,52 +156,47 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_Ex</ItemText>
+          <ItemText>rxdata,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_In</ItemText>
+          <ItemText>Addr</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Instance,0x0A</ItemText>
+          <ItemText>rxdata[0]</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rxdata,0x0A</ItemText>
+          <ItemText>rxdata[1]</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Addr</ItemText>
+          <ItemText>rxdata[2]</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rxdata[0]</ItemText>
+          <ItemText>rxdata[3]</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rxdata[1]</ItemText>
+          <ItemText>ZDT_FeedBack,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rxdata[2]</ItemText>
+          <ItemText>rx_Buff,0x10</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rxdata[3]</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ZDT_FeedBack,0x0A</ItemText>
+          <ItemText>Packet</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
