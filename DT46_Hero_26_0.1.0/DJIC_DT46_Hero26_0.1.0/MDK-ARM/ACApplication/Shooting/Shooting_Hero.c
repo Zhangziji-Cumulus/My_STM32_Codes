@@ -51,7 +51,7 @@ void Shooting_Init(void)
 	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&PID_SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 	
-    Shooting_Instance.Calc.PushRod.ZeroState = ZERO_IDLE;
+    Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING;
 
 	//X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,15);//读取张大头步进电机的实际工作电流
 }
@@ -189,6 +189,35 @@ void Shooting_SendCmd(void)
         PIDoutput[FRICTION_MOTOR_ID_FBK_DM] = Shooting_Instance.Calc.Friction.DM.Ctrl_Vel;
 
         ESC_Control_Raw_Group(&FRICTION_CAN_CTRL, FRICTION_CAN_GROUP, PIDoutput);
+
+
+        if(Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER)
+        {
+            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
+                                    PUSHROD_CCW,
+                                    PUSHROD_ACC,
+                                    PUSHROD_DEC,
+                                    PUSHROD_MAX_SPEED_RPM,
+                                    Shooting_Instance.Calc.PushRod.T_Angle,
+                                    PUSHROD_POS_MODE_ABSOLUTE,
+                                    false,
+                                    PUSHROD_CURRENT_MAX);
+            Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ING;
+        }
+        else if(Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER)
+        {
+            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
+                                    PUSHROD_CCW,
+                                    PUSHROD_ACC,
+                                    PUSHROD_DEC,
+                                    PUSHROD_MAX_SPEED_RPM,
+                                    Shooting_Instance.Calc.PushRod.T_Angle,
+                                    PUSHROD_POS_MODE_ABSOLUTE,
+                                    false,
+                                    PUSHROD_CURRENT_MAX);                 
+            Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING;
+        }
+        
     }
 }
 
@@ -218,48 +247,18 @@ static void Friction_Update_Target(void)
 
 static void PuahRod_Update_Target(void)
 {
-    static uint8_t ZDT_Send_Cmd_TimeCount_F = 0;
-    static uint8_t ZDT_Send_Cmd_TimeCount_B = 0;
 
-    if(Shooting_Instance.CMD.Shooting.Fire == ON)
+    if((Shooting_Instance.CMD.Shooting.Fire == ON) && (Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING))
     {
+        Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER;
+
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
-
-        if(ZDT_Send_Cmd_TimeCount_F < 1)
-        {
-            ZDT_Send_Cmd_TimeCount_B = 0;
-
-            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
-                                    PUSHROD_CCW,
-                                    PUSHROD_ACC,
-                                    PUSHROD_DEC,
-                                    PUSHROD_MAX_SPEED_RPM,
-                                    Shooting_Instance.Calc.PushRod.T_Angle,
-                                    PUSHROD_POS_MODE_ABSOLUTE,
-                                    false,
-                                    PUSHROD_CURRENT_MAX);
-            ZDT_Send_Cmd_TimeCount_F++;
-        }
     }
-    else
+    else if((Shooting_Instance.CMD.Shooting.Fire == OFF) && (Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ING))
     {
-        ZDT_Send_Cmd_TimeCount_F = 0;
+        Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER;
 
         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
-
-        if(ZDT_Send_Cmd_TimeCount_B < 1)
-        {
-            X_V2_Traj_Pos_LC_Control(PUSHROD_CAN_ID,
-                                    PUSHROD_CCW,
-                                    PUSHROD_ACC,
-                                    PUSHROD_DEC,
-                                    PUSHROD_MAX_SPEED_RPM,
-                                    Shooting_Instance.Calc.PushRod.T_Angle,
-                                    PUSHROD_POS_MODE_ABSOLUTE,
-                                    false,
-                                    PUSHROD_CURRENT_MAX);                 
-            ZDT_Send_Cmd_TimeCount_B++;
-        }
     }
 }
 

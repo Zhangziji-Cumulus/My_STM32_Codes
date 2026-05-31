@@ -28,13 +28,21 @@ Project File Date:  05/28/2026
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
 compiling Shooting_Hero.c...
-ACApplication\Shooting\Shooting_Hero.h(106): warning:  #1-D: last line of file ends without a newline
+ACApplication\Shooting\Shooting_Hero.h(105): warning:  #1-D: last line of file ends without a newline
   #endif // SHOOTING_HERO_H_
-ACApplication\Shooting\Shooting_Hero.c: 1 warning, 0 errors
+ACApplication\Shooting\Shooting_Hero.c(194): warning:  #187-D: use of "=" where "==" may have been intended
+          if(Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER)
+ACApplication\Shooting\Shooting_Hero.c(207): warning:  #187-D: use of "=" where "==" may have been intended
+          else if(Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER)
+ACApplication\Shooting\Shooting_Hero.c(251): warning:  #187-D: use of "=" where "==" may have been intended
+      if((Shooting_Instance.CMD.Shooting.Fire == ON) && (Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING))
+ACApplication\Shooting\Shooting_Hero.c(257): warning:  #187-D: use of "=" where "==" may have been intended
+      else if((Shooting_Instance.CMD.Shooting.Fire == OFF) && (Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ING))
+ACApplication\Shooting\Shooting_Hero.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=52048 RO-data=1420 RW-data=524 ZI-data=32812  
+Program Size: Code=51856 RO-data=1420 RW-data=524 ZI-data=32812  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 1 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -58,7 +66,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
