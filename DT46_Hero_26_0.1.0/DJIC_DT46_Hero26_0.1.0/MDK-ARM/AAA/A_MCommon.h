@@ -29,6 +29,8 @@
 //** #################################################################################################### **//
 
 #include "APP_Config.h"
+#include "Auto_Config.h"
+#include "AutoAim.h"
 #include "Robot_Hero_Config.h"
 
 #endif // A_MCOMMON_H_

@@ -70,32 +70,38 @@
 //** =============================== 宏定配置类参数 ================================== **//
 //** ================================================================================ **//
 
-//急停时间
+/* 急停时间 */
 #define DJI_MOTOR_STOP_TIME_MS    100 
 
-//当前机器人类型,设置
+/* 当前机器人类型,设置 */
 #define ROBOT_TYPE      ROBOTTYPE_HERO
 
-
+/* 控制板类型 */
 #define BOARD_MODE_DUAL     0   //双板模式
 #define BOARD_MODE_SINGLE   1   //单板模式
 
 #define BOARD_MODE  BOARD_MODE_DUAL
 
-
-// ====================== 陀螺仪极性定义 ======================
+/* 陀螺仪类 */
+//陀螺仪极性定义
 #define GYRO_NINVERT    0   // 不反转（原值）
 #define GYRO_INVERT     1   // 反转（×-1）
 
-// ====================== 在这里配置每个轴的极性 ======================
+//在这里配置每个轴的极性 
 #define GYRO_YAW_POLARITY      GYRO_NINVERT   // YAW 不反转
 #define GYRO_PITCH_POLARITY    GYRO_INVERT    // PITCH 反转
 #define GYRO_ROLL_POLARITY     GYRO_NINVERT   // ROLL 不反转
 
-// ====================== 极性计算宏（核心公式） ======================
+//极性计算宏（核心公式） ======================
 #define GYRO_YAW(x)       (GYRO_YAW_POLARITY    == GYRO_INVERT ? -(x) : (x))
 #define GYRO_PITCH(x)     (GYRO_PITCH_POLARITY  == GYRO_INVERT ? -(x) : (x))
 #define GYRO_ROLL(x)      (GYRO_ROLL_POLARITY   == GYRO_INVERT ? -(x) : (x))
+
+/* 自瞄相关 */
+
+
+
+#define AutoAim_Mode
 
 //** #################################################################################################### **//
 //** ========================================= 枚举、结构体 ============================================= **//
