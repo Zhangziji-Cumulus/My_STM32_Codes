@@ -1,5 +1,5 @@
-#ifndef AUTO_TASK_H_
-#define AUTO_TASK_H_
+#ifndef AUTOAIM_TASK_H_
+#define AUTOAIM_TASK_H_
 
 #include "A_MCommon.h"
 

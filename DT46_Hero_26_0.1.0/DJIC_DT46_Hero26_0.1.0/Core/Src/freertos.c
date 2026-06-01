@@ -193,6 +193,18 @@ const osThreadAttr_t ShootingLoad_attributes = {
   .stack_size = sizeof(ShootingLoadBuffer),
   .priority = (osPriority_t) osPriorityHigh7,
 };
+/* Definitions for AutoAim */
+osThreadId_t AutoAimHandle;
+uint32_t AutoBuffer[ 128 ];
+osStaticThreadDef_t AutoControlBlock;
+const osThreadAttr_t AutoAim_attributes = {
+  .name = "AutoAim",
+  .cb_mem = &AutoControlBlock,
+  .cb_size = sizeof(AutoControlBlock),
+  .stack_mem = &AutoBuffer[0],
+  .stack_size = sizeof(AutoBuffer),
+  .priority = (osPriority_t) osPriorityRealtime,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -210,6 +222,7 @@ void RCUpdateTask(void *argument);
 void DJIMotorCheckTask(void *argument);
 void ShootingPushRodTask(void *argument);
 void ShootingLoadTask(void *argument);
+void AutoAimTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -280,6 +293,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of ShootingLoad */
   ShootingLoadHandle = osThreadNew(ShootingLoadTask, NULL, &ShootingLoad_attributes);
 
+  /* creation of AutoAim */
+  AutoAimHandle = osThreadNew(AutoAimTask, NULL, &AutoAim_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
 	
@@ -316,24 +332,6 @@ void StartDefaultTask(void *argument)
   }
   /* USER CODE END StartDefaultTask */
 }
-
-/* USER CODE BEGIN Header_INS_task */
-/**
-* @brief Function implementing the imuTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_INS_task */
-
-
-/* USER CODE BEGIN Header_buzzer_effects_task */
-/**
-* @brief Function implementing the buzr thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_buzzer_effects_task */
-
 
 /* USER CODE BEGIN Header_DualBoardTask */
 /**
@@ -514,6 +512,24 @@ __weak void ShootingLoadTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END ShootingLoadTask */
+}
+
+/* USER CODE BEGIN Header_AutoAimTask */
+/**
+* @brief Function implementing the AutoAim thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_AutoAimTask */
+__weak void AutoAimTask(void *argument)
+{
+  /* USER CODE BEGIN AutoAimTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END AutoAimTask */
 }
 
 /* Private application code --------------------------------------------------*/

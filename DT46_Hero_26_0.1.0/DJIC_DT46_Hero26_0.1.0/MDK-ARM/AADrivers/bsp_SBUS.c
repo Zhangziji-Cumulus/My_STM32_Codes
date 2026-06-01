@@ -225,7 +225,7 @@ static void SBUS_SafeReset(void) {
 
 /**
  * @brief SBUS UART IDLE 中断处理函数
- * @note 需在 USARTx_IRQHandler 中调用
+ * @note 需在 USARTx_IRQHandler 中调用(目前写在USART3_IRQHandler)
  */
 void SBUS_UART_IRQHandler(void) {
     if (__HAL_UART_GET_FLAG(sbusHuart, UART_FLAG_IDLE) != RESET) {

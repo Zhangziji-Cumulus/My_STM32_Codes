@@ -3,12 +3,13 @@
 
 /* 系统相关 */
 
-#define AUTO_TASK_TIME_MS 1     //自动任务系统循环时间 
+#define AUTO_TASK_TIME_MS 10     //自动任务系统循环时间 
 
 //串口句柄
 #define AUTO_USART_HANDLE       huart1    //串口使用到的句柄
 
 #define AUTO_USART_HEADER       0x5A      //串口数据包头
+#define AUTO_USART_TAIL         0x7E      //串口数据包尾
 
 /* 自瞄算法相关 */
 
@@ -16,7 +17,7 @@
 #define AUTOAIM_ENEMY_COLOR_RED       0     //红色
 #define AUTOAIM_ENEMY_COLOR_BLUE      1     //蓝色
 
-#define AUTOAIM_ENEMY_COLOR AUTOAIM_ENEMY_COLOR_RED //默认红色
+#define AUTOAIM_ENEMY_COLOR AUTOAIM_ENEMY_COLOR_BLUE 
 
 //开关自瞄宏
 #define AUTOAIM_OFF     0       //关闭自瞄
@@ -26,6 +27,6 @@
 #define AUTOAIM_WEIGHT_AUTO         80  
 #define AUTOAIM_WEIGHT_MANUAL      (100 - AUTOAIM_WEIGHT_AUTO)
 
-
+void AutoAim_UART_IRQHandler(void);//自瞄串口中断处理函数
 
 #endif // AUTO_CONFIG_H_

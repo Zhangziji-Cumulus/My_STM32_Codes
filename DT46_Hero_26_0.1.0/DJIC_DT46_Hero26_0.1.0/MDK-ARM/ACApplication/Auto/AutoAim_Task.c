@@ -1,28 +1,32 @@
-#include "Auto_Task.h"
+#include "AutoAim_Task.h"
 
 //** #################################################################################################### **//
 //** ======================================= 声明弱定义函数 ============================================== **//
 //** #################################################################################################### **//
 
 __weak void AutoAim_Init(void);
-__weak void AutoNavigation_Init(void);
-
+__weak void AutoAim_UpdateTx(void);
+__weak void AutoAim_SendData(void);
 //** #################################################################################################### **//
 //** ========================================= 任务函数 ================================================= **//
 //** #################################################################################################### **//
 
-static UBaseType_t remain_AutoTask;
-__attribute__((used)) void AutoTask(void *argument)
+static UBaseType_t remain_AutoAimTask;
+__attribute__((used)) void AutoAimTask(void *argument)
 {
   //初始化地盘
   AutoAim_Init();
-  AutoNavigation_Init();
 
   for(;;)
   {	
+    //自瞄更新下位机发送给上位机数据
+    AutoAim_UpdateTx();
+
+    //自瞄发送数据函数
+    AutoAim_SendData();
     
     //=============================== 剩余栈检测 ===============================//
-	remain_AutoTask = uxTaskGetStackHighWaterMark(NULL);
+	remain_AutoAimTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(AUTO_TASK_TIME_MS);
   }
 }
@@ -31,15 +35,20 @@ __attribute__((used)) void AutoTask(void *argument)
 //** ======================================== 弱定义任务函数 ============================================= **//
 //** #################################################################################################### **//
 
-
 //自瞄初始化
 __weak void AutoAim_Init(void)
 {
 
 }
 
-//自动导航初始化
-__weak void AutoNavigation_Init(void)
+//自瞄更新下位机发送给上位机数据
+__weak void AutoAim_UpdateTx(void)
+{
+
+}
+
+//自瞄发送数据函数
+__weak void AutoAim_SendData(void)
 {
 
 }

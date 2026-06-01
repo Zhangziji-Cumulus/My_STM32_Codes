@@ -2259,16 +2259,6 @@
               <FilePath>.\ACApplication\Auto\Auto_Config.h</FilePath>
             </File>
             <File>
-              <FileName>Auto_Task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ACApplication\Auto\Auto_Task.c</FilePath>
-            </File>
-            <File>
-              <FileName>Auto_Task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ACApplication\Auto\Auto_Task.h</FilePath>
-            </File>
-            <File>
               <FileName>AutoAim.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ACApplication\Auto\AutoAim.c</FilePath>
@@ -2297,6 +2287,16 @@
               <FileName>AutoShooting.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Auto\AutoShooting.h</FilePath>
+            </File>
+            <File>
+              <FileName>AutoAim_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ACApplication\Auto\AutoAim_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>AutoAim_Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ACApplication\Auto\AutoAim_Task.h</FilePath>
             </File>
           </Files>
         </Group>
