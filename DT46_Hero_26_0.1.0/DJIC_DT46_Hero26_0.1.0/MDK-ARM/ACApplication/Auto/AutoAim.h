@@ -45,7 +45,7 @@ typedef struct
     float IMU_Yaw;        // 4
 
     int32_t Match;        // 4
-    
+
 } AutoAim_Tx_t;
 // 总大小：
 // 1+1+1+1 = 4
@@ -79,6 +79,11 @@ typedef struct
 
 }AutoAim_Instance_t;
 
+typedef struct{
+    float Yaw;
+    float Pitch;
+    uint8_t FireOK;
+}AutoAim_Ctrl_t;
 
 /* 纯整数 int16_t 自瞄+手动融合函数 */
 int16_t AutoAim_WeightFusion_Int16(int16_t manual, int16_t auto_val, uint8_t aim_valid, int16_t min_out, int16_t max_out);

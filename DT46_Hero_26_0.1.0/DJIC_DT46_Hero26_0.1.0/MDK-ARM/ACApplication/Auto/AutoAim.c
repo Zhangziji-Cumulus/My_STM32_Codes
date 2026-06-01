@@ -2,7 +2,8 @@
 
 #if(AutoAim_IFOPEN)
 
-AutoAim_Instance_t  AutoAim_Instance;
+static AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
+static AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
 //** #################################################################################################### **//
 //** ========================================= 对外函数 ================================================= **//
 //** #################################################################################################### **//
@@ -83,7 +84,10 @@ float AutoAim_WeightFusion_Float(float manual, float auto_val, uint8_t aim_valid
 //** ============================= 获取自瞄控制量 ==================================== **//
 //** ================================================================================ **//
 
-
+const AutoAim_Ctrl_t* AutoAim_Ctrl_Get_point(void)
+{
+    return &AutoAim_Ctrl;
+}
 
 //** #################################################################################################### **//
 //** ======================================= 上下位机通信 ================================================ **//
@@ -100,7 +104,7 @@ void AutoAim_Init(void)
     // 启动DMA接收，数据存入 Rx_Buff
     HAL_UART_Receive_DMA(&AUTO_USART_HANDLE, AutoAim_Instance.Rx_Buff, sizeof(AutoAim_Rx_t));
 
-		AutoAim_Instance.Tx_Done = 1;
+	AutoAim_Instance.Tx_Done = 1;
 	
     AutoAim_Instance.Tx.Frame_head = AUTO_USART_HEADER;
     AutoAim_Instance.Tx.Enemy_Color = AUTOAIM_ENEMY_COLOR;  
@@ -145,14 +149,6 @@ void AutoAim_TxCpltCallback(void)
     AutoAim_Instance.Tx_Done = 1;
 }
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart == &huart1)
-    {
-        AutoAim_TxCpltCallback();
-    }
-}
-
 //** ================================================================================ **//
 //** ============================= 从上位机接受并解析 ================================ **//
 //** ================================================================================ **//
@@ -170,6 +166,11 @@ void AutoAim_ReceiveProcess(void)
     if(rx_buf.Frame_head != 0x5A)
         return;
 		AutoAim_Instance.Rx =rx_buf;
+
+    //更新自瞄的控制量
+    AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw; 
+    AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
+    AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
 }
 
 //** ------------------------------------------------------------ **//
