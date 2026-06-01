@@ -189,12 +189,12 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>AutoAim_Instance,0x0A</ItemText>
+          <ItemText>RC_Ctl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rx_buf,0x10</ItemText>
+          <ItemText>CMD</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -1778,7 +1778,7 @@
 
   <Group>
     <GroupName>ACApplication/Auto</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

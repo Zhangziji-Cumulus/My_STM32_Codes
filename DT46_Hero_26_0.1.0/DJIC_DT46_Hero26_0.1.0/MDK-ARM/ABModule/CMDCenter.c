@@ -52,22 +52,25 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
       if(CMD.ctrl == REMOTE_MODE)
       {
         //移动模式
-        if(RC_Ctl->Switch.S2_L == HOTRC_SWITCH_UP)
+        if(RC_Ctl->Switch.S3_R == HOTRC_SWITCH_DOWN)
         {
           CMD.ctrl = STOP_MODE;
         }
 
         if(RC_Ctl->Switch.S3_R == HOTRC_SWITCH_MID)
         {
-          CMD.Move = Spin_CW;
-        }
-        else if(RC_Ctl->Switch.S3_R == HOTRC_SWITCH_DOWN)
-        {
-          CMD.Move = Spin_CCW;
-        }
-        else
-        {
           CMD.Move = Normal;
+        }
+        else if(RC_Ctl->Switch.S3_R == HOTRC_SWITCH_UP)
+        {
+          if(RC_Ctl->Knob.L_state == HOTRC_KNOB_R)
+          {
+              CMD.Move = Spin_CW;
+          }
+          else
+          {
+              CMD.Move = Spin_CCW;
+          }
         }
 
         //底盘移动指令
@@ -99,13 +102,24 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
           CMD.Shooting.Load = OFF;
         }
         //打开摩擦轮
-        if(RC_Ctl->Switch.S2_R == HOTRC_SWITCH_DOWN)
+        if(RC_Ctl->Switch.S2_L == HOTRC_SWITCH_DOWN)
         {
           CMD.Shooting.Friction = ON;
         }
         else
         {
           CMD.Shooting.Friction = OFF;
+        }
+
+        //自动控制相关
+        if(RC_Ctl->Switch.S2_R == HOTRC_SWITCH_DOWN)
+        {
+          CMD.Auto.Aim = ON;
+        }
+        else
+        {
+          CMD.Auto.Aim = OFF;
+
         }
 
       }

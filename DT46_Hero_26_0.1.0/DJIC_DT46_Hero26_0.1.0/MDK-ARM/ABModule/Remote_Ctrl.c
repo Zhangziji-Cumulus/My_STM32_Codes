@@ -33,7 +33,29 @@ static uint8_t Switch_Set(uint16_t ChValue,uint16_t min_Val,uint16_t mid_Val,uin
 		{
 			return 0; //未识别、错误输入
 		}
+}
 
+static uint8_t Knob_Set(uint16_t ChValue,uint16_t min_Val,uint16_t mid_Val,uint16_t max_Val)
+{
+		if(ChValue >= min_Val && ChValue <= max_Val)
+		{
+			if(ChValue > (min_Val - 200) && ChValue < (mid_Val - 200))
+			{
+				return 1;
+			}
+			else if(ChValue > (mid_Val - 200) && ChValue < (mid_Val + 200))
+			{
+				return 2;
+			}
+			else if(ChValue > (mid_Val + 200) && ChValue < (max_Val + 200))
+			{
+				return 3;
+			}
+		}
+		else
+		{
+			return 0; //未识别、错误输入
+		}
 }
 
 //** #################################################################################################### **//
@@ -59,8 +81,12 @@ static void HORRC_HT10A_GET_Ctl(void)
 		RC_Ctl.Switch.S3_L = Switch_Set(sbusData->channels[4],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 		RC_Ctl.Switch.S3_R = Switch_Set(sbusData->channels[7],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 		
-		RC_Ctl.Knob.KL = sbusData->channels[8];
-	    RC_Ctl.Knob.KR = sbusData->channels[9];
+		//返回旋钮线性值
+		RC_Ctl.Knob.L_linear = sbusData->channels[8];
+	  RC_Ctl.Knob.R_linear = sbusData->channels[9];
+		//返回旋钮离散值
+		RC_Ctl.Knob.L_state = Knob_Set(sbusData->channels[8],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+		RC_Ctl.Knob.R_state = Knob_Set(sbusData->channels[9],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 
 		RC_Ctl.Flag.ch17 = sbusData->ch17;
 		RC_Ctl.Flag.ch18 = sbusData->ch18;

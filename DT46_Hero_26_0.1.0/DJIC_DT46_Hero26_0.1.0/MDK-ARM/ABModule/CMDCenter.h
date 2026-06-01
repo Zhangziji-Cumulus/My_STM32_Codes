@@ -74,6 +74,11 @@ typedef struct CMD_t{
         ONOFF_State_e Friction;//摩擦轮开启
     }Shooting;
 
+    struct{
+        ONOFF_State_e Aim;
+        ONOFF_State_e Navigation;
+    }Auto;
+
 }CMD_t;
 
 //这个要放在CMD_t 后面，因为该头文件要包含CMD_t

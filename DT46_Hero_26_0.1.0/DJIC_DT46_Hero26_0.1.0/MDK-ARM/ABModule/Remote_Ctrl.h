@@ -28,9 +28,14 @@
 
 //#define HOTRC_RANGE 600 //接受到的数据的范围
 
+//拨杆的位置
 #define HOTRC_SWITCH_UP    1
 #define HOTRC_SWITCH_MID   2
 #define HOTRC_SWITCH_DOWN  3
+//旋钮的位置
+#define HOTRC_KNOB_L    1		//旋钮左
+#define HOTRC_KNOB_M    2		//旋钮中
+#define HOTRC_KNOB_R    3		//旋钮右
 
 typedef struct{
 	
@@ -52,8 +57,11 @@ typedef struct{
 	
 	//旋钮
 	struct{
-		short KL;//左边旋钮
-		short KR;//右边旋钮
+		short 		L_linear;	//左边旋钮，线性值
+		uint8_t 	L_state;	//左边旋钮，离散值
+
+		short 		R_linear;	//右边旋钮，线性值
+		uint8_t 	R_state;	//右边旋钮，离散值
 	}Knob;
 
 	//标志位
