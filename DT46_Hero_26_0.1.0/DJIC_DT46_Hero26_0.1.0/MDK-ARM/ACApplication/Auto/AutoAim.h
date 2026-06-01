@@ -45,12 +45,7 @@ typedef struct
     float IMU_Yaw;        // 4
 
     int32_t Match;        // 4
-
-    uint8_t Frame_Tail;   // 帧尾（你要加的）
-    uint8_t pad0;         // 【填充】为了4字节对齐
-    uint8_t pad1;         // 【填充】
-    uint8_t pad2;         // 【填充】
-
+    
 } AutoAim_Tx_t;
 // 总大小：
 // 1+1+1+1 = 4

@@ -103,7 +103,6 @@ void AutoAim_Init(void)
 		AutoAim_Instance.Tx_Done = 1;
 	
     AutoAim_Instance.Tx.Frame_head = AUTO_USART_HEADER;
-    AutoAim_Instance.Tx.Frame_Tail = AUTO_USART_TAIL;
     AutoAim_Instance.Tx.Enemy_Color = AUTOAIM_ENEMY_COLOR;  
     
 }

@@ -9,7 +9,7 @@
 #define AUTO_USART_HANDLE       huart1    //串口使用到的句柄
 
 #define AUTO_USART_HEADER       0x5A      //串口数据包头
-#define AUTO_USART_TAIL         0x7E      //串口数据包尾
+//#define AUTO_USART_TAIL         0x6B      //串口数据包尾
 
 /* 自瞄算法相关 */
 
