@@ -83,6 +83,12 @@
 #define BOARD_MODE  BOARD_MODE_DUAL
 
 /* 陀螺仪类 */
+
+//陀螺仪数组序号
+#define IMU_INDEX_YAW      0
+#define IMU_INDEX_PITCH    2
+#define IMU_INDEX_ROLL     1
+
 //陀螺仪极性定义
 #define GYRO_NINVERT    0   // 不反转（原值）
 #define GYRO_INVERT     1   // 反转（×-1）
