@@ -68,13 +68,15 @@ typedef struct
 
     // 通信接收
     AutoAim_Rx_t Rx;
-
-    uint8_t Rx_Buff[sizeof(AutoAim_Rx_t)];
+    // 通信接收缓冲区
+    AutoAim_Rx_t Rx_Buf[2];    //双DMA接收缓冲
+    uint8_t Rx_ActiveBuf;      //DMA当前使用缓存索引
+    AutoAim_Rx_t Rx_ParseBuf;  //独立解析缓存
 
     // 通信发送
-    AutoAim_Tx_t Tx;
-    uint8_t Tx_Buff[sizeof(AutoAim_Tx_t)];
-    uint8_t Tx_Done;//已经发送一组数据标志位
+    AutoAim_Tx_t Tx;    
+    uint8_t Tx_Buff[sizeof(AutoAim_Tx_t)];  //发送缓存
+    uint8_t Tx_Done;    //已经发送一组数据标志位
 
 }AutoAim_Instance_t;
 
@@ -89,7 +91,5 @@ typedef struct{
 int16_t AutoAim_WeightFusion_Int16(int16_t manual, int16_t auto_val, uint8_t aim_valid, int16_t min_out, int16_t max_out);
 /* 浮点型 float 自瞄+手动融合函数*/
 float AutoAim_WeightFusion_Float(float manual, float auto_val, uint8_t aim_valid, float min_out, float max_out);
-/* DMA发送完成回调 */ 
-void AutoAim_TxCpltCallback(void);
 
 #endif // AUTOAIM_H_

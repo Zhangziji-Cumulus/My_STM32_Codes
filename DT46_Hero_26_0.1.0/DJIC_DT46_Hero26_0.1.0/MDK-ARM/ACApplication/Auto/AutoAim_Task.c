@@ -7,6 +7,7 @@
 __weak void AutoAim_Init(void);
 __weak void AutoAim_UpdateTx(void);
 __weak void AutoAim_SendData(void);
+__weak void AutoAim_UpdateRx(void);
 //** #################################################################################################### **//
 //** ========================================= 任务函数 ================================================= **//
 //** #################################################################################################### **//
@@ -24,6 +25,9 @@ __attribute__((used)) void AutoAimTask(void *argument)
 
     //自瞄发送数据函数
     AutoAim_SendData();
+
+    //更新自瞄接受数据
+    AutoAim_UpdateRx();
     
     //=============================== 剩余栈检测 ===============================//
 	remain_AutoAimTask = uxTaskGetStackHighWaterMark(NULL);
@@ -49,6 +53,12 @@ __weak void AutoAim_UpdateTx(void)
 
 //自瞄发送数据函数
 __weak void AutoAim_SendData(void)
+{
+
+}
+
+//重置匹配值
+__weak void AutoAim_UpdateRx(void)
 {
 
 }
