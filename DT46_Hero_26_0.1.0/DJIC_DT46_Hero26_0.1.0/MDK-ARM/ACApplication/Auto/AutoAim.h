@@ -91,5 +91,7 @@ typedef struct{
 int16_t AutoAim_WeightFusion_Int16(int16_t manual, int16_t auto_val, uint8_t aim_valid, int16_t min_out, int16_t max_out);
 /* 浮点型 float 自瞄+手动融合函数*/
 float AutoAim_WeightFusion_Float(float manual, float auto_val, uint8_t aim_valid, float min_out, float max_out);
+/* 获取自瞄控制参数 */
+const AutoAim_Ctrl_t* AutoAim_Ctrl_Get_point(void);
 
 #endif // AUTOAIM_H_

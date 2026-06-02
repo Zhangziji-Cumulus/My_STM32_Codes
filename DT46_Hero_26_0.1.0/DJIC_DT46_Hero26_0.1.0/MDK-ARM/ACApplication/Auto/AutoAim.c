@@ -206,7 +206,7 @@
 
 #include "AutoAim.h"
 
-#if(AutoAim_IFOPEN)
+#if(AUTOAIM_IFOPEN)
 
 static AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
 static AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
@@ -329,7 +329,7 @@ void AutoAim_ReceiveProcess(void)
     AutoAim_Rx_t *rx_buf = &AutoAim_Instance.Rx_ParseBuf;
 
     // 帧头校验
-    if(rx_buf->Frame_head != 0x5A)
+    if(rx_buf->Frame_head != AUTO_USART_HEADER)
         return;
     AutoAim_Instance.Rx = *rx_buf;
 }
@@ -337,17 +337,20 @@ void AutoAim_ReceiveProcess(void)
 void AutoAim_UpdateRx(void)
 {
     ResetMatch();
- 
-    AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw;
-    AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
-    AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
+
     //在线状态暂时设置为0
     if(AutoAim_Instance.Rx.Match != 0)
     {
+        AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw;
+        AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
+        AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
         AutoAim_Ctrl.IsOnline = 1;
     }
     else
     {
+        AutoAim_Ctrl.Yaw = 0;
+        AutoAim_Ctrl.Pitch = 0;
+        AutoAim_Ctrl.FireOK = 0;
         AutoAim_Ctrl.IsOnline = 0;
     }
 }

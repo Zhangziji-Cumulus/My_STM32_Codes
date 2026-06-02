@@ -81,6 +81,13 @@ void Gimbal_Update(void)
     Gimbal_Instance.MotorData.Yaw = Gimbal_Instance.MotorData.Ptr[GIMBAL_MOTOR_ID_FBK_YAW];
     Gimbal_Instance.MotorData.Pitch = Gimbal_Instance.MotorData.Ptr[GIMBAL_MOTOR_ID_FBK_PITCH];
 
+    //获取自瞄控制数据
+#if(AUTOAIM_IFOPEN)
+
+        Gimbal_Instance.Auto.Aim = *AutoAim_Ctrl_Get_point();
+
+#endif
+
 }
 //异常处理函数
 void Gimbal_HandleError(void)
@@ -111,7 +118,6 @@ void Gimbal_CtrlCalc(void)
 {
     Gimbal_YawStable_Calc();
     Gimbal_PitchStable_Calc();
-
 }
 //发送控制指令
 void Gimbal_SendCmd(void)
@@ -165,6 +171,42 @@ void Gimbal_SendCmd(void)
 
 static void Gimbal_Update_Target(void)
 {
+#if(AUTOAIM_IFOPEN)
+    /* 更新云台Yaw Pitch角度的目标值 */
+
+    float ManualYaw = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Yaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_YAW,GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
+    float AutoYaw   = Gimbal_Instance.Auto.Aim.Yaw;
+	
+    float FusionYaw = AutoAim_WeightFusion_Float(ManualYaw,
+                                              AutoYaw,
+                                              Gimbal_Instance.Auto.Aim.IsOnline,
+                                             -GIMBAL_MAX_ANGLE_STEP_DEG_YAW,
+                                              GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
+
+    if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
+    {
+        Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - FusionYaw;
+    }
+    else
+    {
+        Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
+    }
+        
+    //限幅角度-180 ~ 180 循环模式
+    Gimbal_Instance.Calc.Yaw.T_Angle = MyMath_Limit_Float(
+                                            Gimbal_Instance.Calc.Yaw.T_Angle,
+                                            -180.00f,180.00f,1);
+
+    float AddPitch = Gimbal_Instance.CMD.Gimbal.Pitch;
+    Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle
+                                        - MyMath_Map_Range_Float(AddPitch,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
+    //限幅俯仰角，非循环模式
+    Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
+                                            Gimbal_Instance.Calc.Pitch.T_Angle,
+                                            -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
+#endif
+
+#if(AUTOAIM_IFOPEN == AUTOAIM_NOPEN)
 
     /* 更新云台Yaw Pitch角度的目标值 */
     float AddYaw = Gimbal_Instance.CMD.Gimbal.Yaw;
@@ -182,6 +224,8 @@ static void Gimbal_Update_Target(void)
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
+
+#endif
 
 }
 

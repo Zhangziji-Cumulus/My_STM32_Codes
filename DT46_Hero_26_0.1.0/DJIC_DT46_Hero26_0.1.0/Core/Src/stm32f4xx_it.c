@@ -288,9 +288,9 @@ void TIM2_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-	
+#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
 	AutoAim_UART_IRQHandler();
-
+#endif
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */

@@ -52,6 +52,12 @@ typedef struct
 
     }Calc;
 
+    //自瞄结构体
+    struct{
+
+        AutoAim_Ctrl_t Aim; //自瞄控制结构体
+
+    }Auto;
 }Gimbal_Instance_t;
 
 #endif
