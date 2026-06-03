@@ -287,6 +287,7 @@ PID_HandleTypeDef Dial_Ex;
 //** #################################################################################################### **//
 
 static void Dial_Update_Target(void);
+static void Dial_Load_StateMachine(void);
 
 //** #################################################################################################### **//
 //** ====================================== 对外若定义覆盖函数 =========================================== **//
@@ -297,12 +298,14 @@ void Shooting_Init(void)
 {
     //初始模式STOP
     Shooting_Instance.CMD.ctrl = STOP_MODE;
+    //初始化拨盘状态
+    Shooting_Instance.Logic.LoadState = LOAD_STOP;
 
     PID_Init(&Dial_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
 	//拨盘PID
-	PID_Init(&Dial_In,1.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
-	PID_Init(&Dial_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&Dial_In,1.1f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&Dial_Ex,50.0f,0.003f,50.0f,-10000,10000,-1000.0f, 1000.0f);
 
 }          
 
@@ -333,18 +336,27 @@ void Shooting_SetMode(void)
 //更新目标量
 void Shooting_RefreshTarget(void)
 {
+    Dial_Load_StateMachine();
     Dial_Update_Target();
 }
 
 //计算控制量
 void Shooting_CtrlCalc(void)
 {
-    Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calculate(&Dial_In,
-                                                                &Dial_Ex,
-                                                                Shooting_Instance.Calc.Dial.T_rpm,
-                                                                Shooting_Instance.DJI_Motordata.DIAL.current_ma,
-                                                                Shooting_Instance.DJI_Motordata.DIAL.speed_rpm,
-                                                                DIAL_PID_THRESHOLD);
+    if(Shooting_Instance.Logic.LoadState == LOAD_ING)
+    {
+        Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calculate(&Dial_In,
+                                                                    &Dial_Ex,
+                                                                    Shooting_Instance.Calc.Dial.T_rpm,
+                                                                    Shooting_Instance.DJI_Motordata.DIAL.current_ma,
+                                                                    Shooting_Instance.DJI_Motordata.DIAL.speed_rpm,
+                                                                    DIAL_PID_THRESHOLD);
+    }
+    else if((Shooting_Instance.Logic.LoadState == LOAD_STOP) && (Shooting_Instance.Logic.LoadState == LOAD_WAIT))
+    {
+        Shooting_Instance.Calc.Dial.Ctrl_Vel = 0;
+    }
+
 }
 
 //发送控制指令
@@ -393,16 +405,80 @@ void Shooting_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
+//更新拨盘目标量
 static void Dial_Update_Target(void)
 {
-    if(Shooting_Instance.CMD.Shooting.Load == ON)
+    if(Shooting_Instance.Logic.LoadState == LOAD_ING)
     {
         Shooting_Instance.Calc.Dial.T_Speed = DIAL_MAX_SPEED_M_S;
         Shooting_Instance.Calc.Dial.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Dial.T_Speed,(DIAL_RADIUS_MM / 1000),DIAL_RATIO);
     }
-    else
+    else if((Shooting_Instance.Logic.LoadState == LOAD_STOP) || (Shooting_Instance.Logic.LoadState == LOAD_WAIT))
     {
         Shooting_Instance.Calc.Dial.T_rpm = 0;
+    }
+}
+
+//检测拨盘状态并设置标志
+static void Dial_Load_StateMachine(void)
+{
+    // 获取当前状态
+    LOAD_State_e currState = Shooting_Instance.Logic.LoadState;
+    // 获取当前状态
+    static uint32_t LoadOK_tick = 0;
+
+    switch(currState)
+    {
+        // ====================== 停止状态 ======================
+        case LOAD_STOP:
+            // 触发条件：装弹命令有效
+            if(Shooting_Instance.CMD.Shooting.Load == ON)
+            {
+                // 进入装弹中
+                Shooting_Instance.Logic.LoadState = LOAD_ING;
+            }
+            break;
+
+        // ====================== 装弹中 ======================
+        case LOAD_ING:
+            // 条件1：拨盘转速极低
+            // 条件2：电机电流 >=5000mA（堵转/到位）
+            if((Shooting_Instance.DJI_Motordata.DIAL.speed_rpm <= 10) &&
+               (Shooting_Instance.DJI_Motordata.DIAL.current_ma >= 5000))
+            {
+                // 装弹完成
+                Shooting_Instance.Logic.LoadState = LOAD_OK;
+                LoadOK_tick = HAL_GetTick();
+            }
+            // 中途命令取消 → 回到停止
+            else if(Shooting_Instance.CMD.Shooting.Load == OFF)
+            {
+                Shooting_Instance.Logic.LoadState = LOAD_STOP;
+            }
+            break;
+
+        // ====================== 装弹完成 ======================
+        case LOAD_OK:
+            //当装填完毕持续时间为500ms时等待
+            if(HAL_GetTick() - LoadOK_tick >= 500)
+            {
+                Shooting_Instance.Logic.LoadState = LOAD_WAIT;
+            }
+            break;
+
+        // ====================== 等待复位 ======================
+        case LOAD_WAIT:
+            // 命令取消 → 回到停止，完成一次完整流程
+            if(Shooting_Instance.CMD.Shooting.Load == OFF)
+            {
+                Shooting_Instance.Logic.LoadState = LOAD_STOP;
+            }
+            break;
+
+        // ====================== 异常处理 ======================
+        default:
+            Shooting_Instance.Logic.LoadState = LOAD_STOP;
+            break;
     }
 }
 
