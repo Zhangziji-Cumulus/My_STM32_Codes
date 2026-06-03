@@ -171,13 +171,13 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 /* 推杆速度相关 */
 
-#define PUSHROD_ACC            2000         //RPM/s
-#define PUSHROD_DEC            2000         //RPM/s
+#define PUSHROD_ACC            10000         //RPM/s
+#define PUSHROD_DEC            9000         //RPM/s
 
 #define PUSHROD_CW             0          //方向，顺时针转
 #define PUSHROD_CCW            9          //方向，逆时针转
 
-#define PUSHROD_MAX_SPEED_RPM  1500       //要计算成转速rpm/s(最大3000转)
+#define PUSHROD_MAX_SPEED_RPM  5000       //要计算成转速rpm/s(最大3000转)
 
 /* 推杆位置、行程 */
 
@@ -198,7 +198,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 /* 电流检测相关 */
 
-#define PUSHROD_CURRENT_MAX        1000                 //最大电流(mA)
+#define PUSHROD_CURRENT_MAX        1500                 //最大电流(mA)
 
 /* 推杆电机控制 */
 
