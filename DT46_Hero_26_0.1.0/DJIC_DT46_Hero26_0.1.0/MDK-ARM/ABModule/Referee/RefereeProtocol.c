@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#define MIN(a, b)  ((a) < (b) ? (a) : (b))
+
 /************************* CRC表 *************************/
 const uint8_t CRC8_INIT = 0xFF;
 const uint8_t CRC8_TAB[256] =
@@ -220,19 +222,20 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
     {
     /***************** 基础比赛数据 *****************/
     case CMD_GAME_STATUS:
-        memcpy(&all->_game_status, frame->data, sizeof(game_status_t));
+        memcpy(&all->_game_status, frame->data, MIN(frame->header.data_len, sizeof(all->_game_status)));
         all->p_game_status = &all->_game_status;
         all->update.bit.game_status_upd = 1;
         break;
 
     case CMD_GAME_RESULT:
-        memcpy(&all->_game_result, frame->data, sizeof(game_result_t));
+        memcpy(&all->_game_result, frame->data, MIN(frame->header.data_len, sizeof(all->_game_result)));
         all->p_game_result = &all->_game_result;
         all->update.bit.game_result_upd = 1;
         break;
 
     case CMD_ROBOT_HP_DATA:
-        memcpy(&all->_ally_hp, frame->data, sizeof(game_robot_HP_t));
+        memset(&all->_ally_hp, 0, sizeof(all->_ally_hp));
+        memcpy(&all->_ally_hp, frame->data, MIN(frame->header.data_len, sizeof(all->_ally_hp)));
         all->p_ally_hp = &all->_ally_hp;
         all->update.bit.ally_hp_upd = 1;
         break;
@@ -244,38 +247,40 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
         break;
 
     case CMD_REF_WARNING:
-        memcpy(&all->_ref_warning, frame->data, sizeof(referee_warning_t));
+        memcpy(&all->_ref_warning, frame->data, MIN(frame->header.data_len, sizeof(all->_ref_warning)));
         all->p_ref_warning = &all->_ref_warning;
         all->update.bit.ref_warn_upd = 1;
         break;
 
     case CMD_DART_INFO:
-        memcpy(&all->_dart_info, frame->data, sizeof(dart_info_t));
+        memcpy(&all->_dart_info, frame->data, MIN(frame->header.data_len, sizeof(all->_dart_info)));
         all->p_dart_info = &all->_dart_info;
         all->update.bit.dart_info_upd = 1;
         break;
 
     /***************** 本机机器人数据 *****************/
     case CMD_ROBOT_STATUS:
-        memcpy(&all->_robot_status, frame->data, sizeof(robot_status_t));
+        memset(&all->_robot_status, 0, sizeof(all->_robot_status));
+        memcpy(&all->_robot_status, frame->data, MIN(frame->header.data_len, sizeof(all->_robot_status)));
         all->p_robot_status = &all->_robot_status;
         all->update.bit.robot_status_upd = 1;
         break;
 
     case CMD_POWER_HEAT_DATA:
-        memcpy(&all->_power_heat, frame->data, sizeof(power_heat_data_t));
+        memcpy(&all->_power_heat, frame->data, MIN(frame->header.data_len, sizeof(all->_power_heat)));
         all->p_power_heat = &all->_power_heat;
         all->update.bit.power_heat_upd = 1;
         break;
 
     case CMD_ROBOT_POS:
-        memcpy(&all->_robot_pos, frame->data, sizeof(robot_pos_t));
+        memcpy(&all->_robot_pos, frame->data, MIN(frame->header.data_len, sizeof(all->_robot_pos)));
         all->p_robot_pos = &all->_robot_pos;
         all->update.bit.robot_pos_upd = 1;
         break;
 
     case CMD_ROBOT_BUFF:
-        memcpy(&all->_buff, frame->data, sizeof(robot_buff_t));
+        memset(&all->_buff, 0, sizeof(all->_buff));
+        memcpy(&all->_buff, frame->data, MIN(frame->header.data_len, sizeof(all->_buff)));
         all->p_buff = &all->_buff;
         all->update.bit.buff_upd = 1;
         break;
@@ -287,13 +292,13 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
         break;
 
     case CMD_SHOOT_DATA:
-        memcpy(&all->_shoot_data, frame->data, sizeof(shoot_data_t));
+        memcpy(&all->_shoot_data, frame->data, MIN(frame->header.data_len, sizeof(all->_shoot_data)));
         all->p_shoot_data = &all->_shoot_data;
         all->update.bit.shoot_upd = 1;
         break;
 
     case CMD_PROJECTILE_ALLOW:
-        memcpy(&all->_bullet_data, frame->data, sizeof(projectile_allowance_t));
+        memcpy(&all->_bullet_data, frame->data, MIN(frame->header.data_len, sizeof(all->_bullet_data)));
         all->p_bullet_data = &all->_bullet_data;
         all->update.bit.bullet_upd = 1;
         break;
@@ -305,13 +310,13 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
         break;
 
     case CMD_DART_CLIENT_CMD:
-        memcpy(&all->_dart_client_cmd, frame->data, sizeof(dart_client_cmd_t));
+        memcpy(&all->_dart_client_cmd, frame->data, MIN(frame->header.data_len, sizeof(all->_dart_client_cmd)));
         all->p_dart_client_cmd = &all->_dart_client_cmd;
         all->update.bit.dart_client_upd = 1;
         break;
 
     case CMD_GROUND_ROBOT_POS:
-        memcpy(&all->_ground_pos, frame->data, sizeof(ground_robot_position_t));
+        memcpy(&all->_ground_pos, frame->data, MIN(frame->header.data_len, sizeof(all->_ground_pos)));
         all->p_ally_ground_pos = &all->_ground_pos;
         all->update.bit.ally_ground_upd = 1;
         break;
@@ -323,13 +328,14 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
         break;
 
     case CMD_SENTRY_AUTO_INFO:
-        memcpy(&all->_sentry_sync, frame->data, sizeof(sentry_info_t));
+        memset(&all->_sentry_sync, 0, sizeof(all->_sentry_sync));
+        memcpy(&all->_sentry_sync, frame->data, MIN(frame->header.data_len, sizeof(all->_sentry_sync)));
         all->p_sentry_sync = &all->_sentry_sync;
         all->update.bit.sentry_sync_upd = 1;
         break;
 
     case CMD_RADAR_AUTO_INFO:
-        memcpy(&all->_radar_sync, frame->data, sizeof(radar_info_t));
+        memcpy(&all->_radar_sync, frame->data, MIN(frame->header.data_len, sizeof(all->_radar_sync)));
         all->p_radar_sync = &all->_radar_sync;
         all->update.bit.radar_sync_upd = 1;
         break;
@@ -337,7 +343,7 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
     /***************** 交互数据 *****************/
     case CMD_ROBOT_INTERACT:
     {
-        memcpy(&all->_robot_inter, frame->data, sizeof(robot_interaction_data_t));
+        memcpy(&all->_robot_inter, frame->data, MIN(frame->header.data_len, sizeof(all->_robot_inter)));
         all->p_robot_inter = &all->_robot_inter;
         all->update.bit.robot_inter_upd = 1;
         uint16_t sub_cmd = all->p_robot_inter->data_cmd_id;
@@ -358,19 +364,19 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
     }
 
     case CMD_MAP_CLICK_CMD:
-        memcpy(&all->_map_click, frame->data, sizeof(map_command_t));
+        memcpy(&all->_map_click, frame->data, MIN(frame->header.data_len, sizeof(all->_map_click)));
         all->p_map_click = &all->_map_click;
         all->update.bit.map_click_upd = 1;
         break;
 
     case CMD_CUSTOM_CTRL_CLIENT:
-        memcpy(&all->_mouse_key, frame->data, sizeof(custom_client_data_t));
+        memcpy(&all->_mouse_key, frame->data, MIN(frame->header.data_len, sizeof(all->_mouse_key)));
         all->p_mouse_key = &all->_mouse_key;
         all->update.bit.mouse_key_upd = 1;
         break;
 
     case CMD_SENTRY_PATH_DATA:
-        memcpy(&all->_sentry_path, frame->data, sizeof(map_data_t));
+        memcpy(&all->_sentry_path, frame->data, MIN(frame->header.data_len, sizeof(all->_sentry_path)));
         all->p_sentry_path = &all->_sentry_path;
         all->update.bit.sentry_path_upd = 1;
         break;

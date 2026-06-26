@@ -156,42 +156,52 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>INS_angle</ItemText>
+          <ItemText>g_ref_ins</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DJI_MFeedback_CAN1,0x0A</ItemText>
+          <ItemText>g_ref_data,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DJI_MFeedback_CAN2</ItemText>
+          <ItemText>all</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>BoardCRX</ItemText>
+          <ItemText>g_dbg_cmd_id</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>BoardGRX</ItemText>
+          <ItemText>g_dbg_data_len</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_In</ItemText>
+          <ItemText>g_dbg_unknown_cmd_id</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Dial_Ex</ItemText>
+          <ItemText>parser</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Shooting_Instance</ItemText>
+          <ItemText>all-&gt;_robot_status</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>parser</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\BaseMood\ABModule/Referee/RefereeProtocol.c\g_ref_data.p_robot_status-&gt;shooter_barrel_cooling_value</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

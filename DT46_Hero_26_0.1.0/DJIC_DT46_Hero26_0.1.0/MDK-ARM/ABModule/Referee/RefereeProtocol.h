@@ -219,7 +219,7 @@ typedef struct
     uint16_t shooter_barrel_cooling_value;  // 射击热量每秒冷却值
     uint16_t shooter_barrel_heat_limit;     // 射击热量上限
     uint16_t chassis_power_limit;           // 底盘功率上限
-    float    bullet_speed_limit;            // 射击初速度上限
+    //float    bullet_speed_limit;            // 射击初速度上限
     uint8_t  power_management_gimbal_output  : 1;  // bit0 gimble口 0=无输出 1=24V
     uint8_t  power_management_chassis_output : 1;  // bit1 chassis口
     uint8_t  power_management_shooter_output : 1;  // bit2 shooter口
@@ -386,10 +386,6 @@ typedef struct
     uint8_t password_6;                  // 密钥byte6
 } PACKED radar_cmd_t;
 
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-#pragma pack()
-#endif
-
 /************************* 全数据指针总结构体 *************************/
 typedef struct
 {
@@ -485,7 +481,11 @@ typedef struct
             uint32_t reserved            : 8;
         } bit;
     } update;
-} referee_all_data_t;
+} PACKED referee_all_data_t;
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#pragma pack()
+#endif
 
 /************************* 解析状态机 *************************/
 typedef enum

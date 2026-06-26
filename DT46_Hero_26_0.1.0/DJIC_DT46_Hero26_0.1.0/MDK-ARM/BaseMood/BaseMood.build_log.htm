@@ -27,10 +27,16 @@ Project File Date:  06/26/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
+compiling RefereeProtocol.c...
+ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+ABModule\Referee\RefereeProtocol.c(520): warning:  #1-D: last line of file ends without a newline
+  }
+ABModule\Referee\RefereeProtocol.c: 2 warnings, 0 errors
 compiling RefereeCenter.c...
 ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
   #define UART_PARITY_NONE             0U
-ABModule\Referee\RefereeProtocol.h(474): warning:  #1-D: last line of file ends without a newline
+ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
   #endif // REFEREEPROTOCOL_H_
 ABModule\Referee\RefereeCenter.h(17): warning:  #1-D: last line of file ends without a newline
   #endif // REFEREE_CENTER_H
@@ -65,10 +71,22 @@ ABModule\Referee\RefereeCenter.c(220): warning:  #1-D: last line of file ends wi
 ABModule\Referee\RefereeCenter.c(27): warning:  #550-D: variable "remain_RefereeTask"  was set but never used
   static UBaseType_t remain_RefereeTask;
 ABModule\Referee\RefereeCenter.c: 18 warnings, 0 errors
+compiling stm32f4xx_it.c...
+./ACApplication/Auto/AutoAim.h(97): warning:  #1-D: last line of file ends without a newline
+  #endif // AUTOAIM_H_
+.\ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
+  #define UART_PARITY_NONE             0U
+.\ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+.\ABModule\Referee\RefereeCenter.h(17): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREE_CENTER_H
+../Core/Src/stm32f4xx_it.c(308): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
+  	SBUS_UART_IRQHandler();
+../Core/Src/stm32f4xx_it.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=54480 RO-data=2276 RW-data=548 ZI-data=35740  
+Program Size: Code=55184 RO-data=2276 RW-data=548 ZI-data=36188  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 18 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 25 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -92,7 +110,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
