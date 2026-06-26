@@ -205,6 +205,18 @@ const osThreadAttr_t AutoAim_attributes = {
   .stack_size = sizeof(AutoBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
+/* Definitions for Referee */
+osThreadId_t RefereeHandle;
+uint32_t RefereeBuffer[ 128 ];
+osStaticThreadDef_t RefereeControlBlock;
+const osThreadAttr_t Referee_attributes = {
+  .name = "Referee",
+  .cb_mem = &RefereeControlBlock,
+  .cb_size = sizeof(RefereeControlBlock),
+  .stack_mem = &RefereeBuffer[0],
+  .stack_size = sizeof(RefereeBuffer),
+  .priority = (osPriority_t) osPriorityHigh,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -223,6 +235,7 @@ void DJIMotorCheckTask(void *argument);
 void ShootingPushRodTask(void *argument);
 void ShootingLoadTask(void *argument);
 void AutoAimTask(void *argument);
+void RefereeTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -295,6 +308,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of AutoAim */
   AutoAimHandle = osThreadNew(AutoAimTask, NULL, &AutoAim_attributes);
+
+  /* creation of Referee */
+  RefereeHandle = osThreadNew(RefereeTask, NULL, &Referee_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -530,6 +546,24 @@ __weak void AutoAimTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END AutoAimTask */
+}
+
+/* USER CODE BEGIN Header_RefereeTask */
+/**
+* @brief Function implementing the Referee thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_RefereeTask */
+__weak void RefereeTask(void *argument)
+{
+  /* USER CODE BEGIN RefereeTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END RefereeTask */
 }
 
 /* Private application code --------------------------------------------------*/

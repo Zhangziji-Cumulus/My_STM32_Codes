@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;.\ABModule\Referee</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2247,6 +2247,31 @@
               <FileName>ZDT_Firmware.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\ZDT\ZDT_Firmware.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ABModule/Referee</GroupName>
+          <Files>
+            <File>
+              <FileName>RefereeProtocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\Referee\RefereeProtocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>RefereeProtocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\Referee\RefereeProtocol.h</FilePath>
+            </File>
+            <File>
+              <FileName>RefereeCenter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\Referee\RefereeCenter.c</FilePath>
+            </File>
+            <File>
+              <FileName>RefereeCenter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\Referee\RefereeCenter.h</FilePath>
             </File>
           </Files>
         </Group>

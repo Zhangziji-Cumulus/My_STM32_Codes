@@ -130,6 +130,7 @@ extern "C" {
 /************************* 编译器字节对齐配置 *************************/
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #pragma pack(1)
+#define PACKED
 #elif defined(__GNUC__)
 #define PACKED __attribute__((packed))
 #else
