@@ -64,6 +64,7 @@ const uint16_t CRC16_TAB[256] =
 /************************* 全局数据 *************************/
 referee_all_data_t g_ref_data = {0};
 
+
 /************************* CRC8函数 *************************/
 uint8_t Get_CRC8_Check_Sum(uint8_t *pchMessage, uint32_t dwLength, uint8_t ucCRC8)
 {
@@ -219,114 +220,136 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
     {
     /***************** 基础比赛数据 *****************/
     case CMD_GAME_STATUS:
-        all->p_game_status = (game_status_t *)frame->data;
+        memcpy(&all->_game_status, frame->data, sizeof(game_status_t));
+        all->p_game_status = &all->_game_status;
         all->update.bit.game_status_upd = 1;
         break;
 
     case CMD_GAME_RESULT:
-        all->p_game_result = (game_result_t *)frame->data;
+        memcpy(&all->_game_result, frame->data, sizeof(game_result_t));
+        all->p_game_result = &all->_game_result;
         all->update.bit.game_result_upd = 1;
         break;
 
     case CMD_ROBOT_HP_DATA:
-        all->p_ally_hp = (game_robot_HP_t *)frame->data;
+        memcpy(&all->_ally_hp, frame->data, sizeof(game_robot_HP_t));
+        all->p_ally_hp = &all->_ally_hp;
         all->update.bit.ally_hp_upd = 1;
         break;
 
     case CMD_FIELD_EVENT:
-        all->p_field_event = frame->data;
+        memcpy(&all->_field_event, frame->data, sizeof(all->_field_event));
+        all->p_field_event = &all->_field_event;
         all->update.bit.field_event_upd = 1;
         break;
 
     case CMD_REF_WARNING:
-        all->p_ref_warning = (referee_warning_t *)frame->data;
+        memcpy(&all->_ref_warning, frame->data, sizeof(referee_warning_t));
+        all->p_ref_warning = &all->_ref_warning;
         all->update.bit.ref_warn_upd = 1;
         break;
 
     case CMD_DART_INFO:
-        all->p_dart_info = (dart_info_t *)frame->data;
+        memcpy(&all->_dart_info, frame->data, sizeof(dart_info_t));
+        all->p_dart_info = &all->_dart_info;
         all->update.bit.dart_info_upd = 1;
         break;
 
     /***************** 本机机器人数据 *****************/
     case CMD_ROBOT_STATUS:
-        all->p_robot_status = (robot_status_t *)frame->data;
+        memcpy(&all->_robot_status, frame->data, sizeof(robot_status_t));
+        all->p_robot_status = &all->_robot_status;
         all->update.bit.robot_status_upd = 1;
         break;
 
     case CMD_POWER_HEAT_DATA:
-        all->p_power_heat = (power_heat_data_t *)frame->data;
+        memcpy(&all->_power_heat, frame->data, sizeof(power_heat_data_t));
+        all->p_power_heat = &all->_power_heat;
         all->update.bit.power_heat_upd = 1;
         break;
 
     case CMD_ROBOT_POS:
-        all->p_robot_pos = (robot_pos_t *)frame->data;
+        memcpy(&all->_robot_pos, frame->data, sizeof(robot_pos_t));
+        all->p_robot_pos = &all->_robot_pos;
         all->update.bit.robot_pos_upd = 1;
         break;
 
     case CMD_ROBOT_BUFF:
-        all->p_buff_buf = frame->data;
+        memcpy(&all->_buff, frame->data, sizeof(robot_buff_t));
+        all->p_buff = &all->_buff;
         all->update.bit.buff_upd = 1;
         break;
 
     case CMD_DAMAGE_DATA:
-        all->p_damage_buf = frame->data;
+        memcpy(all->_damage, frame->data, frame->header.data_len);
+        all->p_damage_buf = all->_damage;
         all->update.bit.damage_upd = 1;
         break;
 
     case CMD_SHOOT_DATA:
-        all->p_shoot_data = (shoot_data_t *)frame->data;
+        memcpy(&all->_shoot_data, frame->data, sizeof(shoot_data_t));
+        all->p_shoot_data = &all->_shoot_data;
         all->update.bit.shoot_upd = 1;
         break;
 
     case CMD_PROJECTILE_ALLOW:
-        all->p_bullet_data = (projectile_allowance_t *)frame->data;
+        memcpy(&all->_bullet_data, frame->data, sizeof(projectile_allowance_t));
+        all->p_bullet_data = &all->_bullet_data;
         all->update.bit.bullet_upd = 1;
         break;
 
     case CMD_RFID_STATUS:
-        all->p_rfid_buf = frame->data;
+        memcpy(all->_rfid, frame->data, frame->header.data_len);
+        all->p_rfid_buf = all->_rfid;
         all->update.bit.rfid_upd = 1;
         break;
 
     case CMD_DART_CLIENT_CMD:
-        all->p_dart_client_cmd = (dart_client_cmd_t *)frame->data;
+        memcpy(&all->_dart_client_cmd, frame->data, sizeof(dart_client_cmd_t));
+        all->p_dart_client_cmd = &all->_dart_client_cmd;
         all->update.bit.dart_client_upd = 1;
         break;
 
     case CMD_GROUND_ROBOT_POS:
-        all->p_ally_ground_pos = (ground_robot_position_t *)frame->data;
+        memcpy(&all->_ground_pos, frame->data, sizeof(ground_robot_position_t));
+        all->p_ally_ground_pos = &all->_ground_pos;
         all->update.bit.ally_ground_upd = 1;
         break;
 
     case CMD_RADAR_MARK_PROG:
-        all->p_radar_mark_bit = (uint16_t *)frame->data;
+        memcpy(&all->_radar_mark, frame->data, sizeof(uint16_t));
+        all->p_radar_mark_bit = &all->_radar_mark;
         all->update.bit.radar_mark_upd = 1;
         break;
 
     case CMD_SENTRY_AUTO_INFO:
-        all->p_sentry_sync = (sentry_info_t *)frame->data;
+        memcpy(&all->_sentry_sync, frame->data, sizeof(sentry_info_t));
+        all->p_sentry_sync = &all->_sentry_sync;
         all->update.bit.sentry_sync_upd = 1;
         break;
 
     case CMD_RADAR_AUTO_INFO:
-        all->p_radar_sync = (radar_info_t *)frame->data;
+        memcpy(&all->_radar_sync, frame->data, sizeof(radar_info_t));
+        all->p_radar_sync = &all->_radar_sync;
         all->update.bit.radar_sync_upd = 1;
         break;
 
     /***************** 交互数据 *****************/
     case CMD_ROBOT_INTERACT:
     {
-        all->p_robot_inter = (robot_interaction_data_t *)frame->data;
+        memcpy(&all->_robot_inter, frame->data, sizeof(robot_interaction_data_t));
+        all->p_robot_inter = &all->_robot_inter;
         all->update.bit.robot_inter_upd = 1;
         uint16_t sub_cmd = all->p_robot_inter->data_cmd_id;
         switch (sub_cmd)
         {
         case SUB_CMD_SENTRY_AUTO_CMD:
-            all->p_sentry_auto_cmd = (sentry_cmd_t *)all->p_robot_inter->user_data;
+            memcpy(&all->_sentry_auto_cmd, all->p_robot_inter->user_data, sizeof(sentry_cmd_t));
+            all->p_sentry_auto_cmd = &all->_sentry_auto_cmd;
             break;
         case SUB_CMD_RADAR_AUTO_CMD:
-            all->p_radar_auto_cmd = (radar_cmd_t *)all->p_robot_inter->user_data;
+            memcpy(&all->_radar_cmd, all->p_robot_inter->user_data, sizeof(radar_cmd_t));
+            all->p_radar_auto_cmd = &all->_radar_cmd;
             break;
         default:
             break;
@@ -335,17 +358,20 @@ __weak void Referee_Frame_Callback(referee_full_frame_t *frame)
     }
 
     case CMD_MAP_CLICK_CMD:
-        all->p_map_click = (map_command_t *)frame->data;
+        memcpy(&all->_map_click, frame->data, sizeof(map_command_t));
+        all->p_map_click = &all->_map_click;
         all->update.bit.map_click_upd = 1;
         break;
 
     case CMD_CUSTOM_CTRL_CLIENT:
-        all->p_mouse_key = (custom_client_data_t *)frame->data;
+        memcpy(&all->_mouse_key, frame->data, sizeof(custom_client_data_t));
+        all->p_mouse_key = &all->_mouse_key;
         all->update.bit.mouse_key_upd = 1;
         break;
 
     case CMD_SENTRY_PATH_DATA:
-        all->p_sentry_path = (map_data_t *)frame->data;
+        memcpy(&all->_sentry_path, frame->data, sizeof(map_data_t));
+        all->p_sentry_path = &all->_sentry_path;
         all->update.bit.sentry_path_upd = 1;
         break;
 

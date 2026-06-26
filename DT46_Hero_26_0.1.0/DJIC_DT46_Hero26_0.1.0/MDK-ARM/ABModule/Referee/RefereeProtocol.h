@@ -1,5 +1,5 @@
 /*
- *   基于机甲大师高校系列赛通信协议V1.3.1编写
+ *   基于机甲大师高校系列赛通信协议V2.0.0（20260626）编写
  *
  *
  */
@@ -138,6 +138,7 @@ extern "C" {
 #endif
 
 // ========== 帧头结构体 ==========
+// 表1-3/表1-4 帧头格式 页4
 typedef struct
 {
     uint8_t  sof;               // 帧起始标志 固定0xA5
@@ -147,6 +148,7 @@ typedef struct
 } PACKED referee_frame_header_t;
 
 // ========== 完整帧缓存结构体 ==========
+// 表1-2 通信协议格式 frame_header+cmd_id+data+CRC16 页4
 typedef struct
 {
     referee_frame_header_t header;
@@ -157,195 +159,231 @@ typedef struct
 
 /************************* 各命令码数据结构体 *************************/
 // 0x0001 比赛状态
+// 通信协议V2.0.0 表1-6 页9
 typedef struct
 {
-    uint8_t  game_type : 4;     // 比赛类型
-    uint8_t  game_progress : 4; // 比赛阶段
+    uint8_t  game_type : 4;     // bit0-3 比赛类型（1=超级对抗赛 2=高校单项赛 3=ICRA 4=联盟3V3 5=联盟步兵对抗）
+    uint8_t  game_progress : 4; // bit4-7 当前比赛阶段（0=未开始 1=准备 2=自检 3=倒计时 4=比赛中 5=结算中）
     uint16_t stage_remain_time; // 阶段剩余时间(秒)
-    uint64_t sync_time_stamp;   // UNIX时间戳
+    uint64_t sync_time_stamp;   // UNIX时间戳（连接NTP后生效）
 } PACKED game_status_t;
 
 // 0x0002 比赛结果
+// 通信协议V2.0.0 表1-7 页9
 typedef struct
 {
     uint8_t winner;             // 0平局 1红胜 2蓝胜
 } PACKED game_result_t;
 
-// 0x0003 全队血量
+// 0x0003 全队血量（V2.0.0修订：新增伤害差、对方前哨站/基地血量）
+// 通信协议V2.0.0 表1-8 页9-10
 typedef struct
 {
-    uint16_t ally_1_robot_HP;   // 1号英雄血量
-    uint16_t ally_2_robot_HP;   // 2号工程血量
-    uint16_t ally_3_robot_HP;   // 3号步兵血量
-    uint16_t ally_4_robot_HP;   // 4号步兵血量
-    uint16_t reserved;          // 保留
-    uint16_t ally_7_robot_HP;   // 7号哨兵血量
-    uint16_t ally_outpost_HP;   // 前哨站血量
-    uint16_t ally_base_HP;      // 基地血量
+    uint16_t ally_1_robot_HP;   // 己方1号英雄血量（未上场/罚下为0）
+    uint16_t ally_2_robot_HP;   // 己方2号工程血量
+    uint16_t ally_3_robot_HP;   // 己方3号步兵血量
+    uint16_t ally_4_robot_HP;   // 己方4号步兵血量
+    int16_t  damage_difference; // 己方总伤害与对方总伤害之差
+    uint16_t ally_7_robot_HP;   // 己方7号哨兵血量
+    uint16_t ally_outpost_HP;   // 己方前哨站血量
+    uint16_t ally_base_HP;      // 己方基地血量
+    uint16_t enemy_outpost_HP;  // 对方前哨站血量
+    uint16_t enemy_base_HP;     // 对方基地血量
 } PACKED game_robot_HP_t;
 
 // 0x0104 裁判警告
+// 通信协议V2.0.0 表1-10 页12
 typedef struct
 {
-    uint8_t level;              // 判罚等级
-    uint8_t robot_id;           // 违规机器人ID
-    uint8_t count;              // 累计违规次数
+    uint8_t level;              // 己方最后一次受罚等级（1=双方黄牌 2=黄牌 3=红牌 4=判负）
+    uint8_t offending_robot_id; // 违规机器人ID（判负/双方黄牌时为0）
+    uint8_t count;              // 该机器人对应等级的累计违规次数
 } PACKED referee_warning_t;
 
 // 0x0105 飞镖信息
+// 通信协议V2.0.0 表1-11 页12
 typedef struct
 {
-    uint8_t  dart_remaining_time; // 发射冷却剩余秒数
-    uint16_t dart_info;           // 击中目标/计数/选中目标位域
+    uint8_t  dart_remaining_time; // 己方飞镖发射剩余时间(秒)
+    uint16_t dart_info;           // bit0-2:最近击中目标 bit3-5:累计击中次数 bit6-8:当前选定目标
 } PACKED dart_info_t;
 
-// 0x0201 机器人性能状态
+// 0x0201 机器人性能状态（V2.0.0修订：新增bullet_speed_limit）
+// 通信协议V2.0.0 表1-12 页13
 typedef struct
 {
-    uint8_t  robot_id;
-    uint8_t  robot_level;
-    uint16_t current_HP;
-    uint16_t maximum_HP;
-    uint16_t shooter_barrel_cooling_value;
-    uint16_t shooter_barrel_heat_limit;
-    uint16_t chassis_power_limit;
-    uint8_t  power_management_gimbal_output  : 1;
-    uint8_t  power_management_chassis_output : 1;
-    uint8_t  power_management_shooter_output : 1;
+    uint8_t  robot_id;                      // 本机器人ID
+    uint8_t  robot_level;                   // 机器人等级
+    uint16_t current_HP;                    // 当前血量
+    uint16_t maximum_HP;                    // 血量上限
+    uint16_t shooter_barrel_cooling_value;  // 射击热量每秒冷却值
+    uint16_t shooter_barrel_heat_limit;     // 射击热量上限
+    uint16_t chassis_power_limit;           // 底盘功率上限
+    float    bullet_speed_limit;            // 射击初速度上限
+    uint8_t  power_management_gimbal_output  : 1;  // bit0 gimble口 0=无输出 1=24V
+    uint8_t  power_management_chassis_output : 1;  // bit1 chassis口
+    uint8_t  power_management_shooter_output : 1;  // bit2 shooter口
 } PACKED robot_status_t;
 
 // 0x0202 缓冲能量与热量
+// 通信协议V2.0.0 表1-13 页14
 typedef struct
 {
-    uint16_t reserved1;
-    uint16_t reserved2;
-    float    reserved3;
-    uint16_t buffer_energy;
-    uint16_t shooter_17mm_barrel_heat;
-    uint16_t shooter_42mm_barrel_heat;
+    uint16_t reserved1;                     // 保留位
+    uint16_t reserved2;                     // 保留位
+    float    reserved3;                     // 保留位
+    uint16_t buffer_energy;                 // 缓冲能量(J)
+    uint16_t shooter_17mm_barrel_heat;      // 17mm发射机构射击热量
+    uint16_t shooter_42mm_barrel_heat;      // 42mm发射机构射击热量
 } PACKED power_heat_data_t;
 
 // 0x0203 机器人坐标
+// 通信协议V2.0.0 表1-14 页14
 typedef struct
 {
-    float x;
-    float y;
-    float angle;
+    float x;                                // 本机x坐标(m)
+    float y;                                // 本机y坐标(m)
+    float angle;                            // 测速模块朝向(度,正北为0)
 } PACKED robot_pos_t;
 
-// 0x0207 射击数据
+// 0x0204 增益状态
+// 通信协议V2.0.0 表1-15 页15
 typedef struct
 {
-    uint8_t bullet_type;
-    uint8_t shooter_number;
-    uint8_t launching_frequency;
-    float   initial_speed;
+    uint8_t  recovery_buff;         // 回血增益(百分比,如10表示每秒恢复血量上限10%)
+    uint16_t cooling_buff;          // 射击热量冷却增益(直接值,如5表示热量冷却增加5/s)
+    uint8_t  defence_buff;          // 防御增益(百分比,如50表示50%防御)
+    uint8_t  vulnerability_buff;    // 负防御增益(百分比,如30表示-30%防御)
+    uint16_t attack_buff;           // 攻击增益(百分比,如50表示50%攻击)
+    uint8_t  remaining_energy;      // bit0-6剩余能量比例标识(bit0=125% bit1=100% bit2=50% bit3=30% bit4=15% bit5=5% bit6=1%)
+} PACKED robot_buff_t;
+
+// 0x0207 射击数据
+// 通信协议V2.0.0 表1-17 页16
+typedef struct
+{
+    uint8_t bullet_type;            // 弹丸类型(bit1=17mm bit2=42mm)
+    uint8_t shooter_number;         // 发射机构ID(1=17mm 3=42mm)
+    uint8_t launching_frequency;    // 弹丸射速(Hz)
+    float   initial_speed;          // 弹丸初速度(m/s)
 } PACKED shoot_data_t;
 
 // 0x0208 允许发弹量
+// 通信协议V2.0.0 表1-18 页17
 typedef struct
 {
-    uint16_t projectile_allowance_17mm;
-    uint16_t projectile_allowance_42mm;
-    uint16_t remaining_gold_coin;
-    uint16_t projectile_allowance_fortress;
+    uint16_t projectile_allowance_17mm;  // 机器人自身17mm弹丸允许发弹量
+    uint16_t projectile_allowance_42mm;  // 42mm弹丸允许发弹量
+    uint16_t remaining_gold_coin;        // 剩余金币数量
+    uint16_t projectile_allowance_fortress; // 堡垒增益点储备17mm弹丸允许发弹量
 } PACKED projectile_allowance_t;
 
 // 0x020A 飞镖选手端指令
+// 通信协议V2.0.0 表1-20 页19
 typedef struct
 {
-    uint8_t  dart_launch_opening_status;
-    uint8_t  reserved;
-    uint16_t target_change_time;
-    uint16_t latest_launch_cmd_time;
+    uint8_t  dart_launch_opening_status; // 飞镖发射站状态(0=已开启 1=关闭 2=正在开关)
+    uint8_t  reserved;                   // 保留位
+    uint16_t target_change_time;         // 切换目标时的比赛剩余时间(秒)
+    uint16_t latest_launch_cmd_time;     // 最后一次发射指令时的比赛剩余时间(秒)
 } PACKED dart_client_cmd_t;
 
 // 0x020B 地面机器人坐标
+// 通信协议V2.0.0 表1-21 页19
 typedef struct
 {
-    float hero_x;
-    float hero_y;
-    float engineer_x;
-    float engineer_y;
-    float standard_3_x;
-    float standard_3_y;
-    float standard_4_x;
-    float standard_4_y;
-    float reserved1;
-    float reserved2;
+    float hero_x;                        // 己方英雄x坐标(m)
+    float hero_y;                        // 己方英雄y坐标(m)
+    float engineer_x;                    // 己方工程x坐标(m)
+    float engineer_y;                    // 己方工程y坐标(m)
+    float standard_3_x;                  // 己方3号步兵x坐标(m)
+    float standard_3_y;                  // 己方3号步兵y坐标(m)
+    float standard_4_x;                  // 己方4号步兵x坐标(m)
+    float standard_4_y;                  // 己方4号步兵y坐标(m)
+    float reserved1;                     // 保留位
+    float reserved2;                     // 保留位
 } PACKED ground_robot_position_t;
 
-// 0x020D 哨兵自主信息
+// 0x020D 哨兵自主信息（V2.0.0修订：新增sentry_info_3）
+// 通信协议V2.0.0 表1-23 页21-22
 typedef struct
 {
-    uint32_t sentry_info;
-    uint16_t sentry_info_2;
+    uint32_t sentry_info;                // 哨兵信息位域(兑换弹量/复活/能量机关等)
+    uint16_t sentry_info_2;              // 哨兵姿态/脱战/可兑换信息位域
+    uint64_t sentry_info_3;              // 各姿态剩余持续时长位域
 } PACKED sentry_info_t;
 
 // 0x020E 雷达自主信息
+// 通信协议V2.0.0 表1-24 页23
 typedef struct
 {
-    uint8_t radar_info;
+    uint8_t radar_info;                  // bit0-1双倍易伤机会 bit2是否触发 bit3-4加密等级 bit5可否修改密钥
 } PACKED radar_info_t;
 
 // 0x0301 机器人交互数据头
+// 通信协议V2.0.0 表1-25 页23
 typedef struct
 {
-    uint16_t data_cmd_id;
-    uint16_t sender_id;
-    uint16_t receiver_id;
-    uint8_t  user_data[112];
+    uint16_t data_cmd_id;                // 子内容ID
+    uint16_t sender_id;                  // 发送者ID
+    uint16_t receiver_id;                // 接收者ID(仅限己方通信)
+    uint8_t  user_data[112];             // 内容数据段(最大112字节)
 } PACKED robot_interaction_data_t;
 
 // 0x0303 小地图点击指令
+// 通信协议V2.0.0 表1-35 页33
 typedef struct
 {
-    float   target_position_x;
-    float   target_position_y;
-    uint8_t cmd_keyboard;
-    uint8_t target_robot_id;
-    uint16_t cmd_source;
+    float   target_position_x;           // 目标x坐标(m),发送ID时为0
+    float   target_position_y;           // 目标y坐标(m),发送ID时为0
+    uint8_t cmd_keyboard;                // 云台手按下的键盘通用键值(无按键为0)
+    uint8_t target_robot_id;             // 对方机器人ID(发送坐标时为0)
+    uint16_t cmd_source;                 // 信息来源ID
 } PACKED map_command_t;
 
 // 0x0306 键鼠模拟数据
+// 通信协议V2.0.0 表1-43 页38
 typedef struct
 {
-    uint16_t key_value;
-    uint16_t x_position   : 12;
-    uint16_t mouse_left   : 4;
-    uint16_t y_position   : 12;
-    uint16_t mouse_right  : 4;
-    uint16_t reserved;
+    uint16_t key_value;                  // 键盘键值(bit0-7按键1 bit8-15按键2)
+    uint16_t x_position   : 12;          // 鼠标X轴像素位置
+    uint16_t mouse_left   : 4;           // 鼠标左键状态(1=按下)
+    uint16_t y_position   : 12;          // 鼠标Y轴像素位置
+    uint16_t mouse_right  : 4;           // 鼠标右键状态(1=按下)
+    uint16_t reserved;                   // 保留位
 } PACKED custom_client_data_t;
 
 // 0x0307 哨兵路径数据
+// 通信协议V2.0.0 表1-37 页35
 typedef struct
 {
-    uint8_t  intention;
-    uint16_t start_position_x;
-    uint16_t start_position_y;
-    int8_t   delta_x[49];
-    int8_t   delta_y[49];
-    uint16_t sender_id;
+    uint8_t  intention;                  // 意图(1=到目标点攻击 2=到目标点防守 3=移动到目标点)
+    uint16_t start_position_x;           // 路径起点x坐标(dm)
+    uint16_t start_position_y;           // 路径起点y坐标(dm)
+    int8_t   delta_x[49];                // 路径点x轴增量数组(共49个点位)
+    int8_t   delta_y[49];                // 路径点y轴增量数组
+    uint16_t sender_id;                  // 发送者ID
 } PACKED map_data_t;
 
 // 子命令0x0120 哨兵自主指令
+// 通信协议V2.0.0 表1-33 页29
 typedef struct
 {
-    uint32_t sentry_cmd;
+    uint32_t sentry_cmd;                 // bit0确认复活 bit1兑换立即复活 bit2-12兑换弹量 bit13-16远程兑换弹量次数 bit17-20远程兑换血量次数 bit21-23姿态 bit24激活能量机关
 } PACKED sentry_cmd_t;
 
 // 子命令0x0121 雷达自主指令
+// 通信协议V2.0.0 表1-34 页31
 typedef struct
 {
-    uint8_t radar_cmd;
-    uint8_t password_cmd;
-    uint8_t password_1;
-    uint8_t password_2;
-    uint8_t password_3;
-    uint8_t password_4;
-    uint8_t password_5;
-    uint8_t password_6;
+    uint8_t radar_cmd;                   // 触发双倍易伤(单调递增)
+    uint8_t password_cmd;                // 密钥指令(1=更新密钥 2=验证破解)
+    uint8_t password_1;                  // 密钥byte1(ASCII字母/数字)
+    uint8_t password_2;                  // 密钥byte2
+    uint8_t password_3;                  // 密钥byte3
+    uint8_t password_4;                  // 密钥byte4
+    uint8_t password_5;                  // 密钥byte5
+    uint8_t password_6;                  // 密钥byte6
 } PACKED radar_cmd_t;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
@@ -355,19 +393,46 @@ typedef struct
 /************************* 全数据指针总结构体 *************************/
 typedef struct
 {
-    // 基础比赛数据指针
+    // ========== 新增：专用存储缓冲（与解析器 frame_buf 隔离） ==========
+    game_status_t            _game_status;
+    game_result_t            _game_result;
+    game_robot_HP_t          _ally_hp;
+    uint32_t                 _field_event;
+    referee_warning_t        _ref_warning;
+    dart_info_t              _dart_info;
+    robot_status_t           _robot_status;
+    power_heat_data_t        _power_heat;
+    robot_pos_t              _robot_pos;
+    robot_buff_t             _buff;
+    uint8_t                  _damage[16];
+    shoot_data_t             _shoot_data;
+    projectile_allowance_t   _bullet_data;
+    uint8_t                  _rfid[16];
+    dart_client_cmd_t        _dart_client_cmd;
+    ground_robot_position_t  _ground_pos;
+    uint16_t                 _radar_mark;
+    sentry_info_t            _sentry_sync;
+    radar_info_t             _radar_sync;
+    robot_interaction_data_t _robot_inter;
+    map_command_t            _map_click;
+    custom_client_data_t     _mouse_key;
+    map_data_t               _sentry_path;
+    sentry_cmd_t             _sentry_auto_cmd;
+    radar_cmd_t              _radar_cmd;
+
+    // ========== 基础比赛数据指针 ==========
     game_status_t            *p_game_status;
     game_result_t            *p_game_result;
     game_robot_HP_t          *p_ally_hp;
-    uint8_t                  *p_field_event;
+    uint32_t                 *p_field_event;
     referee_warning_t        *p_ref_warning;
     dart_info_t              *p_dart_info;
 
-    // 本机状态指针
+    // ========== 本机状态指针 ==========
     robot_status_t           *p_robot_status;
     power_heat_data_t        *p_power_heat;
     robot_pos_t              *p_robot_pos;
-    uint8_t                  *p_buff_buf;
+    robot_buff_t             *p_buff;
     uint8_t                  *p_damage_buf;
     shoot_data_t             *p_shoot_data;
     projectile_allowance_t   *p_bullet_data;
@@ -378,13 +443,13 @@ typedef struct
     sentry_info_t            *p_sentry_sync;
     radar_info_t             *p_radar_sync;
 
-    // 交互数据指针
+    // ========== 交互数据指针 ==========
     robot_interaction_data_t *p_robot_inter;
     map_command_t            *p_map_click;
     custom_client_data_t     *p_mouse_key;
     map_data_t               *p_sentry_path;
 
-    // 子指令指针
+    // ========== 子指令指针 ==========
     sentry_cmd_t             *p_sentry_auto_cmd;
     radar_cmd_t              *p_radar_auto_cmd;
 
