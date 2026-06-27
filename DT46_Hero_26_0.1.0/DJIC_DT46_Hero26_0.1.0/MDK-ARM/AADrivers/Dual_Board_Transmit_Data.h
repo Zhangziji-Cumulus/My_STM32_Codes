@@ -13,13 +13,17 @@ typedef struct{
 
     CMD_t CMD;
 
+    uint8_t LoadStartFlag;
+
 }BoardTransmit_Gimbal_TX_t;
 
 typedef struct{
 
-    uint8_t test;
+    uint8_t LoadEndFlag;
 
 }BoardTransmit_Gimbal_RX_t;
+
+extern BoardTransmit_Gimbal_RX_t  BoardGRX;
 
 #endif
 
@@ -27,13 +31,15 @@ typedef struct{
 
 typedef struct{
 
-    uint8_t test;
+    uint8_t LoadEndFlag;
     
 }BoardTransmit_Chassis_TX_t;
 
 typedef struct{
 
     CMD_t CMD;
+
+    uint8_t LoadStartFlag;
 
 }BoardTransmit_Chassis_RX_t;
 

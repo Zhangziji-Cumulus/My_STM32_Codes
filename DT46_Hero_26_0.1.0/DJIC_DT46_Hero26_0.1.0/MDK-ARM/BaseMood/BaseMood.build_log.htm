@@ -27,66 +27,7 @@ Project File Date:  06/26/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling RefereeProtocol.c...
-ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREEPROTOCOL_H_
-ABModule\Referee\RefereeProtocol.c(520): warning:  #1-D: last line of file ends without a newline
-  }
-ABModule\Referee\RefereeProtocol.c: 2 warnings, 0 errors
-compiling RefereeCenter.c...
-ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
-  #define UART_PARITY_NONE             0U
-ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREEPROTOCOL_H_
-ABModule\Referee\RefereeCenter.h(17): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREE_CENTER_H
-ABModule\Referee\RefereeCenter.c(134): warning:  #177-D: variable "game_stage"  was declared but never referenced
-              uint8_t game_stage = g_ref_data.p_game_status->game_progress;
-ABModule\Referee\RefereeCenter.c(135): warning:  #177-D: variable "remain_sec"  was declared but never referenced
-              uint16_t remain_sec = g_ref_data.p_game_status->stage_remain_time;
-ABModule\Referee\RefereeCenter.c(152): warning:  #177-D: variable "current_hp"  was declared but never referenced
-              uint16_t current_hp  = g_ref_data.p_robot_status->current_HP;
-ABModule\Referee\RefereeCenter.c(153): warning:  #177-D: variable "power_limit"  was declared but never referenced
-              uint16_t power_limit = g_ref_data.p_robot_status->chassis_power_limit;
-ABModule\Referee\RefereeCenter.c(165): warning:  #177-D: variable "buffer_energy"  was declared but never referenced
-              uint16_t buffer_energy = g_ref_data.p_power_heat->buffer_energy;
-ABModule\Referee\RefereeCenter.c(166): warning:  #177-D: variable "heat_17mm"  was declared but never referenced
-              uint16_t heat_17mm    = g_ref_data.p_power_heat->shooter_17mm_barrel_heat;
-ABModule\Referee\RefereeCenter.c(178): warning:  #177-D: variable "tar_x"  was declared but never referenced
-              float tar_x   = g_ref_data.p_map_click->target_position_x;
-ABModule\Referee\RefereeCenter.c(179): warning:  #177-D: variable "tar_y"  was declared but never referenced
-              float tar_y   = g_ref_data.p_map_click->target_position_y;
-ABModule\Referee\RefereeCenter.c(180): warning:  #177-D: variable "tar_id"  was declared but never referenced
-              uint8_t tar_id = g_ref_data.p_map_click->target_robot_id;
-ABModule\Referee\RefereeCenter.c(193): warning:  #177-D: variable "hero_hp"  was declared but never referenced
-              uint16_t hero_hp   = g_ref_data.p_ally_hp->ally_1_robot_HP;
-ABModule\Referee\RefereeCenter.c(194): warning:  #177-D: variable "base_hp"  was declared but never referenced
-              uint16_t base_hp   = g_ref_data.p_ally_hp->ally_base_HP;
-ABModule\Referee\RefereeCenter.c(195): warning:  #177-D: variable "sentry_hp"  was declared but never referenced
-              uint16_t sentry_hp = g_ref_data.p_ally_hp->ally_7_robot_HP;
-ABModule\Referee\RefereeCenter.c(207): warning:  #177-D: variable "bullet_speed"  was declared but never referenced
-              float bullet_speed = g_ref_data.p_shoot_data->initial_speed;
-ABModule\Referee\RefereeCenter.c(220): warning:  #1-D: last line of file ends without a newline
-  }
-ABModule\Referee\RefereeCenter.c(27): warning:  #550-D: variable "remain_RefereeTask"  was set but never used
-  static UBaseType_t remain_RefereeTask;
-ABModule\Referee\RefereeCenter.c: 18 warnings, 0 errors
-compiling stm32f4xx_it.c...
-./ACApplication/Auto/AutoAim.h(97): warning:  #1-D: last line of file ends without a newline
-  #endif // AUTOAIM_H_
-.\ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
-  #define UART_PARITY_NONE             0U
-.\ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREEPROTOCOL_H_
-.\ABModule\Referee\RefereeCenter.h(17): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREE_CENTER_H
-../Core/Src/stm32f4xx_it.c(308): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
-  	SBUS_UART_IRQHandler();
-../Core/Src/stm32f4xx_it.c: 5 warnings, 0 errors
-linking...
-Program Size: Code=55184 RO-data=2276 RW-data=548 ZI-data=36188  
-FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 25 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -110,7 +51,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

@@ -4,11 +4,14 @@
 
 #if(ROBOT_TYPE == ROBOTTYPE_HERO)
 
+//extern BoardTransmit_Gimbal_RX_t BoardGRX;
+
 //** #################################################################################################### **//
 //** ====================================== 定义数据、结构体 ============================================= **//
 //** #################################################################################################### **//
 
 static Shooting_Instance_t Shooting_Instance;
+Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef PID_SFri_STOP;
 
@@ -217,7 +220,6 @@ void Shooting_SendCmd(void)
                                     PUSHROD_CURRENT_MAX);                 
             Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING;
         }
-        
     }
 }
 
@@ -262,6 +264,177 @@ static void PuahRod_Update_Target(void)
     }
 }
 
+
+
+// //点L位置
+// #define PUSHROD_POSITION_L_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_L_MM,PUSHROD_SCREW_LEAD_MM) 
+// //点A位置
+// #define PUSHROD_POSITION_A_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_A_MM,PUSHROD_SCREW_LEAD_MM) 
+// //点B位置
+// #define PUSHROD_POSITION_B_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_B_MM,PUSHROD_SCREW_LEAD_MM) 
+// //点C位置
+// #define PUSHROD_POSITION_C_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_C_MM,PUSHROD_SCREW_LEAD_MM)   
+
+void Fire_Read(void)
+{
+    //判断上弹完毕后
+    //将推杆从L点位置移动到A点位置
+}
+
+//检测是否发弹
+uint8_t Detect_Fied(void)
+{
+    static uint16_t shoot_cnt = 0;
+    const int16_t CURRENT_THRESHOLD = 2000;
+
+    int32_t sum = Shooting_Instance.DJI_Motordata.DM.current_ma +
+                  Shooting_Instance.DJI_Motordata.UL.current_ma +
+                  Shooting_Instance.DJI_Motordata.UR.current_ma;
+
+    int16_t I_avg = sum / 3;
+
+    //条件：平均电流超限 或者 任意一路电机电流超限
+    if(I_avg > CURRENT_THRESHOLD
+        || Shooting_Instance.DJI_Motordata.DM.current_ma > CURRENT_THRESHOLD
+        || Shooting_Instance.DJI_Motordata.UL.current_ma > CURRENT_THRESHOLD
+        || Shooting_Instance.DJI_Motordata.UR.current_ma > CURRENT_THRESHOLD)
+    {
+        shoot_cnt++;
+    }
+    else
+    {
+        shoot_cnt = 0;
+    }
+
+    //连续5帧超标才确认击发，消除尖峰毛刺
+    if(shoot_cnt >= 5)
+    {
+        shoot_cnt = 5; //防止计数溢出
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+//与填弹逻辑有关
+void Load_Run(void)
+{
+    //获取循环标志
+    if(Shooting_State_Machine.Push_Stroke == PUSHPL)
+    {
+        //发送开始填弹标志
+        Dual_Board_TX_Set_LoadStartFlag(1);
+    }
+
+    if((BoardGRX.LoadEndFlag == LOAD_END) && (Shooting_State_Machine.Push_Stroke == PUSHPL))
+    {
+        //设置推杆位置到A点
+        Shooting_State_Machine.Push_Stroke = PUSHPA;
+    }
+}
+
+void Fire_Run(void)
+{
+    //只在进入该状态瞬间记录起始tick
+    static uint32_t start_tick_1 = 0;
+    static uint32_t start_tick_2 = 0;
+
+    const uint16_t detect_time = 1000;
+
+    //开火触发计时滤波
+    static uint8_t Fired_Flag = 0;
+    static uint32_t fire_trigger_tick = 0;
+    static uint8_t last_raw_fire = 0;  //保存上一帧原始开火电平
+    const uint16_t FIRE_FILTER_TIME = 300;
+
+    uint8_t current_raw_fire = Shooting_State_Machine.Fired_Flag;
+
+    // 检测上升沿：仅 0→1 才开启计时
+    if (current_raw_fire == 1)
+    {
+        if (last_raw_fire == 0)
+        {
+            //上升沿到来，启动计时
+            fire_trigger_tick = HAL_GetTick();
+        }
+
+        //计时满足，且还没有置位时才打开开火标志
+        if ((HAL_GetTick() - fire_trigger_tick >= FIRE_FILTER_TIME) && (Fired_Flag == 0))
+        {
+            Fired_Flag = 1;
+        }
+    }
+    else
+    {
+        fire_trigger_tick = 0;
+    }
+
+    //更新历史电平
+    last_raw_fire = current_raw_fire;
+    
+
+    if(Shooting_State_Machine.Fire == FIRE_READY && Fired_Flag == 1)
+    {
+
+        if(Shooting_State_Machine.Push_Stroke == PUSHPA)
+        {
+            //控制推杆往前走到B点位置
+            //函数...
+
+            Shooting_State_Machine.Push_Stroke = PUSHPB;//更新推杆在点B位置
+        }
+        else if(Shooting_State_Machine.Push_Stroke == PUSHPB)
+        {
+            if(Shooting_State_Machine.Fired_Count == 0)
+            {
+                // 进入推杆到位状态时锁存起始时间
+                if(start_tick_1 == 0)
+                {
+                    start_tick_1 = HAL_GetTick();
+                }
+
+                //时间窗口
+                if(HAL_GetTick() - start_tick_1 <= detect_time)
+                {
+                    if(Detect_Fied())
+                    {
+                        Shooting_State_Machine.Fired_Count = 1;
+                        Shooting_State_Machine.Fire = FIRE_END_B;//在B点完成发射
+                        Fired_Flag = 0;
+                        start_tick_1 = 0; // 成功，清零计时器
+                    }
+                }
+                else
+                {
+                    //超时处理
+                    start_tick_1 = 0;
+                    Shooting_State_Machine.Push_Stroke = PUSHPC;
+                }
+            }
+        }
+        else if(Shooting_State_Machine.Push_Stroke == PUSHPC)
+        {
+            //控制推杆往前走到C点位置
+            //函数...
+            Shooting_State_Machine.Fire = FIRE_END_C;
+        }
+    }
+    else if(Shooting_State_Machine.Fire == FIRE_END_B && Fired_Flag == 1)
+    {
+        //控制推杆往前走到C点位置
+        //函数...
+        Shooting_State_Machine.Fire = FIRE_END_C;// 不管C点有没有发弹都视为完成发弹了
+    }
+    else if(Shooting_State_Machine.Fire == FIRE_END_C)
+    {
+        //返回
+        Shooting_State_Machine.Fired_Count = 0;
+        Shooting_State_Machine.Push_Stroke = PUSHPL;
+        Fired_Flag = 0;
+    }
+}
 
 #endif
 

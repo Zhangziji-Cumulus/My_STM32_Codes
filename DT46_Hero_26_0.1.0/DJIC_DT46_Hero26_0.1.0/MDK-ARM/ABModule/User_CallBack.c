@@ -27,7 +27,7 @@
 
 static uint8_t g_dataValid = 0;
 
-BoardTransmit_Gimbal_TX_t   BoardGRX;
+BoardTransmit_Gimbal_RX_t   BoardGRX;
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
