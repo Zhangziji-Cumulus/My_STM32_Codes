@@ -17,13 +17,13 @@
     推杆向后给出空间后，给一个标志；拨盘上弹，检测电流过大后，给标志。
 */
 
-// typedef enum
-// {
-//     LOAD_STOP,  //停止
-//     LOAD_ING,   //装弹中
-//     LOAD_OK,    //装弹完成
-//     LOAD_WAIT   //等待下一次装弹
-// }LOAD_State_e;
+typedef enum
+{
+    LOAD_STOP,  //停止
+    LOAD_ING,   //装弹中
+    LOAD_OK,    //装弹完成
+    LOAD_WAIT   //等待下一次装弹
+}LOAD_State_e;
 
 
 #if(ROBOT_TYPE == ROBOTTYPE_HERO)
@@ -48,7 +48,7 @@ typedef enum{
 /* 填弹状态枚举 */
 typedef enum{
     LOAD_START,     //开始填弹
-    LOAD_ING,       //填弹中
+    //LOAD_ING,       //填弹中
     LOAD_END       //填弹完成
     // LOAD_READ       //发射预备（推杆向前进一点点）
 }Load_State_e;
@@ -139,6 +139,10 @@ typedef struct
         
     }Calc;
 
+
+    struct{
+        LOAD_State_e LoadState;//上弹OK标志
+    }Logic;
 
 }Shooting_Instance_t;
 

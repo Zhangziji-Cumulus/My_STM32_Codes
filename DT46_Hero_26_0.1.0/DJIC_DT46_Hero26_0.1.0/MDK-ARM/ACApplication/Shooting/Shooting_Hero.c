@@ -328,10 +328,11 @@ void Load_Run(void)
         Dual_Board_TX_Set_LoadStartFlag(1);
     }
 
-    if((BoardGRX.LoadEndFlag == LOAD_END) && (Shooting_State_Machine.Push_Stroke == PUSHPL))
+    else if((BoardGRX.LoadEndFlag == LOAD_END) && (Shooting_State_Machine.Push_Stroke == PUSHPL))
     {
         //设置推杆位置到A点
         Shooting_State_Machine.Push_Stroke = PUSHPA;
+        Dual_Board_TX_Set_LoadStartFlag(0);//清零
     }
 }
 
@@ -449,6 +450,7 @@ void Fire_Run(void)
 //** #################################################################################################### **//
 
 static Shooting_Instance_t Shooting_Instance;
+Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef Dial_Motor_STOP;
 
@@ -654,6 +656,38 @@ static void Dial_Load_StateMachine(void)
             break;
     }
 }
+
+void Auto_Load(void)
+{
+    uint8_t LoadStartFlag = BoardCRX.LoadStartFlag; 
+    //获取上弹状态
+    if(LoadStartFlag && (Shooting_State_Machine.Load == LOAD_END)) 
+    {
+        Shooting_State_Machine.Load = LOAD_START;
+        Dual_Board_TX_Set_LoadEndFlag(0);//发送Load结束清零
+    }
+    else if(Shooting_State_Machine.Load == LOAD_START)
+    { 
+        //检测电流状态
+        //如果电流大于
+        Shooting_State_Machine.Load == LOAD_END;
+    }
+    else if(Shooting_State_Machine.Load == LOAD_END)
+    {
+        Dual_Board_TX_Set_LoadEndFlag(1);//发送Load结束指令
+        LoadStartFlag = 0;//清零
+    } 
+
+}
+
+// /* 填弹状态枚举 */
+// typedef enum{
+//     LOAD_START,     //开始填弹
+//     LOAD_ING,       //填弹中
+//     LOAD_END       //填弹完成
+//     // LOAD_READ       //发射预备（推杆向前进一点点）
+// }Load_State_e;
+
 
 #endif
 
