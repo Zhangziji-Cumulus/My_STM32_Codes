@@ -156,52 +156,37 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_ref_ins</ItemText>
+          <ItemText>g_ref_data,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_ref_data,0x0A</ItemText>
+          <ItemText>Shooting_State_Machine</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>all</ItemText>
+          <ItemText>BoardCRX</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_dbg_cmd_id</ItemText>
+          <ItemText>Shooting_State_Machine</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_dbg_data_len</ItemText>
+          <ItemText>Shooting_Instance.DJI_Motordata.DIAL.current_ma,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_dbg_unknown_cmd_id</ItemText>
+          <ItemText>Dial_Ex</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>parser</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>all-&gt;_robot_status</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>parser</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>\\BaseMood\ABModule/Referee/RefereeProtocol.c\g_ref_data.p_robot_status-&gt;shooter_barrel_cooling_value</ItemText>
+          <ItemText>BoardGRX</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -1389,7 +1374,7 @@
 
   <Group>
     <GroupName>ABModule</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1785,7 +1770,7 @@
 
   <Group>
     <GroupName>ABModule/Referee</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2097,7 +2082,7 @@
 
   <Group>
     <GroupName>ACApplication/Gimbal</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

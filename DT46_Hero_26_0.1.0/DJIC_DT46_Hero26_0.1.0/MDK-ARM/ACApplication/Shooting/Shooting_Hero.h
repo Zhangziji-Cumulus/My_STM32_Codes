@@ -21,8 +21,8 @@ typedef enum
 {
     LOAD_STOP,  //停止
     LOAD_ING,   //装弹中
-    LOAD_OK,    //装弹完成
-    LOAD_WAIT   //等待下一次装弹
+    //LOAD_OK,    //装弹完成
+    //LOAD_WAIT   //等待下一次装弹
 }LOAD_State_e;
 
 
@@ -49,8 +49,8 @@ typedef enum{
 typedef enum{
     LOAD_START,     //开始填弹
     //LOAD_ING,       //填弹中
-    LOAD_END       //填弹完成
-    // LOAD_READ       //发射预备（推杆向前进一点点）
+    LOAD_OK,       //填弹完成
+    LOAD_WAIT       //等待下一次填弹指令
 }Load_State_e;
 /* 发射机构状态枚举 */
 typedef enum{
@@ -135,6 +135,7 @@ typedef struct
             PushRod_State_e State;
             float   T_Angle;
             int16_t Ctrl_Vel;
+            uint8_t CtlFlag;
         }PushRod;
         
     }Calc;
