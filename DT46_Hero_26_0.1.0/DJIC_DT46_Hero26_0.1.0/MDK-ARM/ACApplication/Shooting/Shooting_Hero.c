@@ -57,11 +57,10 @@ void Shooting_Init(void)
 	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&PID_SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
 	
-
     Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_L_DEG;
-
+    Shooting_Instance.Calc.PushRod.CtlFlag = 1;
     Shooting_State_Machine.Push_Stroke == PUSHPL;
-
+    
     //Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING;
 
 	//X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,15);//读取张大头步进电机的实际工作电流
@@ -107,7 +106,7 @@ void Shooting_RefreshTarget(void)
 
     Fire_Run();
     Load_Run();
-    // Friction_Update_Target();
+    Friction_Update_Target();
     // PuahRod_Update_Target();
 }
 
@@ -344,20 +343,6 @@ uint8_t Detect_Fied(void)
  //与填弹逻辑有关
  void Load_Run(void)
  {
-     // //获取循环标志
-     // if(Shooting_State_Machine.Push_Stroke == PUSHPL)
-     // {
-     //     //发送开始填弹标志
-     //     Dual_Board_TX_Set_LoadStartFlag(1);
-     // }
-     // else if((BoardGRX.LoadEndFlag == 1) && (Shooting_State_Machine.Push_Stroke == PUSHPL))
-     // {
-     //     //设置推杆位置到A点
-     //     Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_A_DEG;
-     //     Shooting_State_Machine.Push_Stroke = PUSHPA;
-     //     Dual_Board_TX_Set_LoadStartFlag(0);//清零
-     // }
-
      static uint32_t start_tick = 0;
 
      if(Shooting_State_Machine.Push_Stroke == PUSHPL)
@@ -391,176 +376,7 @@ uint8_t Detect_Fied(void)
      }
  }
 
-// void Fire_Run(void)
-// {
-//     //只在进入该状态瞬间记录起始tick
-//     static uint32_t start_tick_1 = 0;
-//     static uint32_t start_tick_B = 0;
-//     static uint32_t start_tick_C1 = 0;
-//     static uint32_t start_tick_C2 = 0;
-//     static uint32_t start_tick_L = 0;
 
-//     const uint16_t detect_time = 1000;
-
-//     //开火触发计时滤波
-//     static uint8_t Fired_Flag = 0;
-//     static uint32_t fire_trigger_tick = 0;
-//     static uint8_t last_raw_fire = 0;  //保存上一帧原始开火电平
-//     const uint16_t FIRE_FILTER_TIME = 300;
-
-//     uint8_t current_raw_fire = Shooting_State_Machine.Fired_Flag;
-
-//     // 检测上升沿：仅 0→1 才开启计时
-//     if (current_raw_fire == 1)
-//     {
-//         if (last_raw_fire == 0)
-//         {
-//             //上升沿到来，启动计时
-//             fire_trigger_tick = HAL_GetTick();
-//         }
-
-//         //计时满足，且还没有置位时才打开开火标志
-//         if ((HAL_GetTick() - fire_trigger_tick >= FIRE_FILTER_TIME) && (Fired_Flag == 0))
-//         {
-//             Fired_Flag = 1;
-//         }
-//     }
-//     else
-//     {
-//         fire_trigger_tick = 0;
-//     }
-
-//     //更新历史电平
-//     last_raw_fire = current_raw_fire;
-    
-
-//     if(Fired_Flag == 1 && Shooting_State_Machine.Fire == FIRE_READY)
-//     {
-
-//         if(Shooting_State_Machine.Push_Stroke == PUSHPA)
-//         {
-//             //控制推杆往前走到B点位置
-//             Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_B_DEG;
-//             Shooting_Instance.Calc.PushRod.CtlFlag = 1;
-
-//             //等待B点到位
-//             if(start_tick_B == 0)
-//             {
-//                 start_tick_B = HAL_GetTick();
-//             }
-//             //时间窗口
-//             if(HAL_GetTick() - start_tick_B >= detect_time)
-//             {
-//                 Shooting_State_Machine.Push_Stroke = PUSHPB;//更新推杆在点B位置
-//                 start_tick_B = 0;// 成功，清零计时器
-//                 Fired_Flag = 0;
-//             }
-//         }
-//         else if(Shooting_State_Machine.Push_Stroke == PUSHPB)
-//         {
-//             if(Shooting_State_Machine.Fired_Count == 0)
-//             {
-//                 // 进入推杆到位状态时锁存起始时间
-//                 if(start_tick_1 == 0)
-//                 {
-//                     start_tick_1 = HAL_GetTick();
-//                 }
-
-//                 //时间窗口
-//                 if(HAL_GetTick() - start_tick_1 <= detect_time)
-//                 {
-//                     if(Detect_Fied())
-//                     {
-//                         Shooting_State_Machine.Fired_Count = 1;
-//                         Shooting_State_Machine.Fire = FIRE_END_B;//在B点完成发射
-//                         Fired_Flag = 0;
-//                         start_tick_1 = 0; // 成功，清零计时器
-//                     }
-//                 }
-//                 else
-//                 {
-//                     //超时处理
-//                     start_tick_1 = 0;
-//                     Shooting_State_Machine.Push_Stroke = PUSHPC;
-//                 }
-//             }
-//         }
-//         else if(Shooting_State_Machine.Push_Stroke == PUSHPC)
-//         {
-//             //控制推杆往前走到C点位置
-//             Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_C_DEG;
-//             Shooting_Instance.Calc.PushRod.CtlFlag = 1;
-
-//             //等待C点到位
-//             if(start_tick_C1 == 0)
-//             {
-//                 start_tick_C1 = HAL_GetTick();
-//             }
-
-//             //时间窗口
-//             if(HAL_GetTick() - start_tick_C1 >= detect_time)
-//             {
-//                 Shooting_State_Machine.Fire = FIRE_END_C;
-//                 start_tick_C1 = 0;// 成功，清零计时器
-//                 Fired_Flag = 0;
-//             }
-//         }
-//     }
-//     else if(Shooting_State_Machine.Fire == FIRE_END_B && Fired_Flag == 1)
-//     {
-//        //控制推杆往前走到C点位置
-//        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_C_DEG;
-//        Shooting_Instance.Calc.PushRod.CtlFlag = 1;
-
-//        //等待C点到位
-//        if(start_tick_C2 == 0)
-//        {
-//            start_tick_C2 = HAL_GetTick();
-//        }
-
-//        //时间窗口
-//        if(HAL_GetTick() - start_tick_C2 >= detect_time)
-//        {
- 
-//            Shooting_State_Machine.Fire = FIRE_END_C;// 不管C点有没有发弹都视为完成发弹了
-//            start_tick_C2 = 0;// 成功，清零计时器
-//            Fired_Flag = 0;
-//        }
-
-//     }
-//     else if(Shooting_State_Machine.Fire == FIRE_END_C && Shooting_State_Machine.Push_Stroke == PUSHPC)
-//     {
-//         //返回到L点
-//         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_L_DEG;
-//         Shooting_Instance.Calc.PushRod.CtlFlag = 1;
-
-//         //等待L点到位
-//         if(start_tick_L == 0)
-//         {
-//             start_tick_L = HAL_GetTick();
-//         }
-
-//         //时间窗口
-//         if(HAL_GetTick() - start_tick_L >= detect_time)
-//         {
-//             Shooting_State_Machine.Fired_Count = 0;
-//             Shooting_State_Machine.Push_Stroke = PUSHPL;
-//             start_tick_L = 0;// 成功，清零计时器
-//             Fired_Flag = 0;
-//         }
-//     }
-// }
-
-/************************* 状态枚举（建议放到头文件） *************************/
-typedef enum
-{
-    FIRE_STA_IDLE = 0,      // 待机：推杆在A点，等待第一次开火触发
-    FIRE_STA_MOVE_A2B,      // 推杆从A点移动到B点
-    FIRE_STA_B_DETECT,      // B点停留，检测发射信号（带超时）
-    FIRE_STA_B_READY,       // B点发射成功，待发射，等待第二次开火
-    FIRE_STA_MOVE_B2C,      // 推杆从B点移动到C点
-    FIRE_STA_MOVE_C2L,      // 推杆从C点返回L点
-} Fire_State_e2;
 
 /************************* 时间参数配置（按实际调试修改） *************************/
 #define TIME_A_TO_B        1000    // A→B 推杆运动时间(ms)
@@ -572,7 +388,7 @@ typedef enum
 /************************* 状态机主函数 *************************/
 void Fire_Run(void)
 {
-    static Fire_State_e2 fire_state = FIRE_STA_IDLE;
+    static Fire_State_e fire_state = FIRE_STA_IDLE;
     static uint32_t state_tick = 0;         // 单状态计时变量，切换状态时重置
     static uint32_t fire_filter_tick = 0;   // 开火信号消抖计时
     static uint8_t  last_raw_fire = 0;      // 上一帧原始开火电平
@@ -811,21 +627,6 @@ void Shooting_RefreshTarget(void)
 //计算控制量
 void Shooting_CtrlCalc(void)
 {
-    // if(Shooting_Instance.Logic.LoadState == LOAD_ING)
-    // {
-    //     Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calculate(&Dial_In,
-    //                                                                 &Dial_Ex,
-    //                                                                 Shooting_Instance.Calc.Dial.T_rpm,
-    //                                                                 Shooting_Instance.DJI_Motordata.DIAL.current_ma,
-    //                                                                 Shooting_Instance.DJI_Motordata.DIAL.speed_rpm,
-    //                                                                 DIAL_PID_THRESHOLD);
-    // }
-    // else if((Shooting_Instance.Logic.LoadState == LOAD_STOP) && (Shooting_Instance.Logic.LoadState == LOAD_WAIT))
-    // {
-    //     Shooting_Instance.Calc.Dial.Ctrl_Vel = 0;
-    // }
-
-    
     if(Shooting_State_Machine.Load == LOAD_START)
     {
         Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calculate(&Dial_In,
@@ -887,84 +688,6 @@ void Shooting_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
-// //更新拨盘目标量
-// static void Dial_Update_Target(void)
-// {
-//     if(Shooting_Instance.Logic.LoadState == LOAD_ING)
-//     {
-//         Shooting_Instance.Calc.Dial.T_Speed = DIAL_MAX_SPEED_M_S;
-//         Shooting_Instance.Calc.Dial.T_rpm = (int16_t)calc_motor_rpm_from_speed(Shooting_Instance.Calc.Dial.T_Speed,(DIAL_RADIUS_MM / 1000),DIAL_RATIO);
-//     }
-//     else if((Shooting_Instance.Logic.LoadState == LOAD_STOP) || (Shooting_Instance.Logic.LoadState == LOAD_WAIT))
-//     {
-//         Shooting_Instance.Calc.Dial.T_rpm = 0;
-//     }
-// }
-
-// //检测拨盘状态并设置标志
-// static void Dial_Load_StateMachine(void)
-// {
-//     // 获取当前状态
-//     LOAD_State_e currState = Shooting_Instance.Logic.LoadState;
-//     // 获取当前状态
-//     static uint32_t LoadOK_tick = 0;
-
-//     switch(currState)
-//     {
-//         // ====================== 停止状态 ======================
-//         case LOAD_STOP:
-//             // 触发条件：装弹命令有效
-//             if(Shooting_Instance.CMD.Shooting.Load == ON)
-//             {
-//                 // 进入装弹中
-//                 Shooting_Instance.Logic.LoadState = LOAD_ING;
-//             }
-//             break;
-
-//         // ====================== 装弹中 ======================
-//         case LOAD_ING:
-//             // 条件1：拨盘转速极低
-//             // 条件2：电机电流 >=5000mA（堵转/到位）
-//             if((Shooting_Instance.DJI_Motordata.DIAL.speed_rpm <= 10) &&
-//                (Shooting_Instance.DJI_Motordata.DIAL.current_ma >= 5000))
-//             {
-//                 // 装弹完成
-//                 Shooting_Instance.Logic.LoadState = LOAD_OK;
-//                 LoadOK_tick = HAL_GetTick();
-//             }
-//             // 中途命令取消 → 回到停止
-//             else if(Shooting_Instance.CMD.Shooting.Load == OFF)
-//             {
-//                 Shooting_Instance.Logic.LoadState = LOAD_STOP;
-//             }
-//             break;
-
-//         // ====================== 装弹完成 ======================
-//         case LOAD_OK:
-//             //当装填完毕持续时间为500ms时等待
-//             if(HAL_GetTick() - LoadOK_tick >= 500)
-//             {
-//                 Shooting_Instance.Logic.LoadState = LOAD_WAIT;
-//             }
-//             break;
-
-//         // ====================== 等待复位 ======================
-//         case LOAD_WAIT:
-//             // 命令取消 → 回到停止，完成一次完整流程
-//             if(Shooting_Instance.CMD.Shooting.Load == OFF)
-//             {
-//                 Shooting_Instance.Logic.LoadState = LOAD_STOP;
-//             }
-//             break;
-
-//         // ====================== 异常处理 ======================
-//         default:
-//             Shooting_Instance.Logic.LoadState = LOAD_STOP;
-//             break;
-//     }
-// }
-
-
 static void Dial_Update_Target(void)
 {
     if(Shooting_State_Machine.Load == LOAD_START)
@@ -1003,63 +726,6 @@ static uint8_t Detect_Load(void)
         return 0;
     }
 }
-
-// static void Auto_Load(void)
-// {
-//     static uint8_t LoadStartFlag;
-//     static uint8_t LoadStartFlag_Last;
-//     static uint32_t LoadStartTick = 0;
-//     static uint32_t LoadEndTick = 0;
-//     static uint8_t LoadDelayFlag = 0;
-//     static uint8_t EndDelayFlag = 0;
-
-//     //1. 先保存上一帧
-//     LoadStartFlag_Last = LoadStartFlag;
-//     //2. 刷新为本帧最新值
-//     LoadStartFlag = BoardCRX.LoadStartFlag;
-//     //3. 判断前后是否发生跳变
-//     if(LoadStartFlag && !LoadStartFlag_Last)
-//     {
-//         if(Shooting_State_Machine.Load == LOAD_WAIT) 
-//         {
-//             LoadStartTick = HAL_GetTick();
-//             LoadDelayFlag = 1;
-//         }
-//     }
-
-//     if(LoadDelayFlag)
-//     {
-//         if(HAL_GetTick() - LoadStartTick >= 500)
-//         {
-//             Shooting_State_Machine.Load = LOAD_START;
-//             LoadDelayFlag = 0;
-//         }
-//     }
-
-// 	if(Shooting_State_Machine.Load == LOAD_START)
-//     { 
-//         if(Detect_Load())
-//         {
-//             Shooting_State_Machine.Load = LOAD_OK;
-// 			Dual_Board_TX_Set_LoadEndFlag(1);
-//         }
-//     }
-//     else if(Shooting_State_Machine.Load == LOAD_OK)
-//     {
-//         if(!EndDelayFlag)
-//         {
-//             LoadEndTick = HAL_GetTick();
-//             EndDelayFlag = 1;
-//         }
-
-//         if(HAL_GetTick() - LoadEndTick >= 500)
-//         {
-//             Dual_Board_TX_Set_LoadEndFlag(0);
-//             Shooting_State_Machine.Load = LOAD_WAIT;
-//             EndDelayFlag = 0;
-//         }
-//     }
-// }
 
 static void Auto_Load(void)
 {

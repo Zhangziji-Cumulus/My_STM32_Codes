@@ -36,6 +36,9 @@ typedef enum
 //** ==================================== 枚举 ====================================== **//
 //** ================================================================================ **//
 
+
+
+
 /* 推杆状态枚举 */
 typedef enum{
 
@@ -48,21 +51,33 @@ typedef enum{
 /* 填弹状态枚举 */
 typedef enum{
     LOAD_START,     //开始填弹
-    //LOAD_ING,       //填弹中
     LOAD_OK,       //填弹完成
     LOAD_WAIT       //等待下一次填弹指令
 }Load_State_e;
 /* 发射机构状态枚举 */
-typedef enum{
+
+// typedef enum{
+//     FIRE_READY,     //发射准备
+//     FIRE_ING,       //发射中
+//     FIRE_END_B,     //推杆在点B时完成发射
+//     FIRE_END_C,     //推杆在点C时完成发射
+//     ReLoad          //开始重新填弹
+// }Fire_State_e;
+/* 推杆行程状态枚举 */
+typedef enum
+{
+    FIRE_STA_IDLE = 0,      // 待机：推杆在A点，等待第一次开火触发
+    FIRE_STA_MOVE_A2B,      // 推杆从A点移动到B点
+    FIRE_STA_B_DETECT,      // B点停留，检测发射信号（带超时）
+    FIRE_STA_B_READY,       // B点发射成功，待发射，等待第二次开火
+    FIRE_STA_MOVE_B2C,      // 推杆从B点移动到C点
+    FIRE_STA_MOVE_C2L,      // 推杆从C点返回L点
+
     FIRE_READY,     //发射准备
-    FIRE_ING,       //发射中
     FIRE_END_B,     //推杆在点B时完成发射
     FIRE_END_C,     //推杆在点C时完成发射
-    ReLoad          //开始重新填弹
-}Fire_State_e;
-/* 推杆行程状态枚举 */
 
-/* 推杆点：A->B->C */
+} Fire_State_e;
 
 typedef enum{
     PUSHPL,//推杆在L点
@@ -139,11 +154,6 @@ typedef struct
         }PushRod;
         
     }Calc;
-
-
-    struct{
-        LOAD_State_e LoadState;//上弹OK标志
-    }Logic;
 
 }Shooting_Instance_t;
 
